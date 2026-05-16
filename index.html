@@ -8,6 +8,7 @@
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <script src="words.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     /* ─── Reset ─── */
     *, *::before, *::after {
@@ -250,6 +251,9 @@
     .action-btn:active { transform: scale(0.94); }
     .action-btn.primary   { background: #f59e0b; color: white; box-shadow: 0 4px 16px rgba(245,158,11,0.35); }
     .action-btn.secondary { background: #eff6ff; color: #6366f1; }
+    .email-status { font-size: 0.82rem; font-weight: 600; color: #9ca3af; margin-top: 14px; min-height: 1.4em; text-align: center; transition: color 0.3s; }
+    .email-status.ok  { color: #10b981; }
+    .email-status.err { color: #f87171; }
 
     /* ─── Keyframes ─── */
     @keyframes pulse-border {
@@ -353,6 +357,7 @@
         <button class="action-btn primary"   onclick="restartGame()">🔄 다시 하기</button>
         <button class="action-btn secondary" onclick="goStart()">🏠 처음으로</button>
       </div>
+      <div class="email-status" id="emailStatus"></div>
     </div>
   </div>
 
@@ -542,6 +547,33 @@ function showResult() {
     uw.forEach(w => { const item = document.createElement('div'); item.className = 'wrong-item'; item.innerHTML = `<span style="font-size:1.5rem">${w.emoji}</span><span class="w-word">${w.word}</span><span class="w-meaning">${w.meaning}</span>`; section.appendChild(item); });
   }
   showScreen('screen-result');
+  sendResultEmail(uw, cc, stars);
+}
+function sendResultEmail(wrongList, correct, stars) {
+  const statusEl = document.getElementById('emailStatus');
+  statusEl.textContent = '✉️ 엄마에게 결과 전송 중...';
+  statusEl.className = 'email-status';
+
+  const diffLabel = {'very-easy':'아주쉬움 🍀','easy':'쉬움 🌱','normal':'보통 ⭐','hard':'어려움 🔥'}[difficulty] || difficulty;
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const wrongStr = wrongList.length === 0 ? '없음 🎉' : wrongList.map(w => `${w.word} (${w.meaning})`).join('\n');
+
+  emailjs.init({ publicKey: 'SmEGPotCOv7j_TAqw' });
+  emailjs.send('service_clixeak', 'template_xly11pf', {
+    date: dateStr,
+    difficulty: diffLabel,
+    stars: '⭐'.repeat(stars) + '☆'.repeat(3 - stars),
+    total: String(gameWords.length),
+    correct: String(correct),
+    wrong_words: wrongStr,
+  }).then(() => {
+    statusEl.textContent = '✅ 엄마에게 결과를 보냈어요!';
+    statusEl.className = 'email-status ok';
+  }).catch(() => {
+    statusEl.textContent = '⚠️ 전송 실패 (인터넷 확인)';
+    statusEl.className = 'email-status err';
+  });
 }
 function speakWord(word) {
   if (!('speechSynthesis' in window)) return;
