@@ -499,8 +499,9 @@ function revealHalfLetters() {
 }
 function buildLetterButtons(word) {
   const needed = [...new Set(word.split(''))], all = 'abcdefghijklmnopqrstuvwxyz'.split('');
-  const distract = shuffle(all.filter(l => !needed.includes(l))).slice(0, 4);
-  const buttons = shuffle([...needed, ...distract]);
+  const distractCount = {'very-easy': 2, 'easy': 3, 'normal': 4, 'hard': 7}[difficulty] ?? 4;
+  const distract = shuffle(all.filter(l => !needed.includes(l))).slice(0, distractCount);
+  const buttons = [...new Set([...needed, ...distract])].sort();
   const grid = document.getElementById('letterGrid'); grid.innerHTML = '';
   buttons.forEach((letter, i) => {
     const btn = document.createElement('button');
