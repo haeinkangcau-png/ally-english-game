@@ -475,11 +475,6 @@ function revealFirstLetter() {
   t.textContent = w.word[0]; t.classList.add('revealed'); t.classList.remove('current');
   if (w.word.length > 1) document.getElementById('tile-1').classList.add('current');
   filledCount = 1; revealedFirst = true;
-  // 남은 위치에 같은 글자가 없을 때만 버튼 비활성화 (ewe 같은 경우 e 버튼 유지)
-  const remaining = w.word.slice(1);
-  if (!remaining.includes(w.word[0])) {
-    document.querySelectorAll('.letter-btn').forEach(b => { if (b.textContent === w.word[0]) b.disabled = true; });
-  }
   if (w.word.length === 1) setTimeout(() => wordComplete(), 300);
 }
 function revealHalfLetters() {
@@ -493,11 +488,6 @@ function revealHalfLetters() {
   if (revealCount < w.word.length) {
     document.getElementById('tile-' + revealCount).classList.add('current');
   }
-  // 남은 위치에 없는 글자 버튼만 비활성화
-  const remaining = w.word.slice(revealCount);
-  document.querySelectorAll('.letter-btn').forEach(b => {
-    if (!remaining.includes(b.textContent)) b.disabled = true;
-  });
   if (revealCount >= w.word.length) setTimeout(() => wordComplete(), 300);
 }
 function buildLetterButtons(word) {
