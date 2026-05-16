@@ -3,330 +3,853 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Ally's English Game 🎮</title>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <title>Ally's English Game ♡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Jua&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
   <script src="words.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
-    /* ─── Reset ─── */
+    /* ═════════════════════════════════════════
+       Ally's English Game — Kawaii / Sanrio
+       Palette
+       ═════════════════════════════════════════ */
+    :root {
+      /* surfaces */
+      --bg-1:    #fff1f5;     /* cream pink */
+      --bg-2:    #f3e8ff;     /* soft lavender */
+      --bg-3:    #e0f2fe;     /* sky baby blue */
+      --paper:   #fffafd;     /* card cream */
+      --paper-2: #fff5f9;     /* card cream subtle */
+      /* accents */
+      --pink:    #ff8fb8;     /* primary candy pink */
+      --pink-d:  #f06aa0;     /* deep pink */
+      --pink-s:  #ffd4e3;     /* soft pink */
+      --pink-x:  #ffe7ef;     /* extra soft pink */
+      --mint:    #9adfc4;     /* sanrio mint */
+      --blue:    #a8caff;     /* baby blue */
+      --lav:     #c8b9f5;     /* lavender */
+      --butter:  #ffe186;     /* butter yellow */
+      --peach:   #ffbf9a;     /* peach */
+      /* ink */
+      --ink:     #5a4658;     /* warm plum-brown */
+      --ink-2:   #8a7787;     /* muted plum */
+      --ink-3:   #b9a8b3;     /* faint plum */
+      --line:    #f6dde7;     /* hairline */
+      /* shadow */
+      --sh-soft: 0 6px 0 0 #f0c8d8;
+      --sh-card: 0 12px 28px -8px rgba(255, 143, 184, 0.25), 0 2px 0 0 #fde0ea;
+      --sh-pop:  0 10px 24px -6px rgba(168, 130, 200, 0.35);
+    }
+
+    /* ───────── Reset ───────── */
     *, *::before, *::after {
       margin: 0; padding: 0; box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
     }
+    button { font: inherit; color: inherit; }
 
+    html, body { min-height: 100dvh; }
     body {
-      font-family: 'Pretendard Variable', Pretendard, sans-serif;
-      background: linear-gradient(160deg, #fffbf0 0%, #f0f4ff 100%);
+      font-family: 'Gaegu', 'Pretendard Variable', Pretendard, sans-serif;
+      font-weight: 700;
+      color: var(--ink);
+      word-break: keep-all;
+      background:
+        radial-gradient(at 12% 8%, #ffe2ee 0%, transparent 38%),
+        radial-gradient(at 88% 14%, #e2d9ff 0%, transparent 42%),
+        radial-gradient(at 50% 92%, #d6ecff 0%, transparent 45%),
+        linear-gradient(170deg, var(--bg-1) 0%, var(--bg-2) 55%, var(--bg-3) 100%);
+      background-attachment: fixed;
       min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 16px 16px 32px;
       overflow-x: hidden;
+      position: relative;
     }
 
-    /* ─── Screens ─── */
+    /* Decorative floating shapes — full screen, behind everything */
+    .deco {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .deco svg { position: absolute; opacity: 0.55; }
+    .deco .d1 { top: 4%;  left: 4%;  width: 64px; animation: floaty 7s ease-in-out infinite; }
+    .deco .d2 { top: 18%; right: 6%; width: 52px; animation: floaty 9s ease-in-out infinite 1s; }
+    .deco .d3 { top: 62%; left: 3%;  width: 44px; animation: floaty 8s ease-in-out infinite 2s; }
+    .deco .d4 { top: 78%; right: 4%; width: 72px; animation: floaty 10s ease-in-out infinite .5s; }
+    .deco .d5 { top: 42%; right: 2%; width: 38px; animation: floaty 6s ease-in-out infinite 1.5s; }
+    .deco .d6 { top: 86%; left: 30%; width: 36px; animation: floaty 7.5s ease-in-out infinite 2.5s; }
+    .deco .d7 { top: 6%;  left: 48%; width: 42px; animation: floaty 8.5s ease-in-out infinite 1.8s; }
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50%      { transform: translateY(-14px) rotate(4deg); }
+    }
+    @media (max-width: 520px) {
+      .deco .d1, .deco .d7 { display: none; }
+    }
+
+    /* ───────── Layout shell ───────── */
+    .stage {
+      position: relative; z-index: 1;
+      min-height: 100dvh;
+      display: flex; flex-direction: column;
+      align-items: center;
+      padding: 18px 16px 48px;
+    }
     .screen {
       display: none;
       flex-direction: column;
       align-items: center;
       width: 100%;
-      max-width: 560px;
+      max-width: 480px;
+    }
+    @media (min-width: 720px) {
+      .stage { padding: 28px 28px 64px; }
+      .screen { max-width: 680px; }
+    }
+    @media (min-width: 1024px) {
+      .screen { max-width: 760px; }
     }
 
-    /* ══════════════════════════════
+    /* ═══════════════════════════════════════
        START SCREEN
-    ══════════════════════════════ */
-    .title {
-      font-family: 'Fredoka One', cursive;
-      font-size: 2.2rem;
-      color: #f59e0b;
-      text-align: center;
-      margin: 28px 0 6px;
-      line-height: 1.25;
+       ═══════════════════════════════════════ */
+    .hero {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: end;
+      margin: 6px 0 22px;
     }
-    .title .ally { color: #ff6b35; font-size: 2.6rem; }
-    .subtitle { font-size: 0.95rem; color: #9ca3af; margin-bottom: 32px; font-weight: 500; }
+    .hero-text { padding-bottom: 6px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Jua', 'Gaegu', sans-serif;
+      font-size: 0.9rem; color: var(--pink-d);
+      background: white;
+      padding: 5px 12px 4px; border-radius: 999px;
+      box-shadow: 0 2px 0 0 var(--pink-s);
+      margin-bottom: 10px;
+      white-space: nowrap;
+      word-break: keep-all;
+    }
+    .hero-title {
+      font-family: 'Fredoka', 'Jua', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 6vw, 2.8rem);
+      line-height: 1;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+    }
+    .hero-title .ally {
+      color: var(--pink-d);
+      display: inline-block;
+      transform: rotate(-3deg);
+    }
+    .hero-title .sparkle { color: var(--butter); }
+    .hero-sub {
+      font-family: 'Gaegu', sans-serif;
+      font-weight: 400;
+      font-size: 1.05rem;
+      color: var(--ink-2);
+      margin-top: 6px;
+    }
+    .hero-mascot { width: 96px; height: 110px; }
+    @media (min-width: 720px) {
+      .hero-mascot { width: 140px; height: 160px; }
+      .hero-title { font-size: 3.4rem; }
+      .hero-sub { font-size: 1.25rem; }
+    }
 
-    /* mode tabs */
-    .mode-tabs { display: flex; width: 100%; gap: 10px; margin-bottom: 28px; }
-    .mode-tab {
-      flex: 1; padding: 16px 12px; border-radius: 18px;
-      border: 2px solid #e5e7eb; background: white;
-      font-family: 'Pretendard Variable', Pretendard, sans-serif;
-      font-weight: 700; font-size: 1rem; color: #6b7280;
-      cursor: pointer; touch-action: manipulation; transition: all 0.2s; text-align: center;
+    /* ── Mode tabs ── */
+    .mode-tabs {
+      display: flex; width: 100%; gap: 10px; margin-bottom: 18px;
     }
-    .mode-tab .tab-icon { font-size: 1.6rem; display: block; margin-bottom: 4px; }
-    .mode-tab.active { border-color: #f59e0b; background: #fef3c7; color: #92400e; }
-    /* review list */
-    .review-list { display: none; flex-direction: column; gap: 10px; width: 100%; margin-bottom: 24px; }
+    .mode-tab {
+      flex: 1;
+      padding: 14px 10px 12px;
+      border-radius: 22px;
+      border: none;
+      background: var(--paper);
+      box-shadow: 0 4px 0 0 #fadbe8, inset 0 0 0 2px #fde9f0;
+      font-family: 'Jua', 'Gaegu', sans-serif;
+      font-size: 1.05rem; color: var(--ink-2);
+      cursor: pointer; touch-action: manipulation;
+      transition: transform .12s, box-shadow .12s, background .15s, color .15s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .mode-tab svg { width: 24px; height: 24px; flex: 0 0 auto; }
+    .mode-tab:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #fadbe8, inset 0 0 0 2px #fde9f0; }
+    .mode-tab.active {
+      background: linear-gradient(180deg, #fff 0%, #ffeaf2 100%);
+      color: var(--pink-d);
+      box-shadow: 0 4px 0 0 var(--pink), inset 0 0 0 2px var(--pink);
+    }
+
+    /* ── Review list ── */
+    .review-list {
+      display: none; flex-direction: column; gap: 10px;
+      width: 100%; margin-bottom: 18px;
+    }
     .review-list.visible { display: flex; }
     .review-item {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 18px; border-radius: 14px;
-      border: 2px solid #e5e7eb; background: white;
-      font-weight: 600; font-size: 0.95rem; color: #374151;
-      cursor: pointer; touch-action: manipulation; transition: all 0.18s;
-    }
-    .review-item:hover, .review-item.selected { border-color: #6366f1; background: #eef2ff; color: #4338ca; }
-    .review-item .ri-count { font-size: 0.82rem; color: #9ca3af; font-weight: 500; }
-    /* difficulty */
-    .section-label { font-weight: 800; font-size: 0.9rem; color: #6b7280; align-self: flex-start; margin-bottom: 10px; }
-    .difficulty-row { display: flex; gap: 8px; width: 100%; margin-bottom: 24px; }
-    .diff-btn {
-      flex: 1; padding: 10px 6px; border-radius: 12px;
-      border: 2px solid #e5e7eb; background: white;
-      font-family: 'Pretendard Variable', Pretendard, sans-serif;
-      font-weight: 700; font-size: 0.85rem; color: #6b7280;
-      cursor: pointer; touch-action: manipulation; transition: all 0.18s; text-align: center; line-height: 1.4;
-    }
-    .diff-btn .d-icon { font-size: 1.2rem; display: block; margin-bottom: 2px; }
-    .diff-btn.selected { border-color: #f59e0b; background: #fef3c7; color: #92400e; }
-
-    .badge { background: #6366f1; color: white; font-size: 0.62rem; padding: 2px 8px; border-radius: 100px; font-weight: 700; }
-
-    .info-box {
-      width: 100%; background: white; border-radius: 18px;
-      padding: 16px 20px; margin-bottom: 32px;
-      border: 1.5px solid #e5e7eb;
-      font-size: 0.9rem; color: #6b7280; line-height: 2; font-weight: 500;
-    }
-    .info-box strong { color: #374151; font-weight: 800; }
-
-    .start-btn {
-      background: linear-gradient(135deg, #f59e0b, #ef4444);
-      color: white; border: none; border-radius: 22px;
-      padding: 18px 64px;
-      font-family: 'Fredoka One', cursive; font-size: 1.7rem;
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px;
+      border-radius: 18px;
+      background: var(--paper);
+      box-shadow: 0 3px 0 0 #f3dee8, inset 0 0 0 1.5px #fbe6ef;
       cursor: pointer; touch-action: manipulation;
-      box-shadow: 0 6px 24px rgba(245,158,11,0.4);
-      transition: transform 0.15s, box-shadow 0.15s;
+      transition: transform .12s, box-shadow .12s;
     }
-    .start-btn:active { transform: scale(0.94); box-shadow: 0 3px 12px rgba(245,158,11,0.3); }
+    .review-item:active { transform: translateY(1px); }
+    .review-item.selected {
+      background: linear-gradient(180deg, #fff 0%, #fff5f9 100%);
+      box-shadow: 0 3px 0 0 var(--pink), inset 0 0 0 2px var(--pink);
+    }
+    .ri-dot {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--pink-s);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Jua', sans-serif; color: var(--pink-d); font-size: 0.95rem;
+    }
+    .review-item.selected .ri-dot { background: var(--pink); color: white; }
+    .ri-label {
+      flex: 1;
+      font-family: 'Jua', 'Gaegu', sans-serif;
+      font-size: 1.05rem; color: var(--ink);
+    }
+    .ri-count {
+      font-family: 'Gaegu', sans-serif;
+      font-size: 0.95rem; color: var(--ink-3);
+    }
+    .badge {
+      display: inline-block; vertical-align: 1px;
+      background: var(--pink);
+      color: white; font-family: 'Jua', sans-serif;
+      font-size: 0.7rem; padding: 1px 8px 0; border-radius: 999px;
+      margin-left: 6px;
+    }
 
-    /* ══════════════════════════════
-       GAME SCREEN
-    ══════════════════════════════ */
-    .top-bar {
-      width: 100%; display: flex; align-items: center;
-      gap: 12px; margin: 12px 0 14px; padding-top: 4px;
+    /* ── Section label ── */
+    .section-label {
+      font-family: 'Jua', sans-serif;
+      font-size: 1rem; color: var(--ink);
+      align-self: flex-start;
+      margin: 6px 0 10px 4px;
+      display: flex; align-items: center; gap: 6px;
     }
+    .section-label svg { width: 18px; height: 18px; }
+
+    /* ── Difficulty ── */
+    .difficulty-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 8px; width: 100%; margin-bottom: 20px;
+    }
+    .diff-btn {
+      padding: 10px 4px 12px;
+      border-radius: 18px;
+      border: none;
+      background: var(--paper);
+      box-shadow: 0 3px 0 0 #f3dee8, inset 0 0 0 1.5px #fbe6ef;
+      cursor: pointer; touch-action: manipulation;
+      transition: transform .12s, box-shadow .12s;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      font-family: 'Jua', 'Gaegu', sans-serif;
+    }
+    .diff-btn:active { transform: translateY(1px); }
+    .diff-btn .d-face {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: inset 0 -3px 0 0 rgba(0,0,0,0.04);
+    }
+    .diff-btn .d-name {
+      font-size: 0.95rem; color: var(--ink); line-height: 1;
+      white-space: nowrap; word-break: keep-all;
+    }
+    .diff-btn .d-hint {
+      font-family: 'Gaegu', sans-serif;
+      font-weight: 400; font-size: 0.78rem; color: var(--ink-3); line-height: 1.1;
+      white-space: nowrap; word-break: keep-all;
+    }
+    .diff-btn[data-d="very-easy"] .d-face { background: var(--mint); }
+    .diff-btn[data-d="easy"]      .d-face { background: var(--blue); }
+    .diff-btn[data-d="normal"]    .d-face { background: var(--butter); }
+    .diff-btn[data-d="hard"]      .d-face { background: var(--peach); }
+    .diff-btn.selected {
+      background: linear-gradient(180deg, #fff 0%, #fff5f9 100%);
+      box-shadow: 0 3px 0 0 var(--pink), inset 0 0 0 2px var(--pink);
+    }
+
+    /* ── Info box ── */
+    .info-box {
+      position: relative;
+      width: 100%;
+      background: var(--paper);
+      border-radius: 22px;
+      padding: 16px 18px 16px 22px;
+      margin-bottom: 26px;
+      box-shadow: var(--sh-card);
+      font-family: 'Gaegu', sans-serif;
+      font-weight: 400;
+      font-size: 1.05rem; color: var(--ink-2);
+      line-height: 1.6;
+    }
+    .info-box::before {
+      content: '';
+      position: absolute; left: 0; top: 14px; bottom: 14px; width: 4px;
+      background: var(--pink); border-radius: 4px;
+    }
+    .info-box strong { font-weight: 700; color: var(--pink-d); }
+
+    /* ── Start button ── */
+    .start-btn {
+      position: relative;
+      background: linear-gradient(180deg, #ff9fc2 0%, var(--pink) 60%, var(--pink-d) 100%);
+      color: white; border: none;
+      border-radius: 28px;
+      padding: 16px 56px 18px;
+      font-family: 'Fredoka', 'Jua', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 0.5px;
+      cursor: pointer; touch-action: manipulation;
+      box-shadow: 0 6px 0 0 var(--pink-d), 0 14px 26px -8px rgba(240,106,160,0.6);
+      transition: transform .1s, box-shadow .1s;
+    }
+    .start-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 0 var(--pink-d), 0 6px 14px -6px rgba(240,106,160,0.6);
+    }
+    .start-btn::after {
+      content: '♡';
+      position: absolute; top: -10px; right: -8px;
+      width: 28px; height: 28px;
+      background: var(--butter); color: var(--pink-d);
+      font-family: 'Fredoka', sans-serif; font-size: 1rem;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      box-shadow: 0 2px 0 0 #e8c454;
+      transform: rotate(12deg);
+    }
+
+    /* ═══════════════════════════════════════
+       GAME SCREEN
+       ═══════════════════════════════════════ */
+    .top-bar {
+      width: 100%;
+      display: flex; align-items: center; gap: 12px;
+      margin: 6px 0 16px;
+    }
+    .home-btn {
+      width: 38px; height: 38px;
+      border: none; border-radius: 50%;
+      background: var(--paper);
+      box-shadow: 0 3px 0 0 #f3dee8;
+      cursor: pointer;
+      display: grid; place-items: center;
+      flex: 0 0 auto;
+    }
+    .home-btn svg { width: 18px; height: 18px; color: var(--pink-d); }
+    .home-btn:active { transform: translateY(1px); box-shadow: 0 1px 0 0 #f3dee8; }
     .progress-track {
-      flex: 1; height: 10px; background: #e5e7eb;
-      border-radius: 100px; overflow: hidden;
+      flex: 1; height: 16px;
+      background: white;
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 0 0 #fde0ea, inset 0 0 0 2px #fde0ea;
+      position: relative;
     }
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #f59e0b, #6366f1);
-      border-radius: 100px;
-      transition: width 0.5s ease;
+      background: linear-gradient(90deg, var(--pink) 0%, var(--lav) 60%, var(--blue) 100%);
+      border-radius: 999px;
+      transition: width 0.6s cubic-bezier(.22,1,.36,1);
       width: 0%;
+      position: relative;
     }
-    .progress-label { font-weight: 800; font-size: 1rem; color: #9ca3af; white-space: nowrap; }
-
-    .game-card {
-      width: 100%; background: white; border-radius: 28px;
-      box-shadow: 0 8px 36px rgba(0,0,0,0.08);
-      padding: 24px 20px 22px;
-      display: flex; flex-direction: column; align-items: center;
-      margin-bottom: 18px;
+    .progress-fill::after {
+      content: '';
+      position: absolute; top: 2px; left: 6px; right: 6px; height: 4px;
+      background: rgba(255,255,255,0.55); border-radius: 999px;
     }
-
-    .emoji-area {
-      font-size: 88px; line-height: 1;
-      min-height: 96px; display: flex; align-items: center; justify-content: center;
-      margin-bottom: 10px;
-    }
-
-    .speak-btn {
-      background: #eff6ff; border: none; border-radius: 100px;
-      padding: 9px 26px; font-size: 1rem;
-      cursor: pointer; touch-action: manipulation;
-      margin-bottom: 22px;
-      transition: transform 0.1s, background 0.15s;
-      font-family: 'Pretendard Variable', Pretendard, sans-serif; font-weight: 700; color: #3b82f6;
-    }
-    .speak-btn:active { transform: scale(0.9); background: #dbeafe; }
-
-    .blanks-row {
-      display: flex; flex-wrap: wrap; justify-content: center;
-      gap: 8px; margin-bottom: 16px;
-    }
-    .blank-tile {
-      min-width: 42px; height: 56px;
-      border-bottom: 3px solid #d1d5db;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Fredoka One', cursive; font-size: 30px;
-      color: #f59e0b; padding: 0 3px;
-      transition: border-color 0.2s;
-    }
-    .blank-tile.current {
-      border-bottom-color: #6366f1;
-      animation: pulse-border 1.2s ease-in-out infinite;
-    }
-    .blank-tile.filled { border-bottom-color: #f59e0b; }
-    .blank-tile.revealed { color: #c4b5fd; border-bottom-color: #c4b5fd; }
-    .blank-tile.pop { animation: pop 0.35s ease; }
-
-    .hint-area { display: flex; flex-direction: column; align-items: center; gap: 7px; }
-    .hint-btn {
-      background: none; border: 1.5px solid #e5e7eb; border-radius: 100px;
-      padding: 6px 18px;
-      font-family: 'Pretendard Variable', Pretendard, sans-serif; font-weight: 700;
-      font-size: 0.9rem; color: #9ca3af;
-      cursor: pointer; touch-action: manipulation;
-      transition: border-color 0.2s;
-    }
-    .hint-btn:active { border-color: #6366f1; }
-    .hint-text { font-weight: 800; font-size: 1.1rem; color: #6366f1; min-height: 1.4em; text-align: center; }
-
-    /* ─── Letter Buttons ─── */
-    .letter-grid {
-      display: flex; flex-wrap: wrap; gap: 10px;
-      justify-content: center; width: 100%; max-width: 440px;
-    }
-    .letter-btn {
-      width: 74px; height: 74px; border-radius: 18px; border: none;
-      font-family: 'Fredoka One', cursive; font-size: 1.9rem; color: #374151;
-      cursor: pointer; touch-action: manipulation;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-      transition: transform 0.1s;
-      user-select: none;
-    }
-    .letter-btn:active { transform: scale(0.87); }
-    .letter-btn:disabled { opacity: 0.35; }
-    .letter-btn.flash-ok   { animation: flash-ok   0.4s ease; }
-    .letter-btn.flash-no   { animation: flash-no   0.45s ease; }
-
-    /* ─── Word Complete Toast ─── */
-    .word-toast {
-      position: fixed; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'Fredoka One', cursive;
-      font-size: 2.4rem; color: white;
-      background: rgba(30, 30, 40, 0.78);
-      padding: 18px 40px; border-radius: 22px;
-      pointer-events: none;
-      animation: toast-in 0.3s ease;
-      z-index: 200;
+    .progress-label {
+      font-family: 'Jua', sans-serif;
+      font-size: 1rem; color: var(--ink);
+      background: white;
+      padding: 6px 12px 5px;
+      border-radius: 999px;
+      box-shadow: 0 3px 0 0 #fde0ea;
       white-space: nowrap;
     }
 
-    /* ══════════════════════════════
-       RESULT SCREEN
-    ══════════════════════════════ */
-    .result-card {
-      width: 100%; background: white; border-radius: 28px;
-      box-shadow: 0 8px 36px rgba(0,0,0,0.08);
-      padding: 32px 24px; text-align: center;
-      margin-top: 16px;
+    /* ── Game card ── */
+    .game-card {
+      position: relative;
+      width: 100%;
+      background: var(--paper);
+      border-radius: 32px;
+      box-shadow: var(--sh-card);
+      padding: 28px 20px 24px;
+      display: flex; flex-direction: column; align-items: center;
+      margin-bottom: 22px;
     }
-    .stars-display { font-size: 3.2rem; letter-spacing: 8px; margin-bottom: 18px; }
-    .result-msg { font-weight: 800; font-size: 1.3rem; color: #374151; margin-bottom: 5px; }
-    .result-sub { font-size: 0.9rem; color: #9ca3af; margin-bottom: 20px; font-weight: 500; }
+    .game-card::before {
+      content: ''; position: absolute; top: 14px; left: 14px; right: 14px; bottom: 14px;
+      border-radius: 22px;
+      border: 2px dashed #ffd4e3;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    .game-card-tag {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--pink); color: white;
+      font-family: 'Jua', sans-serif;
+      font-size: 0.85rem;
+      padding: 4px 16px 3px; border-radius: 999px;
+      box-shadow: 0 3px 0 0 var(--pink-d);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .game-card-tag svg { width: 14px; height: 14px; }
 
-    .wrong-section { text-align: left; }
-    .wrong-header { font-weight: 800; font-size: 0.95rem; color: #6b7280; margin-bottom: 10px; }
-    .wrong-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 0; border-bottom: 1px solid #f3f4f6;
+    .emoji-area {
+      font-size: 96px;
+      line-height: 1;
+      min-height: 110px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 10px 0 6px;
+      position: relative;
+      z-index: 2;
     }
-    .w-word  { font-family:'Fredoka One',cursive; font-size: 1.15rem; color: #f59e0b; }
-    .w-meaning { color: #9ca3af; font-size: 0.9rem; margin-left: auto; font-weight: 500; }
+    .emoji-area::before, .emoji-area::after {
+      content: '✦'; position: absolute;
+      font-family: 'Fredoka', sans-serif;
+      color: var(--butter); font-size: 22px;
+      opacity: 0.8;
+    }
+    .emoji-area::before { top: 10px; left: 8%; animation: twinkle 2.4s ease-in-out infinite; }
+    .emoji-area::after  { top: 18px; right: 10%; animation: twinkle 2.4s ease-in-out infinite 1.2s; color: var(--pink); }
+    @keyframes twinkle {
+      0%,100% { transform: scale(.7) rotate(0); opacity: .3; }
+      50%     { transform: scale(1.15) rotate(20deg); opacity: 1; }
+    }
+    @media (min-width: 720px) {
+      .emoji-area { font-size: 130px; min-height: 150px; }
+    }
+
+    .speak-btn {
+      background: white;
+      border: none;
+      border-radius: 999px;
+      padding: 9px 22px 8px;
+      font-family: 'Jua', sans-serif;
+      font-size: 1rem;
+      color: var(--pink-d);
+      cursor: pointer; touch-action: manipulation;
+      margin-bottom: 22px;
+      box-shadow: 0 3px 0 0 var(--pink-s), inset 0 0 0 2px var(--pink-s);
+      transition: transform .1s, box-shadow .1s;
+      display: inline-flex; align-items: center; gap: 8px;
+      z-index: 2;
+    }
+    .speak-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 0 var(--pink-s), inset 0 0 0 2px var(--pink-s); }
+    .speak-btn svg { width: 18px; height: 18px; }
+
+    .blanks-row {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 8px; margin-bottom: 18px;
+      z-index: 2;
+    }
+    .blank-tile {
+      min-width: 40px; height: 56px;
+      border-bottom: 3px solid var(--ink-3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka', sans-serif; font-weight: 700;
+      font-size: 32px;
+      color: var(--pink-d);
+      padding: 0 4px;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+    .blank-tile.current {
+      border-bottom-color: var(--pink);
+    }
+    .blank-tile.current::after {
+      content: '♡';
+      position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%);
+      font-family: 'Fredoka', sans-serif; font-size: 14px;
+      color: var(--pink);
+      animation: bounce-arrow 1s ease-in-out infinite;
+    }
+    .blank-tile.filled { border-bottom-color: var(--pink); }
+    .blank-tile.revealed { color: var(--lav); border-bottom-color: var(--lav); }
+    .blank-tile.pop { animation: pop 0.4s cubic-bezier(.5,1.6,.45,.9); }
+    @keyframes bounce-arrow {
+      0%,100% { transform: translate(-50%, 0); }
+      50%     { transform: translate(-50%, -4px); }
+    }
+    @media (min-width: 720px) {
+      .blank-tile { min-width: 56px; height: 72px; font-size: 44px; }
+    }
+
+    .hint-area {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      z-index: 2;
+    }
+    .hint-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 14px;
+      font-family: 'Gaegu', sans-serif; font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--ink-3);
+      cursor: pointer; touch-action: manipulation;
+      transition: color .2s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .hint-btn:active { color: var(--pink-d); }
+    .hint-btn svg { width: 16px; height: 16px; }
+    .hint-text {
+      font-family: 'Jua', sans-serif;
+      font-size: 1.1rem;
+      color: var(--lav);
+      min-height: 1.4em;
+      text-align: center;
+    }
+    .hint-text:not(:empty) {
+      background: #f1ebff;
+      padding: 6px 16px 4px;
+      border-radius: 999px;
+    }
+
+    /* ── Letter buttons (candy bubbles) ── */
+    .letter-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      width: 100%;
+      max-width: 460px;
+    }
+    @media (min-width: 720px) {
+      .letter-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 14px; max-width: 580px;
+      }
+    }
+    .letter-btn {
+      aspect-ratio: 1;
+      border-radius: 22px;
+      border: none;
+      font-family: 'Fredoka', sans-serif; font-weight: 700;
+      font-size: clamp(1.6rem, 5vw, 2rem);
+      color: white;
+      cursor: pointer; touch-action: manipulation;
+      transition: transform 0.1s, box-shadow .1s;
+      user-select: none;
+      position: relative;
+      text-shadow: 0 1.5px 0 rgba(0,0,0,0.08);
+    }
+    .letter-btn::before {
+      content: ''; position: absolute;
+      top: 6px; left: 14%; right: 14%; height: 30%;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.55);
+      pointer-events: none;
+    }
+    .letter-btn:active { transform: translateY(3px); }
+    .letter-btn:disabled { opacity: 0.4; }
+    .letter-btn.flash-ok   { animation: flash-ok   0.5s ease; }
+    .letter-btn.flash-no   { animation: flash-no   0.5s ease; }
+
+    /* ── Word complete toast ── */
+    .word-toast {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Fredoka', 'Jua', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: var(--ink);
+      background: white;
+      padding: 28px 36px 24px;
+      border-radius: 32px;
+      pointer-events: none;
+      animation: toast-in 0.45s cubic-bezier(.4,1.6,.45,.95);
+      z-index: 200;
+      box-shadow: 0 12px 40px -8px rgba(255, 143, 184, 0.5), 0 0 0 4px white, 0 0 0 6px var(--pink-s);
+      text-align: center;
+      max-width: 80vw;
+    }
+    .word-toast .toast-big {
+      font-size: 2.6rem; display: block;
+      margin-bottom: 4px;
+      color: var(--pink-d);
+    }
+    .word-toast .toast-emoji {
+      font-size: 3rem; display: block; line-height: 1; margin-bottom: 8px;
+    }
+
+    /* ═══════════════════════════════════════
+       RESULT SCREEN
+       ═══════════════════════════════════════ */
+    .result-card {
+      width: 100%;
+      background: var(--paper);
+      border-radius: 32px;
+      box-shadow: var(--sh-card);
+      padding: 36px 24px 28px;
+      text-align: center;
+      margin-top: 12px;
+      position: relative;
+    }
+    .result-mascot {
+      width: 110px; height: 110px;
+      margin: 0 auto -28px;
+      display: block;
+      position: relative;
+      top: -50px;
+      margin-bottom: -38px;
+    }
+    .stars-display {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .stars-display svg { width: 52px; height: 52px; }
+    .stars-display .star-on  { color: var(--butter); filter: drop-shadow(0 4px 0 #e8c454); }
+    .stars-display .star-off { color: #f0e3ec; }
+    .stars-display .star-on:nth-child(2) {
+      width: 64px; height: 64px;
+      animation: star-pop .6s ease;
+    }
+    @keyframes star-pop {
+      0% { transform: scale(0) rotate(-20deg); }
+      70% { transform: scale(1.2) rotate(8deg); }
+      100% { transform: scale(1); }
+    }
+    .result-msg {
+      font-family: 'Jua', sans-serif;
+      font-size: 1.4rem; color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .result-sub {
+      font-family: 'Gaegu', sans-serif;
+      font-weight: 400; font-size: 1.05rem;
+      color: var(--ink-2);
+      margin-bottom: 24px;
+    }
+    .wrong-section { text-align: left; margin-top: 8px; }
+    .wrong-header {
+      font-family: 'Jua', sans-serif;
+      font-size: 1rem; color: var(--ink);
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .wrong-header svg { width: 16px; height: 16px; color: var(--pink); }
+    .wrong-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px;
+      background: var(--pink-x);
+      border-radius: 16px;
+      margin-bottom: 8px;
+    }
+    .wrong-item .w-emoji { font-size: 1.7rem; }
+    .wrong-item .w-word  {
+      font-family: 'Fredoka', sans-serif; font-weight: 700;
+      font-size: 1.15rem; color: var(--pink-d);
+    }
+    .wrong-item .w-meaning {
+      color: var(--ink-2);
+      font-family: 'Gaegu', sans-serif; font-weight: 400;
+      font-size: 0.95rem;
+      margin-left: auto;
+    }
 
     .action-row {
       display: flex; gap: 12px; justify-content: center;
-      flex-wrap: wrap; margin-top: 24px;
+      flex-wrap: wrap; margin-top: 28px;
     }
     .action-btn {
-      padding: 14px 28px; border-radius: 100px; border: none;
-      font-family: 'Pretendard Variable', Pretendard, sans-serif;
-      font-weight: 800; font-size: 1.05rem;
+      padding: 13px 24px 14px;
+      border-radius: 999px; border: none;
+      font-family: 'Jua', sans-serif;
+      font-size: 1.05rem;
       cursor: pointer; touch-action: manipulation;
-      transition: transform 0.1s;
+      transition: transform .1s, box-shadow .1s;
+      display: inline-flex; align-items: center; gap: 6px;
     }
-    .action-btn:active { transform: scale(0.94); }
-    .action-btn.primary   { background: #f59e0b; color: white; box-shadow: 0 4px 16px rgba(245,158,11,0.35); }
-    .action-btn.secondary { background: #eff6ff; color: #6366f1; }
-    .email-status { font-size: 0.82rem; font-weight: 600; color: #9ca3af; margin-top: 14px; min-height: 1.4em; text-align: center; transition: color 0.3s; }
-    .email-status.ok  { color: #10b981; }
-    .email-status.err { color: #f87171; }
+    .action-btn:active { transform: translateY(2px); }
+    .action-btn.primary {
+      background: var(--pink); color: white;
+      box-shadow: 0 4px 0 0 var(--pink-d);
+    }
+    .action-btn.primary:active { box-shadow: 0 2px 0 0 var(--pink-d); }
+    .action-btn.secondary {
+      background: white; color: var(--ink-2);
+      box-shadow: 0 4px 0 0 #fde0ea, inset 0 0 0 2px #fde0ea;
+    }
+    .action-btn.secondary:active { box-shadow: 0 2px 0 0 #fde0ea, inset 0 0 0 2px #fde0ea; }
 
-    /* ─── Keyframes ─── */
-    @keyframes pulse-border {
-      0%, 100% { border-bottom-color: #6366f1; }
-      50%       { border-bottom-color: #c7d2fe; }
+    .email-status {
+      font-family: 'Gaegu', sans-serif; font-weight: 400;
+      font-size: 0.9rem; color: var(--ink-3);
+      margin-top: 16px; min-height: 1.4em;
+      text-align: center;
+      transition: color 0.3s;
     }
+    .email-status.ok  { color: var(--mint); font-weight: 700; }
+    .email-status.err { color: var(--peach); }
+
+    /* ── Keyframes ── */
     @keyframes pop {
       0%   { transform: scale(1); }
       40%  { transform: scale(1.35); }
-      70%  { transform: scale(0.9); }
+      70%  { transform: scale(.92); }
       100% { transform: scale(1); }
     }
     @keyframes flash-ok {
-      0%   { background: inherit; transform: scale(1); }
-      35%  { background: #bbf7d0; transform: scale(1.2); }
-      100% { background: inherit; transform: scale(1); }
+      0%   { transform: scale(1); filter: brightness(1); }
+      35%  { transform: scale(1.18); filter: brightness(1.15) saturate(1.3); }
+      100% { transform: scale(1); filter: brightness(1); }
     }
     @keyframes flash-no {
       0%   { transform: translateX(0); }
-      20%  { transform: translateX(-10px); }
-      40%  { transform: translateX(10px); }
-      60%  { transform: translateX(-7px); }
-      80%  { transform: translateX(7px); }
+      20%  { transform: translateX(-9px); }
+      40%  { transform: translateX(9px); }
+      60%  { transform: translateX(-6px); }
+      80%  { transform: translateX(6px); }
       100% { transform: translateX(0); }
     }
     @keyframes toast-in {
-      0%   { transform: translate(-50%,-50%) scale(0.55); opacity: 0; }
-      65%  { transform: translate(-50%,-50%) scale(1.06); opacity: 1; }
-      100% { transform: translate(-50%,-50%) scale(1);    opacity: 1; }
+      0%   { transform: translate(-50%,-50%) scale(0.4) rotate(-6deg); opacity: 0; }
+      65%  { transform: translate(-50%,-50%) scale(1.08) rotate(2deg); opacity: 1; }
+      100% { transform: translate(-50%,-50%) scale(1) rotate(0); opacity: 1; }
     }
+    @keyframes mascot-wave {
+      0%, 100% { transform: rotate(-4deg); }
+      50%      { transform: rotate(4deg); }
+    }
+    .hero-mascot { animation: mascot-wave 3.5s ease-in-out infinite; transform-origin: 50% 100%; }
   </style>
 </head>
 <body>
 
+  <!-- ═══ Decorative background ═══ -->
+  <div class="deco" aria-hidden="true">
+    <svg class="d1" viewBox="0 0 40 40"><path d="M20 4 L24 16 L36 18 L26 26 L29 38 L20 32 L11 38 L14 26 L4 18 L16 16 Z" fill="#ffe186"/></svg>
+    <svg class="d2" viewBox="0 0 40 40"><path d="M20 36 L7 23 a8 8 0 0 1 13-10 a8 8 0 0 1 13 10 Z" fill="#ff9fc2"/></svg>
+    <svg class="d3" viewBox="0 0 40 40"><circle cx="14" cy="22" r="10" fill="#fff"/><circle cx="26" cy="22" r="10" fill="#fff"/><circle cx="20" cy="16" r="10" fill="#fff"/></svg>
+    <svg class="d4" viewBox="0 0 40 40"><path d="M20 4 L24 16 L36 18 L26 26 L29 38 L20 32 L11 38 L14 26 L4 18 L16 16 Z" fill="#c8b9f5"/></svg>
+    <svg class="d5" viewBox="0 0 40 40"><path d="M20 36 L7 23 a8 8 0 0 1 13-10 a8 8 0 0 1 13 10 Z" fill="#a8caff"/></svg>
+    <svg class="d6" viewBox="0 0 40 40"><circle cx="14" cy="22" r="10" fill="#fff"/><circle cx="26" cy="22" r="10" fill="#fff"/><circle cx="20" cy="16" r="10" fill="#fff"/></svg>
+    <svg class="d7" viewBox="0 0 40 40"><path d="M20 4 L24 16 L36 18 L26 26 L29 38 L20 32 L11 38 L14 26 L4 18 L16 16 Z" fill="#9adfc4"/></svg>
+  </div>
+
+  <div class="stage">
+
   <!-- ═══ START SCREEN ═══ -->
   <div class="screen" id="screen-start">
-    <div class="title"><span class="ally">Ally's</span> 🎮<br>English Game</div>
-    <div class="subtitle">이모지를 보고 알파벳을 맞춰봐요!</div>
+    <div class="hero">
+      <div class="hero-text">
+        <span class="hero-eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.9l-6.2 4.4 2.4-7.4L2 9.4h7.6z"/></svg>
+          오늘의 영어 놀이
+        </span>
+        <div class="hero-title">
+          <span class="ally">Ally</span>'s<br>
+          English<br>
+          Game <span class="sparkle">✦</span>
+        </div>
+        <div class="hero-sub">이모지를 보고 단어를 맞춰봐 ♡</div>
+      </div>
+      <svg class="hero-mascot" viewBox="0 0 120 140" aria-hidden="true">
+        <!-- left ear -->
+        <g transform="rotate(-10 40 35)">
+          <ellipse cx="40" cy="35" rx="14" ry="32" fill="#fff" stroke="#e8b8c8" stroke-width="2.5"/>
+          <ellipse cx="40" cy="35" rx="6" ry="22" fill="#ffc8d8"/>
+        </g>
+        <!-- right ear -->
+        <g transform="rotate(10 80 35)">
+          <ellipse cx="80" cy="35" rx="14" ry="32" fill="#fff" stroke="#e8b8c8" stroke-width="2.5"/>
+          <ellipse cx="80" cy="35" rx="6" ry="22" fill="#ffc8d8"/>
+        </g>
+        <!-- bow on right ear -->
+        <g transform="translate(0 -4)">
+          <path d="M86 28 Q78 24 78 32 Q78 40 86 36 Z" fill="#ff8fb8"/>
+          <path d="M92 28 Q100 24 100 32 Q100 40 92 36 Z" fill="#ff8fb8"/>
+          <circle cx="89" cy="32" r="3" fill="#f06aa0"/>
+        </g>
+        <!-- head -->
+        <circle cx="60" cy="85" r="38" fill="#fff" stroke="#e8b8c8" stroke-width="2.5"/>
+        <!-- blush -->
+        <ellipse cx="38" cy="98" rx="7" ry="4.5" fill="#ffb8cc" opacity=".75"/>
+        <ellipse cx="82" cy="98" rx="7" ry="4.5" fill="#ffb8cc" opacity=".75"/>
+        <!-- eyes -->
+        <ellipse cx="46" cy="83" rx="3.2" ry="5" fill="#5a4658"/>
+        <ellipse cx="74" cy="83" rx="3.2" ry="5" fill="#5a4658"/>
+        <circle cx="47.4" cy="81" r="1.1" fill="#fff"/>
+        <circle cx="75.4" cy="81" r="1.1" fill="#fff"/>
+        <!-- nose -->
+        <ellipse cx="60" cy="92" rx="2.2" ry="1.6" fill="#ff9bb8"/>
+        <!-- mouth -->
+        <path d="M55 96 Q60 100 65 96" stroke="#5a4658" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" id="tabMain" onclick="selectMode('main')">
-        <span class="tab-icon">🚀</span>이번 주 게임
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.9l-6.2 4.4 2.4-7.4L2 9.4h7.6z"/></svg>
+        이번 주
       </button>
       <button class="mode-tab" id="tabReview" onclick="selectMode('review')">
-        <span class="tab-icon">📚</span>복습하기
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h11v18H6a2 2 0 01-2-2V5z"/><path d="M9 7h6M9 11h6"/></svg>
+        복습하기
       </button>
     </div>
 
     <div class="review-list" id="reviewList"></div>
 
-    <div class="section-label">🎯 난이도 선택</div>
+    <div class="section-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+      난이도 골라봐!
+    </div>
     <div class="difficulty-row">
-      <button class="diff-btn selected" id="diff-very-easy" onclick="selectDiff('very-easy')">
-        <span class="d-icon">🍀</span>아주쉬움<br><small style="font-weight:500;font-size:.72rem">반반 표시</small>
+      <button class="diff-btn selected" id="diff-very-easy" data-d="very-easy" onclick="selectDiff('very-easy')">
+        <span class="d-face">🌸</span>
+        <span class="d-name">아주쉬움</span>
+        <span class="d-hint">반반 보여줘</span>
       </button>
-      <button class="diff-btn" id="diff-easy" onclick="selectDiff('easy')">
-        <span class="d-icon">🌱</span>쉬움<br><small style="font-weight:500;font-size:.72rem">첫 글자 표시</small>
+      <button class="diff-btn" id="diff-easy" data-d="easy" onclick="selectDiff('easy')">
+        <span class="d-face">🌱</span>
+        <span class="d-name">쉬움</span>
+        <span class="d-hint">첫 글자만</span>
       </button>
-      <button class="diff-btn" id="diff-normal" onclick="selectDiff('normal')">
-        <span class="d-icon">⭐</span>보통<br><small style="font-weight:500;font-size:.72rem">힌트 버튼 있음</small>
+      <button class="diff-btn" id="diff-normal" data-d="normal" onclick="selectDiff('normal')">
+        <span class="d-face">⭐</span>
+        <span class="d-name">보통</span>
+        <span class="d-hint">힌트 있음</span>
       </button>
-      <button class="diff-btn" id="diff-hard" onclick="selectDiff('hard')">
-        <span class="d-icon">🔥</span>어려움<br><small style="font-weight:500;font-size:.72rem">힌트 없음</small>
+      <button class="diff-btn" id="diff-hard" data-d="hard" onclick="selectDiff('hard')">
+        <span class="d-face">🔥</span>
+        <span class="d-name">어려움</span>
+        <span class="d-hint">힌트 없이</span>
       </button>
     </div>
 
     <div class="info-box" id="infoBox">로딩 중...</div>
-    <button class="start-btn" onclick="startGame()">시작! 🚀</button>
+    <button class="start-btn" onclick="startGame()">Let's Play!</button>
   </div>
 
   <!-- ═══ GAME SCREEN ═══ -->
   <div class="screen" id="screen-game">
     <div class="top-bar">
+      <button class="home-btn" onclick="goStart()" aria-label="처음으로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8"/><path d="M5 10v10h14V10"/></svg>
+      </button>
       <div class="progress-track">
         <div class="progress-fill" id="progressFill"></div>
       </div>
@@ -334,11 +857,21 @@
     </div>
 
     <div class="game-card">
+      <div class="game-card-tag">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.9l-6.2 4.4 2.4-7.4L2 9.4h7.6z"/></svg>
+        What is it?
+      </div>
       <div class="emoji-area" id="emojiArea"></div>
-      <button class="speak-btn" onclick="speakCurrent()">🔊 발음 듣기</button>
+      <button class="speak-btn" onclick="speakCurrent()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 010 6"/><path d="M19 6a8 8 0 010 12"/></svg>
+        발음 듣기
+      </button>
       <div class="blanks-row" id="blanksRow"></div>
       <div class="hint-area">
-        <button class="hint-btn" id="hintBtn" onclick="toggleHint()">💡 힌트 보기</button>
+        <button class="hint-btn" id="hintBtn" onclick="toggleHint()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6"/><path d="M10 17h4"/><path d="M12 3a6 6 0 014 10c-1 1-1.5 2-1.5 3h-5c0-1-.5-2-1.5-3a6 6 0 014-10z"/></svg>
+          힌트 보기
+        </button>
         <div class="hint-text" id="hintText"></div>
       </div>
     </div>
@@ -349,22 +882,67 @@
   <!-- ═══ RESULT SCREEN ═══ -->
   <div class="screen" id="screen-result">
     <div class="result-card">
+      <svg class="result-mascot" viewBox="0 0 120 140" aria-hidden="true">
+        <g transform="rotate(-10 40 35)">
+          <ellipse cx="40" cy="35" rx="14" ry="32" fill="#fff" stroke="#e8b8c8" stroke-width="2.5"/>
+          <ellipse cx="40" cy="35" rx="6" ry="22" fill="#ffc8d8"/>
+        </g>
+        <g transform="rotate(10 80 35)">
+          <ellipse cx="80" cy="35" rx="14" ry="32" fill="#fff" stroke="#e8b8c8" stroke-width="2.5"/>
+          <ellipse cx="80" cy="35" rx="6" ry="22" fill="#ffc8d8"/>
+        </g>
+        <g transform="translate(0 -4)">
+          <path d="M86 28 Q78 24 78 32 Q78 40 86 36 Z" fill="#ff8fb8"/>
+          <path d="M92 28 Q100 24 100 32 Q100 40 92 36 Z" fill="#ff8fb8"/>
+          <circle cx="89" cy="32" r="3" fill="#f06aa0"/>
+        </g>
+        <circle cx="60" cy="85" r="38" fill="#fff" stroke="#e8b8c8" stroke-width="2.5"/>
+        <ellipse cx="38" cy="98" rx="7" ry="4.5" fill="#ffb8cc" opacity=".75"/>
+        <ellipse cx="82" cy="98" rx="7" ry="4.5" fill="#ffb8cc" opacity=".75"/>
+        <!-- happy eyes (^_^) -->
+        <path d="M42 86 Q46 81 50 86" stroke="#5a4658" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M70 86 Q74 81 78 86" stroke="#5a4658" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="60" cy="93" rx="2.2" ry="1.6" fill="#ff9bb8"/>
+        <path d="M53 97 Q60 104 67 97" stroke="#5a4658" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
       <div class="stars-display" id="starsDisplay"></div>
       <div class="result-msg"   id="resultMsg"></div>
       <div class="result-sub"   id="resultSub"></div>
       <div class="wrong-section" id="wrongSection"></div>
       <div class="action-row">
-        <button class="action-btn primary"   onclick="restartGame()">🔄 다시 하기</button>
-        <button class="action-btn secondary" onclick="goStart()">🏠 처음으로</button>
+        <button class="action-btn primary" onclick="restartGame()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0115-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 01-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>
+          다시 하기
+        </button>
+        <button class="action-btn secondary" onclick="goStart()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8"/><path d="M5 10v10h14V10"/></svg>
+          처음으로
+        </button>
       </div>
       <div class="email-status" id="emailStatus"></div>
     </div>
   </div>
 
+  </div><!-- /.stage -->
+
 <script>
 emailjs.init({ publicKey: 'SmEGPotCOv7j_TAqw' });
 
-const BTN_COLORS = ['#fde68a','#bbf7d0','#bfdbfe','#fca5a5','#ddd6fe','#fed7aa','#d1fae5','#fecdd3','#e0f2fe','#fef9c3','#f0fdf4','#ffe4e6'];
+/* Candy palette for letter buttons */
+const BTN_COLORS = [
+  '#ff9fc2', // candy pink
+  '#a8caff', // baby blue
+  '#9adfc4', // mint
+  '#c8b9f5', // lavender
+  '#ffc78a', // peach
+  '#ffd66e', // butter
+  '#ff8fb8', // hot pink
+  '#88c7f5', // sky
+  '#ffb1d4', // rose
+  '#bce0a5', // pistachio
+  '#f5a8c8', // bubblegum
+  '#a3d8f5', // cyan
+];
 
 let currentMode = 'main';
 let selectedReview = WEEK_ORDER[WEEK_ORDER.length - 1];
@@ -390,7 +968,7 @@ function getGameEmoji(w) {
       <circle cx="62" cy="43" r="26" fill="#bc002d"/>
     </svg><span style="font-size:52px;margin-left:6px">🏝️</span>`;
   }
-  return `<span style="font-size:88px">${w.emoji}</span>`;
+  return `<span>${w.emoji}</span>`;
 }
 
 function selectMode(mode) {
@@ -406,11 +984,16 @@ function buildReviewList() {
   const list = document.getElementById('reviewList');
   list.innerHTML = '';
   const latestKey = WEEK_ORDER[WEEK_ORDER.length - 1];
-  [...WEEK_ORDER].reverse().forEach(key => {
+  [...WEEK_ORDER].reverse().forEach((key, idx) => {
     const item = document.createElement('div');
     item.className = 'review-item' + (key === selectedReview ? ' selected' : '');
     const isLatest = key === latestKey;
-    item.innerHTML = `<span>${WORDS_DATA[key].label}${isLatest ? ' <span class="badge">이번 주</span>' : ''}</span><span class="ri-count">${WORDS_DATA[key].words.length}개 단어</span>`;
+    const num = WEEK_ORDER.indexOf(key) + 1;
+    item.innerHTML = `
+      <span class="ri-dot">${num}</span>
+      <span class="ri-label">${WORDS_DATA[key].label}${isLatest ? '<span class="badge">NEW</span>' : ''}</span>
+      <span class="ri-count">${WORDS_DATA[key].words.length} words</span>
+    `;
     item.onclick = () => {
       selectedReview = key;
       document.querySelectorAll('.review-item').forEach(i => i.classList.remove('selected'));
@@ -431,14 +1014,14 @@ function updateInfoBox() {
     const lk = WEEK_ORDER[WEEK_ORDER.length - 1], lw = WORDS_DATA[lk].words, prev = [];
     WEEK_ORDER.slice(0, -1).forEach(k => prev.push(...WORDS_DATA[k].words));
     if (prev.length === 0) {
-      box.innerHTML = `<strong>이번 주 단어 ${lw.length}개</strong> 중에서 <strong>${Math.min(10, lw.length)}문제</strong> 랜덤으로 풀어요! 🎲`;
+      box.innerHTML = `<strong>이번 주 단어 ${lw.length}개</strong> 중에서<br><strong>${Math.min(10, lw.length)}문제</strong> 랜덤으로 풀어요 ♡`;
     } else {
       const tc = Math.min(5, lw.length), tp = Math.min(5, prev.length);
-      box.innerHTML = `<strong>이번 주</strong> ${tc}개 + <strong>이전 단어</strong> ${tp}개<br>= 총 <strong>${tc + tp}문제</strong> 랜덤으로 풀어요! 🎲`;
+      box.innerHTML = `<strong>이번 주</strong> ${tc}개 + <strong>이전 단어</strong> ${tp}개<br>= 총 <strong>${tc + tp}문제</strong> 랜덤으로 풀어요 ♡`;
     }
   } else {
     const w = WORDS_DATA[selectedReview].words;
-    box.innerHTML = `<strong>${WORDS_DATA[selectedReview].label}</strong> 단어 <strong>${w.length}개</strong>를 전부 복습해요! 📖`;
+    box.innerHTML = `<strong>${WORDS_DATA[selectedReview].label}</strong> 단어 <strong>${w.length}개</strong>를 전부 복습해요 ♪`;
   }
 }
 function buildGameWords() {
@@ -471,7 +1054,6 @@ function loadWord() {
     row.appendChild(t);
   }
   document.getElementById('hintText').textContent = '';
-  document.getElementById('hintBtn').textContent = '💡 힌트 보기';
   document.getElementById('hintBtn').style.display = (difficulty === 'hard') ? 'none' : '';
   buildLetterButtons(w.word);
   if (difficulty === 'very-easy') revealHalfLetters();
@@ -505,10 +1087,22 @@ function buildLetterButtons(word) {
   const grid = document.getElementById('letterGrid'); grid.innerHTML = '';
   buttons.forEach((letter, i) => {
     const btn = document.createElement('button');
-    btn.className = 'letter-btn'; btn.style.background = BTN_COLORS[i % BTN_COLORS.length]; btn.textContent = letter;
+    btn.className = 'letter-btn';
+    btn.style.background = BTN_COLORS[i % BTN_COLORS.length];
+    btn.style.boxShadow = `0 5px 0 0 ${shade(BTN_COLORS[i % BTN_COLORS.length], -18)}`;
+    btn.textContent = letter;
     btn.addEventListener('click', () => handleTap(letter, btn));
     grid.appendChild(btn);
   });
+}
+/* darken a hex by N% for the candy button bottom-shadow */
+function shade(hex, percent) {
+  const n = parseInt(hex.slice(1), 16);
+  let r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  r = Math.max(0, Math.min(255, Math.round(r * (1 + percent/100))));
+  g = Math.max(0, Math.min(255, Math.round(g * (1 + percent/100))));
+  b = Math.max(0, Math.min(255, Math.round(b * (1 + percent/100))));
+  return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
 }
 function handleTap(letter, btn) {
   const w = gameWords[currentIdx], expected = w.word[filledCount];
@@ -531,23 +1125,45 @@ function triggerAnim(el, cls) {
 function wordComplete() {
   const w = gameWords[currentIdx]; playSound('complete'); speakWord(w.word);
   const toast = document.createElement('div'); toast.className = 'word-toast';
-  toast.textContent = wordHadMistake ? '👏 잘했어요!' : '🌟 완벽해요!';
+  const msgs = wordHadMistake
+    ? [{e:'👏', t:'잘했어요!'}, {e:'💪', t:'좋아요!'}, {e:'🌷', t:'다음도!'}]
+    : [{e:'🌟', t:'완벽해요!'}, {e:'✨', t:'대단해!'}, {e:'💖', t:'최고야!'}, {e:'🎀', t:'예쁘다!'}];
+  const m = msgs[Math.floor(Math.random() * msgs.length)];
+  toast.innerHTML = `<span class="toast-emoji">${m.e}</span><span class="toast-big">${w.word}</span><span>${m.t}</span>`;
   document.body.appendChild(toast);
   document.querySelectorAll('.letter-btn').forEach(b => b.disabled = true);
-  setTimeout(() => { toast.remove(); currentIdx++; if (currentIdx < gameWords.length) loadWord(); else showResult(); }, 1900);
+  setTimeout(() => { toast.remove(); currentIdx++; if (currentIdx < gameWords.length) loadWord(); else showResult(); }, 2000);
+}
+function starSvg(filled) {
+  return `<svg viewBox="0 0 24 24" fill="currentColor" class="${filled ? 'star-on' : 'star-off'}"><path d="M12 2l2.9 7.1L22 10l-5.5 4.6L18.5 22 12 17.7 5.5 22 7.5 14.6 2 10l7.1-.9z"/></svg>`;
 }
 function showResult() {
   const uw = [...new Map(wrongWords.map(w => [w.word, w])).values()], cc = gameWords.length - uw.length;
   let stars = 3; if (uw.length >= 2) stars = 2; if (uw.length >= 4) stars = 1; if (uw.length >= 7) stars = 0;
-  document.getElementById('starsDisplay').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
-  const msgs = [['조금 더 연습해요! 💪','괜찮아요, 다시 해봐요!'],['잘하고 있어요! 😊','조금만 더 연습하면 완벽해요!'],['아주 잘했어요! 🎉','거의 다 맞췄어요!'],['완벽해요! 🏆','모든 단어를 다 맞췄어요!']];
+  document.getElementById('starsDisplay').innerHTML = [0,1,2].map(i => starSvg(i < stars)).join('');
+  const msgs = [
+    ['조금만 더 연습해요!', '괜찮아요, 다음엔 잘할 수 있어요'],
+    ['잘하고 있어요!',     '조금만 더 연습하면 완벽해요'],
+    ['아주 잘했어요!',     '거의 다 맞췄어요'],
+    ['완벽해요!',          '모든 단어를 다 맞췄어요']
+  ];
   const [mm, sm] = msgs[stars];
   document.getElementById('resultMsg').textContent = `${gameWords.length}개 중 ${cc}개 정답! ${mm}`;
   document.getElementById('resultSub').textContent = sm;
   const section = document.getElementById('wrongSection'); section.innerHTML = '';
   if (uw.length > 0) {
-    const h = document.createElement('div'); h.className = 'wrong-header'; h.textContent = '📝 다시 확인해요'; section.appendChild(h);
-    uw.forEach(w => { const item = document.createElement('div'); item.className = 'wrong-item'; item.innerHTML = `<span style="font-size:1.5rem">${w.emoji}</span><span class="w-word">${w.word}</span><span class="w-meaning">${w.meaning}</span>`; section.appendChild(item); });
+    const h = document.createElement('div');
+    h.className = 'wrong-header';
+    h.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.9l-6.2 4.4 2.4-7.4L2 9.4h7.6z"/></svg>
+      다시 확인해요`;
+    section.appendChild(h);
+    uw.forEach(w => {
+      const item = document.createElement('div');
+      item.className = 'wrong-item';
+      item.innerHTML = `<span class="w-emoji">${w.emoji}</span><span class="w-word">${w.word}</span><span class="w-meaning">${w.meaning}</span>`;
+      section.appendChild(item);
+    });
   }
   showScreen('screen-result');
   sendResultEmail(uw, cc, stars);
@@ -557,7 +1173,7 @@ function sendResultEmail(wrongList, correct, stars) {
   statusEl.textContent = '✉️ 엄마에게 결과 전송 중...';
   statusEl.className = 'email-status';
 
-  const diffLabel = {'very-easy':'아주쉬움 🍀','easy':'쉬움 🌱','normal':'보통 ⭐','hard':'어려움 🔥'}[difficulty] || difficulty;
+  const diffLabel = {'very-easy':'아주쉬움 🌸','easy':'쉬움 🌱','normal':'보통 ⭐','hard':'어려움 🔥'}[difficulty] || difficulty;
   const now = new Date();
   const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
   const wrongStr = wrongList.length === 0 ? '없음 🎉' : wrongList.map(w => `${w.word} (${w.meaning})`).join('\n');
@@ -588,8 +1204,13 @@ function speakWord(word) {
 function speakCurrent() { if (gameWords[currentIdx]) speakWord(gameWords[currentIdx].word); }
 function toggleHint() {
   const hint = document.getElementById('hintText'), btn = document.getElementById('hintBtn');
-  if (hint.textContent) { hint.textContent = ''; btn.textContent = '💡 힌트 보기'; }
-  else { hint.textContent = gameWords[currentIdx].meaning; btn.textContent = '💡 힌트 숨기기'; }
+  if (hint.textContent) {
+    hint.textContent = '';
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6"/><path d="M10 17h4"/><path d="M12 3a6 6 0 014 10c-1 1-1.5 2-1.5 3h-5c0-1-.5-2-1.5-3a6 6 0 014-10z"/></svg> 힌트 보기`;
+  } else {
+    hint.textContent = gameWords[currentIdx].meaning;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6"/><path d="M10 17h4"/><path d="M12 3a6 6 0 014 10c-1 1-1.5 2-1.5 3h-5c0-1-.5-2-1.5-3a6 6 0 014-10z"/></svg> 힌트 숨기기`;
+  }
 }
 let audioCtx = null;
 function getAudioCtx() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); return audioCtx; }
