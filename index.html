@@ -1,15 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Ally's English Game ?렜</title>
+  <title>Ally's English Game 🎮</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <script src="words.js"></script>
   <style>
-    /* ??? Reset ??? */
+    /* ─── Reset ─── */
     *, *::before, *::after {
       margin: 0; padding: 0; box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
@@ -26,7 +26,7 @@
       overflow-x: hidden;
     }
 
-    /* ??? Screens ??? */
+    /* ─── Screens ─── */
     .screen {
       display: none;
       flex-direction: column;
@@ -35,9 +35,9 @@
       max-width: 560px;
     }
 
-    /* ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
+    /* ══════════════════════════════
        START SCREEN
-    ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 */
+    ══════════════════════════════ */
     .title {
       font-family: 'Fredoka One', cursive;
       font-size: 2.2rem;
@@ -49,75 +49,49 @@
     .title .ally { color: #ff6b35; font-size: 2.6rem; }
     .subtitle { font-size: 0.95rem; color: #9ca3af; margin-bottom: 32px; font-weight: 500; }
 
-    /* ?? 硫붿씤 / 蹂듭뒿 ???? */
-    .mode-tabs {
-      display: flex; width: 100%; gap: 10px; margin-bottom: 28px;
-    }
+    /* mode tabs */
+    .mode-tabs { display: flex; width: 100%; gap: 10px; margin-bottom: 28px; }
     .mode-tab {
       flex: 1; padding: 16px 12px; border-radius: 18px;
       border: 2px solid #e5e7eb; background: white;
       font-family: 'Pretendard Variable', Pretendard, sans-serif;
       font-weight: 700; font-size: 1rem; color: #6b7280;
-      cursor: pointer; touch-action: manipulation;
-      transition: all 0.2s; text-align: center;
+      cursor: pointer; touch-action: manipulation; transition: all 0.2s; text-align: center;
     }
     .mode-tab .tab-icon { font-size: 1.6rem; display: block; margin-bottom: 4px; }
-    .mode-tab.active {
-      border-color: #f59e0b; background: #fef3c7; color: #92400e;
-    }
-
-    /* ?? 蹂듭뒿 二쇱감 紐⑸줉 ?? */
-    .review-list {
-      display: none;
-      flex-direction: column;
-      gap: 10px; width: 100%; margin-bottom: 24px;
-    }
+    .mode-tab.active { border-color: #f59e0b; background: #fef3c7; color: #92400e; }
+    /* review list */
+    .review-list { display: none; flex-direction: column; gap: 10px; width: 100%; margin-bottom: 24px; }
     .review-list.visible { display: flex; }
     .review-item {
       display: flex; align-items: center; justify-content: space-between;
       padding: 14px 18px; border-radius: 14px;
       border: 2px solid #e5e7eb; background: white;
       font-weight: 600; font-size: 0.95rem; color: #374151;
-      cursor: pointer; touch-action: manipulation;
-      transition: all 0.18s;
+      cursor: pointer; touch-action: manipulation; transition: all 0.18s;
     }
-    .review-item:hover, .review-item.selected {
-      border-color: #6366f1; background: #eef2ff; color: #4338ca;
-    }
+    .review-item:hover, .review-item.selected { border-color: #6366f1; background: #eef2ff; color: #4338ca; }
     .review-item .ri-count { font-size: 0.82rem; color: #9ca3af; font-weight: 500; }
-
-    /* ?? ?쒖씠???? */
-    .section-label {
-      font-weight: 800; font-size: 0.9rem; color: #6b7280;
-      align-self: flex-start; margin-bottom: 10px;
-      letter-spacing: 0.03em;
-    }
-    .difficulty-row {
-      display: flex; gap: 8px; width: 100%; margin-bottom: 24px;
-    }
+    /* difficulty */
+    .section-label { font-weight: 800; font-size: 0.9rem; color: #6b7280; align-self: flex-start; margin-bottom: 10px; }
+    .difficulty-row { display: flex; gap: 8px; width: 100%; margin-bottom: 24px; }
     .diff-btn {
       flex: 1; padding: 10px 6px; border-radius: 12px;
       border: 2px solid #e5e7eb; background: white;
       font-family: 'Pretendard Variable', Pretendard, sans-serif;
       font-weight: 700; font-size: 0.85rem; color: #6b7280;
-      cursor: pointer; touch-action: manipulation;
-      transition: all 0.18s; text-align: center; line-height: 1.4;
+      cursor: pointer; touch-action: manipulation; transition: all 0.18s; text-align: center; line-height: 1.4;
     }
     .diff-btn .d-icon { font-size: 1.2rem; display: block; margin-bottom: 2px; }
     .diff-btn.selected { border-color: #f59e0b; background: #fef3c7; color: #92400e; }
 
-    .badge {
-      background: #6366f1; color: white; font-size: 0.62rem;
-      padding: 2px 8px; border-radius: 100px;
-      font-weight: 700;
-    }
+    .badge { background: #6366f1; color: white; font-size: 0.62rem; padding: 2px 8px; border-radius: 100px; font-weight: 700; }
 
     .info-box {
       width: 100%; background: white; border-radius: 18px;
       padding: 16px 20px; margin-bottom: 32px;
       border: 1.5px solid #e5e7eb;
-      font-size: 0.9rem; color: #6b7280; line-height: 2;
-      font-weight: 500;
+      font-size: 0.9rem; color: #6b7280; line-height: 2; font-weight: 500;
     }
     .info-box strong { color: #374151; font-weight: 800; }
 
@@ -132,9 +106,9 @@
     }
     .start-btn:active { transform: scale(0.94); box-shadow: 0 3px 12px rgba(245,158,11,0.3); }
 
-    /* ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
+    /* ══════════════════════════════
        GAME SCREEN
-    ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 */
+    ══════════════════════════════ */
     .top-bar {
       width: 100%; display: flex; align-items: center;
       gap: 12px; margin: 12px 0 14px; padding-top: 4px;
@@ -150,10 +124,7 @@
       transition: width 0.5s ease;
       width: 0%;
     }
-    .progress-label {
-      font-weight: 800;
-      font-size: 1rem; color: #9ca3af; white-space: nowrap;
-    }
+    .progress-label { font-weight: 800; font-size: 1rem; color: #9ca3af; white-space: nowrap; }
 
     .game-card {
       width: 100%; background: white; border-radius: 28px;
@@ -171,12 +142,11 @@
 
     .speak-btn {
       background: #eff6ff; border: none; border-radius: 100px;
-      padding: 9px 26px; font-size: 1.0rem;
+      padding: 9px 26px; font-size: 1rem;
       cursor: pointer; touch-action: manipulation;
       margin-bottom: 22px;
       transition: transform 0.1s, background 0.15s;
-      font-family: 'Pretendard Variable', Pretendard, sans-serif;
-      font-weight: 700; color: #3b82f6;
+      font-family: 'Pretendard Variable', Pretendard, sans-serif; font-weight: 700; color: #3b82f6;
     }
     .speak-btn:active { transform: scale(0.9); background: #dbeafe; }
 
@@ -210,12 +180,9 @@
       transition: border-color 0.2s;
     }
     .hint-btn:active { border-color: #6366f1; }
-    .hint-text {
-      font-weight: 800;
-      font-size: 1.1rem; color: #6366f1; min-height: 1.4em; text-align: center;
-    }
+    .hint-text { font-weight: 800; font-size: 1.1rem; color: #6366f1; min-height: 1.4em; text-align: center; }
 
-    /* ??? Letter Buttons ??? */
+    /* ─── Letter Buttons ─── */
     .letter-grid {
       display: flex; flex-wrap: wrap; gap: 10px;
       justify-content: center; width: 100%; max-width: 440px;
@@ -233,7 +200,7 @@
     .letter-btn.flash-ok   { animation: flash-ok   0.4s ease; }
     .letter-btn.flash-no   { animation: flash-no   0.45s ease; }
 
-    /* ??? Word Complete Toast ??? */
+    /* ─── Word Complete Toast ─── */
     .word-toast {
       position: fixed; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
@@ -247,9 +214,9 @@
       white-space: nowrap;
     }
 
-    /* ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
+    /* ══════════════════════════════
        RESULT SCREEN
-    ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 */
+    ══════════════════════════════ */
     .result-card {
       width: 100%; background: white; border-radius: 28px;
       box-shadow: 0 8px 36px rgba(0,0,0,0.08);
@@ -257,17 +224,11 @@
       margin-top: 16px;
     }
     .stars-display { font-size: 3.2rem; letter-spacing: 8px; margin-bottom: 18px; }
-    .result-msg {
-      font-weight: 800;
-      font-size: 1.3rem; color: #374151; margin-bottom: 5px;
-    }
+    .result-msg { font-weight: 800; font-size: 1.3rem; color: #374151; margin-bottom: 5px; }
     .result-sub { font-size: 0.9rem; color: #9ca3af; margin-bottom: 20px; font-weight: 500; }
 
     .wrong-section { text-align: left; }
-    .wrong-header {
-      font-weight: 800;
-      font-size: 0.95rem; color: #6b7280; margin-bottom: 10px;
-    }
+    .wrong-header { font-weight: 800; font-size: 0.95rem; color: #6b7280; margin-bottom: 10px; }
     .wrong-item {
       display: flex; align-items: center; gap: 10px;
       padding: 10px 0; border-bottom: 1px solid #f3f4f6;
@@ -290,7 +251,7 @@
     .action-btn.primary   { background: #f59e0b; color: white; box-shadow: 0 4px 16px rgba(245,158,11,0.35); }
     .action-btn.secondary { background: #eff6ff; color: #6366f1; }
 
-    /* ??? Keyframes ??? */
+    /* ─── Keyframes ─── */
     @keyframes pulse-border {
       0%, 100% { border-bottom-color: #6366f1; }
       50%       { border-bottom-color: #c7d2fe; }
@@ -323,44 +284,40 @@
 </head>
 <body>
 
-  <!-- ?먥븧??START SCREEN ?먥븧??-->
+  <!-- ═══ START SCREEN ═══ -->
   <div class="screen" id="screen-start">
-    <div class="title"><span class="ally">Ally's</span> ?렜<br>English Game</div>
-    <div class="subtitle">?대え吏瑜?蹂닿퀬 ?뚰뙆踰녹쓣 留욎떠遊먯슂!</div>
+    <div class="title"><span class="ally">Ally's</span> 🎮<br>English Game</div>
+    <div class="subtitle">이모지를 보고 알파벳을 맞춰봐요!</div>
 
-    <!-- 硫붿씤 / 蹂듭뒿 ??-->
     <div class="mode-tabs">
       <button class="mode-tab active" id="tabMain" onclick="selectMode('main')">
-        <span class="tab-icon">??</span>?대쾲 二?寃뚯엫
+        <span class="tab-icon">🚀</span>이번 주 게임
       </button>
       <button class="mode-tab" id="tabReview" onclick="selectMode('review')">
-        <span class="tab-icon">?뱴</span>蹂듭뒿?섍린
+        <span class="tab-icon">📚</span>복습하기
       </button>
     </div>
 
-    <!-- 蹂듭뒿 二쇱감 紐⑸줉 -->
     <div class="review-list" id="reviewList"></div>
 
-    <!-- ?쒖씠???좏깮 -->
-    <div class="section-label">?렞 ?쒖씠???좏깮</div>
+    <div class="section-label">🎯 난이도 선택</div>
     <div class="difficulty-row">
       <button class="diff-btn selected" id="diff-easy" onclick="selectDiff('easy')">
-        <span class="d-icon">?뙮</span>?ъ?<br><small style="font-weight:500;font-size:0.75rem">泥?湲???쒖떆</small>
+        <span class="d-icon">🌱</span>쉬움<br><small style="font-weight:500;font-size:.75rem">첫 글자 표시</small>
       </button>
       <button class="diff-btn" id="diff-normal" onclick="selectDiff('normal')">
-        <span class="d-icon">狩?/span>蹂댄넻<br><small style="font-weight:500;font-size:0.75rem">?뚰듃 踰꾪듉 ?덉쓬</small>
+        <span class="d-icon">⭐</span>보통<br><small style="font-weight:500;font-size:.75rem">힌트 버튼 있음</small>
       </button>
       <button class="diff-btn" id="diff-hard" onclick="selectDiff('hard')">
-        <span class="d-icon">?뵦</span>?대젮?<br><small style="font-weight:500;font-size:0.75rem">?뚰듃 ?놁쓬</small>
+        <span class="d-icon">🔥</span>어려움<br><small style="font-weight:500;font-size:.75rem">힌트 없음</small>
       </button>
     </div>
 
-    <div class="info-box" id="infoBox">濡쒕뵫 以?..</div>
-
-    <button class="start-btn" onclick="startGame()">?쒖옉! ??</button>
+    <div class="info-box" id="infoBox">로딩 중...</div>
+    <button class="start-btn" onclick="startGame()">시작! 🚀</button>
   </div>
 
-  <!-- ?먥븧??GAME SCREEN ?먥븧??-->
+  <!-- ═══ GAME SCREEN ═══ -->
   <div class="screen" id="screen-game">
     <div class="top-bar">
       <div class="progress-track">
@@ -371,10 +328,10 @@
 
     <div class="game-card">
       <div class="emoji-area" id="emojiArea"></div>
-      <button class="speak-btn" onclick="speakCurrent()">?뵄 諛쒖쓬 ?ｊ린</button>
+      <button class="speak-btn" onclick="speakCurrent()">🔊 발음 듣기</button>
       <div class="blanks-row" id="blanksRow"></div>
       <div class="hint-area">
-        <button class="hint-btn" id="hintBtn" onclick="toggleHint()">?뮕 ?뚰듃 蹂닿린</button>
+        <button class="hint-btn" id="hintBtn" onclick="toggleHint()">💡 힌트 보기</button>
         <div class="hint-text" id="hintText"></div>
       </div>
     </div>
@@ -382,7 +339,7 @@
     <div class="letter-grid" id="letterGrid"></div>
   </div>
 
-  <!-- ?먥븧??RESULT SCREEN ?먥븧??-->
+  <!-- ═══ RESULT SCREEN ═══ -->
   <div class="screen" id="screen-result">
     <div class="result-card">
       <div class="stars-display" id="starsDisplay"></div>
@@ -390,38 +347,20 @@
       <div class="result-sub"   id="resultSub"></div>
       <div class="wrong-section" id="wrongSection"></div>
       <div class="action-row">
-        <button class="action-btn primary"   onclick="restartGame()">?봽 ?ㅼ떆 ?섍린</button>
-        <button class="action-btn secondary" onclick="goStart()">?룧 泥섏쓬?쇰줈</button>
+        <button class="action-btn primary"   onclick="restartGame()">🔄 다시 하기</button>
+        <button class="action-btn secondary" onclick="goStart()">🏠 처음으로</button>
       </div>
     </div>
   </div>
 
 <script>
-/* ??????????????????????????????????????
-   CONSTANTS
-?????????????????????????????????????? */
-const BTN_COLORS = [
-  '#fde68a','#bbf7d0','#bfdbfe','#fca5a5',
-  '#ddd6fe','#fed7aa','#d1fae5','#fecdd3',
-  '#e0f2fe','#fef9c3','#f0fdf4','#ffe4e6',
-];
+const BTN_COLORS = ['#fde68a','#bbf7d0','#bfdbfe','#fca5a5','#ddd6fe','#fed7aa','#d1fae5','#fecdd3','#e0f2fe','#fef9c3','#f0fdf4','#ffe4e6'];
 
-/* ??????????????????????????????????????
-   STATE
-?????????????????????????????????????? */
-let currentMode     = 'main';
-let selectedReview  = WEEK_ORDER[WEEK_ORDER.length - 1];
-let difficulty      = 'easy';
-let gameWords       = [];
-let currentIdx      = 0;
-let filledCount     = 0;
-let wordHadMistake  = false;
-let wrongWords      = [];
-let revealedFirst   = false;
+let currentMode = 'main';
+let selectedReview = WEEK_ORDER[WEEK_ORDER.length - 1];
+let difficulty = 'easy';
+let gameWords = [], currentIdx = 0, filledCount = 0, wordHadMistake = false, wrongWords = [], revealedFirst = false;
 
-/* ??????????????????????????????????????
-   UTILS
-?????????????????????????????????????? */
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -430,57 +369,38 @@ function shuffle(arr) {
   }
   return a;
 }
-
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
   document.getElementById(id).style.display = 'flex';
 }
-
-/* ??????????????????????????????????????
-   EMOJI RENDERING
-?????????????????????????????????????? */
 function getGameEmoji(w) {
   if (w.svgEmoji) {
-    return `<svg width="124" height="86" viewBox="0 0 124 86"
-        xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle">
+    return `<svg width="124" height="86" viewBox="0 0 124 86" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle">
       <rect width="124" height="86" rx="8" fill="#fff" stroke="#e5e7eb" stroke-width="2"/>
       <circle cx="62" cy="43" r="26" fill="#bc002d"/>
-    </svg><span style="font-size:52px;margin-left:6px">?룤截?/span>`;
+    </svg><span style="font-size:52px;margin-left:6px">🏝️</span>`;
   }
   return `<span style="font-size:88px">${w.emoji}</span>`;
 }
 
-/* ??????????????????????????????????????
-   MODE & DIFFICULTY
-?????????????????????????????????????? */
 function selectMode(mode) {
   currentMode = mode;
   document.getElementById('tabMain').classList.toggle('active', mode === 'main');
   document.getElementById('tabReview').classList.toggle('active', mode === 'review');
-
-  const reviewList = document.getElementById('reviewList');
-  if (mode === 'review') {
-    reviewList.classList.add('visible');
-    buildReviewList();
-  } else {
-    reviewList.classList.remove('visible');
-  }
+  const rl = document.getElementById('reviewList');
+  if (mode === 'review') { rl.classList.add('visible'); buildReviewList(); }
+  else { rl.classList.remove('visible'); }
   updateInfoBox();
 }
-
 function buildReviewList() {
   const list = document.getElementById('reviewList');
   list.innerHTML = '';
   const latestKey = WEEK_ORDER[WEEK_ORDER.length - 1];
-
   [...WEEK_ORDER].reverse().forEach(key => {
     const item = document.createElement('div');
     item.className = 'review-item' + (key === selectedReview ? ' selected' : '');
     const isLatest = key === latestKey;
-    const count = WORDS_DATA[key].words.length;
-    item.innerHTML =
-      `<span>${WORDS_DATA[key].label}${isLatest ? ' <span class="badge">?대쾲 二?/span>' : ''}</span>` +
-      `<span class="ri-count">${count}媛??⑥뼱</span>`;
+    item.innerHTML = `<span>${WORDS_DATA[key].label}${isLatest ? ' <span class="badge">이번 주</span>' : ''}</span><span class="ri-count">${WORDS_DATA[key].words.length}개 단어</span>`;
     item.onclick = () => {
       selectedReview = key;
       document.querySelectorAll('.review-item').forEach(i => i.classList.remove('selected'));
@@ -490,345 +410,160 @@ function buildReviewList() {
     list.appendChild(item);
   });
 }
-
 function selectDiff(d) {
   difficulty = d;
-  ['easy','normal','hard'].forEach(k => {
-    document.getElementById('diff-' + k).classList.toggle('selected', k === d);
-  });
+  ['easy','normal','hard'].forEach(k => document.getElementById('diff-' + k).classList.toggle('selected', k === d));
 }
-
-/* ??????????????????????????????????????
-   START SCREEN
-?????????????????????????????????????? */
-function initStart() {
-  buildReviewList();
-  updateInfoBox();
-  showScreen('screen-start');
-}
-
+function initStart() { buildReviewList(); updateInfoBox(); showScreen('screen-start'); }
 function updateInfoBox() {
   const box = document.getElementById('infoBox');
-
   if (currentMode === 'main') {
-    const latestKey = WEEK_ORDER[WEEK_ORDER.length - 1];
-    const latestWords = WORDS_DATA[latestKey].words;
-    const prevWords = [];
-    WEEK_ORDER.slice(0, -1).forEach(k => prevWords.push(...WORDS_DATA[k].words));
-
-    if (prevWords.length === 0) {
-      box.innerHTML = `<strong>?대쾲 二??⑥뼱 ${latestWords.length}媛?/strong> 以묒뿉??<strong>${Math.min(10, latestWords.length)}臾몄젣</strong> ?쒕뜡?쇰줈 ??댁슂! ?렡`;
+    const lk = WEEK_ORDER[WEEK_ORDER.length - 1], lw = WORDS_DATA[lk].words, prev = [];
+    WEEK_ORDER.slice(0, -1).forEach(k => prev.push(...WORDS_DATA[k].words));
+    if (prev.length === 0) {
+      box.innerHTML = `<strong>이번 주 단어 ${lw.length}개</strong> 중에서 <strong>${Math.min(10, lw.length)}문제</strong> 랜덤으로 풀어요! 🎲`;
     } else {
-      const tc = Math.min(5, latestWords.length);
-      const tp = Math.min(5, prevWords.length);
-      box.innerHTML = `<strong>?대쾲 二?/strong> ${tc}媛?+ <strong>?댁쟾 ?⑥뼱</strong> ${tp}媛?br>= 珥?<strong>${tc + tp}臾몄젣</strong> ?쒕뜡?쇰줈 ??댁슂! ?렡`;
+      const tc = Math.min(5, lw.length), tp = Math.min(5, prev.length);
+      box.innerHTML = `<strong>이번 주</strong> ${tc}개 + <strong>이전 단어</strong> ${tp}개<br>= 총 <strong>${tc + tp}문제</strong> 랜덤으로 풀어요! 🎲`;
     }
   } else {
-    const words = WORDS_DATA[selectedReview].words;
-    box.innerHTML = `<strong>${WORDS_DATA[selectedReview].label}</strong> ?⑥뼱 <strong>${words.length}媛?/strong>瑜??꾨? 蹂듭뒿?댁슂! ?뱰`;
+    const w = WORDS_DATA[selectedReview].words;
+    box.innerHTML = `<strong>${WORDS_DATA[selectedReview].label}</strong> 단어 <strong>${w.length}개</strong>를 전부 복습해요! 📖`;
   }
 }
-
-/* ??????????????????????????????????????
-   GAME BUILD
-?????????????????????????????????????? */
 function buildGameWords() {
-  if (currentMode === 'review') {
-    return shuffle([...WORDS_DATA[selectedReview].words]);
-  }
-
-  const latestKey = WEEK_ORDER[WEEK_ORDER.length - 1];
-  const current   = shuffle([...WORDS_DATA[latestKey].words]);
-  const prev      = [];
+  if (currentMode === 'review') return shuffle([...WORDS_DATA[selectedReview].words]);
+  const lk = WEEK_ORDER[WEEK_ORDER.length - 1], cur = shuffle([...WORDS_DATA[lk].words]), prev = [];
   WEEK_ORDER.slice(0, -1).forEach(k => prev.push(...WORDS_DATA[k].words));
-  const shuffledPrev = shuffle(prev);
-
-  if (prev.length === 0) {
-    return current.slice(0, Math.min(10, current.length));
-  }
-
-  const takeCurrent = Math.min(5, current.length);
-  const takePrev    = Math.min(5, shuffledPrev.length);
-  let selected = [...current.slice(0, takeCurrent), ...shuffledPrev.slice(0, takePrev)];
-
-  if (selected.length < 10 && current.length > takeCurrent) {
-    const extra = current.slice(takeCurrent, takeCurrent + (10 - selected.length));
-    selected = [...selected, ...extra];
-  }
-
-  return shuffle(selected);
+  const sp = shuffle(prev);
+  if (prev.length === 0) return cur.slice(0, Math.min(10, cur.length));
+  const tc = Math.min(5, cur.length), tp = Math.min(5, sp.length);
+  let sel = [...cur.slice(0, tc), ...sp.slice(0, tp)];
+  if (sel.length < 10 && cur.length > tc) sel = [...sel, ...cur.slice(tc, tc + (10 - sel.length))];
+  return shuffle(sel);
 }
-
-/* ??????????????????????????????????????
-   GAME FLOW
-?????????????????????????????????????? */
-function startGame() {
-  gameWords  = buildGameWords();
-  currentIdx = 0;
-  wrongWords = [];
-  showScreen('screen-game');
-  loadWord();
-}
-
+function startGame() { gameWords = buildGameWords(); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
 function restartGame() { startGame(); }
-function goStart()      { initStart(); }
-
+function goStart() { initStart(); }
 function loadWord() {
   const w = gameWords[currentIdx];
-  filledCount    = 0;
-  wordHadMistake = false;
-  revealedFirst  = false;
-
+  filledCount = 0; wordHadMistake = false; revealedFirst = false;
   const pct = (currentIdx / gameWords.length) * 100;
-  document.getElementById('progressFill').style.width  = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressLabel').textContent = `${currentIdx + 1} / ${gameWords.length}`;
-
   document.getElementById('emojiArea').innerHTML = getGameEmoji(w);
-
   const row = document.getElementById('blanksRow');
   row.innerHTML = '';
   for (let i = 0; i < w.word.length; i++) {
-    const tile = document.createElement('div');
-    tile.className = 'blank-tile' + (i === 0 ? ' current' : '');
-    tile.id = 'tile-' + i;
-    row.appendChild(tile);
+    const t = document.createElement('div');
+    t.className = 'blank-tile' + (i === 0 ? ' current' : '');
+    t.id = 'tile-' + i;
+    row.appendChild(t);
   }
-
   document.getElementById('hintText').textContent = '';
-  document.getElementById('hintBtn').textContent  = '?뮕 ?뚰듃 蹂닿린';
+  document.getElementById('hintBtn').textContent = '💡 힌트 보기';
   document.getElementById('hintBtn').style.display = (difficulty === 'hard') ? 'none' : '';
-
-  // ?뚰뙆踰?踰꾪듉 癒쇱? ?앹꽦
   buildLetterButtons(w.word);
-
-  // ?ъ?: 泥?湲???먮룞 ?쒖떆
-  if (difficulty === 'easy') {
-    revealFirstLetter();
-  }
+  if (difficulty === 'easy') revealFirstLetter();
 }
-
 function revealFirstLetter() {
-  const w = gameWords[currentIdx];
-  const tile = document.getElementById('tile-0');
-  tile.textContent = w.word[0];
-  tile.classList.add('revealed');
-  tile.classList.remove('current');
-
-  if (w.word.length > 1) {
-    document.getElementById('tile-1').classList.add('current');
-  }
-
-  filledCount = 1;
-  revealedFirst = true;
-
-  // 泥?湲??踰꾪듉 鍮꾪솢?깊솕
-  document.querySelectorAll('.letter-btn').forEach(btn => {
-    if (btn.textContent === w.word[0]) btn.disabled = true;
-  });
-
-  if (w.word.length === 1) {
-    setTimeout(() => wordComplete(), 300);
-  }
+  const w = gameWords[currentIdx], t = document.getElementById('tile-0');
+  t.textContent = w.word[0]; t.classList.add('revealed'); t.classList.remove('current');
+  if (w.word.length > 1) document.getElementById('tile-1').classList.add('current');
+  filledCount = 1; revealedFirst = true;
+  document.querySelectorAll('.letter-btn').forEach(b => { if (b.textContent === w.word[0]) b.disabled = true; });
+  if (w.word.length === 1) setTimeout(() => wordComplete(), 300);
 }
-
 function buildLetterButtons(word) {
-  const needed   = [...new Set(word.split(''))];
-  const all      = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  const needed = [...new Set(word.split(''))], all = 'abcdefghijklmnopqrstuvwxyz'.split('');
   const distract = shuffle(all.filter(l => !needed.includes(l))).slice(0, 4);
-  const buttons  = shuffle([...needed, ...distract]);
-
-  const grid = document.getElementById('letterGrid');
-  grid.innerHTML = '';
+  const buttons = shuffle([...needed, ...distract]);
+  const grid = document.getElementById('letterGrid'); grid.innerHTML = '';
   buttons.forEach((letter, i) => {
     const btn = document.createElement('button');
-    btn.className = 'letter-btn';
-    btn.style.background = BTN_COLORS[i % BTN_COLORS.length];
-    btn.textContent = letter;
+    btn.className = 'letter-btn'; btn.style.background = BTN_COLORS[i % BTN_COLORS.length]; btn.textContent = letter;
     btn.addEventListener('click', () => handleTap(letter, btn));
     grid.appendChild(btn);
   });
 }
-
 function handleTap(letter, btn) {
-  const w        = gameWords[currentIdx];
-  const expected = w.word[filledCount];
-
+  const w = gameWords[currentIdx], expected = w.word[filledCount];
   if (letter === expected) {
     triggerAnim(btn, 'flash-ok');
-
-    const tile = document.getElementById('tile-' + filledCount);
-    tile.textContent = letter;
-    tile.classList.add('filled');
-    tile.classList.remove('current');
-    triggerAnim(tile, 'pop');
-
-    filledCount++;
-    playSound('correct');
-
-    if (filledCount < w.word.length) {
-      document.getElementById('tile-' + filledCount).classList.add('current');
-    } else {
-      wordComplete();
-    }
+    const t = document.getElementById('tile-' + filledCount);
+    t.textContent = letter; t.classList.add('filled'); t.classList.remove('current'); triggerAnim(t, 'pop');
+    filledCount++; playSound('correct');
+    if (filledCount < w.word.length) document.getElementById('tile-' + filledCount).classList.add('current');
+    else wordComplete();
   } else {
-    triggerAnim(btn, 'flash-no');
-    playSound('wrong');
-    if (!wordHadMistake) {
-      wordHadMistake = true;
-      wrongWords.push(w);
-    }
+    triggerAnim(btn, 'flash-no'); playSound('wrong');
+    if (!wordHadMistake) { wordHadMistake = true; wrongWords.push(w); }
   }
 }
-
 function triggerAnim(el, cls) {
-  el.classList.remove(cls);
-  void el.offsetWidth;
-  el.classList.add(cls);
+  el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls);
   el.addEventListener('animationend', () => el.classList.remove(cls), { once: true });
 }
-
 function wordComplete() {
-  const w = gameWords[currentIdx];
-  playSound('complete');
-  speakWord(w.word);
-
-  const toast = document.createElement('div');
-  toast.className = 'word-toast';
-  toast.textContent = wordHadMistake ? '?몡 ?섑뻽?댁슂!' : '?뙚 ?꾨꼍?댁슂!';
+  const w = gameWords[currentIdx]; playSound('complete'); speakWord(w.word);
+  const toast = document.createElement('div'); toast.className = 'word-toast';
+  toast.textContent = wordHadMistake ? '👏 잘했어요!' : '🌟 완벽해요!';
   document.body.appendChild(toast);
-
   document.querySelectorAll('.letter-btn').forEach(b => b.disabled = true);
-
-  setTimeout(() => {
-    toast.remove();
-    currentIdx++;
-    if (currentIdx < gameWords.length) {
-      loadWord();
-    } else {
-      showResult();
-    }
-  }, 1900);
+  setTimeout(() => { toast.remove(); currentIdx++; if (currentIdx < gameWords.length) loadWord(); else showResult(); }, 1900);
 }
-
-/* ??????????????????????????????????????
-   RESULT
-?????????????????????????????????????? */
 function showResult() {
-  const uniqueWrong  = [...new Map(wrongWords.map(w => [w.word, w])).values()];
-  const correctCount = gameWords.length - uniqueWrong.length;
-
-  let stars = 3;
-  if (uniqueWrong.length >= 2) stars = 2;
-  if (uniqueWrong.length >= 4) stars = 1;
-  if (uniqueWrong.length >= 7) stars = 0;
-
-  document.getElementById('starsDisplay').textContent =
-    '狩?.repeat(stars) + '??.repeat(3 - stars);
-
-  const msgs = [
-    ['議곌툑 ???곗뒿?댁슂! ?뮞', '愿쒖갖?꾩슂, ?ㅼ떆 ?대킄??'],
-    ['?섑븯怨??덉뼱?? ?삃',   '議곌툑留????곗뒿?섎㈃ ?꾨꼍?댁슂!'],
-    ['?꾩＜ ?섑뻽?댁슂! ?럦',   '嫄곗쓽 ??留욎톬?댁슂!'],
-    ['?꾨꼍?댁슂! ?룇',        '紐⑤뱺 ?⑥뼱瑜???留욎톬?댁슂!'],
-  ];
-  const [mainMsg, subMsg] = msgs[stars];
-  document.getElementById('resultMsg').textContent =
-    `${gameWords.length}媛?以?${correctCount}媛??뺣떟! ${mainMsg}`;
-  document.getElementById('resultSub').textContent = subMsg;
-
-  const section = document.getElementById('wrongSection');
-  section.innerHTML = '';
-  if (uniqueWrong.length > 0) {
-    const h = document.createElement('div');
-    h.className = 'wrong-header';
-    h.textContent = '?뱷 ?ㅼ떆 ?뺤씤?댁슂';
-    section.appendChild(h);
-    uniqueWrong.forEach(w => {
-      const item = document.createElement('div');
-      item.className = 'wrong-item';
-      item.innerHTML =
-        `<span style="font-size:1.5rem">${w.emoji}</span>` +
-        `<span class="w-word">${w.word}</span>` +
-        `<span class="w-meaning">${w.meaning}</span>`;
-      section.appendChild(item);
-    });
+  const uw = [...new Map(wrongWords.map(w => [w.word, w])).values()], cc = gameWords.length - uw.length;
+  let stars = 3; if (uw.length >= 2) stars = 2; if (uw.length >= 4) stars = 1; if (uw.length >= 7) stars = 0;
+  document.getElementById('starsDisplay').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+  const msgs = [['조금 더 연습해요! 💪','괜찮아요, 다시 해봐요!'],['잘하고 있어요! 😊','조금만 더 연습하면 완벽해요!'],['아주 잘했어요! 🎉','거의 다 맞췄어요!'],['완벽해요! 🏆','모든 단어를 다 맞췄어요!']];
+  const [mm, sm] = msgs[stars];
+  document.getElementById('resultMsg').textContent = `${gameWords.length}개 중 ${cc}개 정답! ${mm}`;
+  document.getElementById('resultSub').textContent = sm;
+  const section = document.getElementById('wrongSection'); section.innerHTML = '';
+  if (uw.length > 0) {
+    const h = document.createElement('div'); h.className = 'wrong-header'; h.textContent = '📝 다시 확인해요'; section.appendChild(h);
+    uw.forEach(w => { const item = document.createElement('div'); item.className = 'wrong-item'; item.innerHTML = `<span style="font-size:1.5rem">${w.emoji}</span><span class="w-word">${w.word}</span><span class="w-meaning">${w.meaning}</span>`; section.appendChild(item); });
   }
-
   showScreen('screen-result');
 }
-
-/* ??????????????????????????????????????
-   SPEECH
-?????????????????????????????????????? */
 function speakWord(word) {
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
-  const utt = new SpeechSynthesisUtterance(word);
-  utt.lang  = 'en-US';
-  utt.rate  = 0.8;
-  utt.pitch = 1.1;
-  window.speechSynthesis.speak(utt);
+  const u = new SpeechSynthesisUtterance(word); u.lang = 'en-US'; u.rate = 0.8; u.pitch = 1.1;
+  window.speechSynthesis.speak(u);
 }
-function speakCurrent() {
-  if (gameWords[currentIdx]) speakWord(gameWords[currentIdx].word);
-}
+function speakCurrent() { if (gameWords[currentIdx]) speakWord(gameWords[currentIdx].word); }
 function toggleHint() {
-  const hint = document.getElementById('hintText');
-  const btn  = document.getElementById('hintBtn');
-  if (hint.textContent) {
-    hint.textContent = '';
-    btn.textContent  = '?뮕 ?뚰듃 蹂닿린';
-  } else {
-    hint.textContent = gameWords[currentIdx].meaning;
-    btn.textContent  = '?뮕 ?뚰듃 ?④린湲?;
-  }
+  const hint = document.getElementById('hintText'), btn = document.getElementById('hintBtn');
+  if (hint.textContent) { hint.textContent = ''; btn.textContent = '💡 힌트 보기'; }
+  else { hint.textContent = gameWords[currentIdx].meaning; btn.textContent = '💡 힌트 숨기기'; }
 }
-
-/* ??????????????????????????????????????
-   SOUND (Web Audio API)
-?????????????????????????????????????? */
 let audioCtx = null;
-function getAudioCtx() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  return audioCtx;
-}
+function getAudioCtx() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); return audioCtx; }
 function playSound(type) {
   try {
     const ctx = getAudioCtx();
     if (type === 'correct') {
-      const osc = ctx.createOscillator(), g = ctx.createGain();
-      osc.connect(g); g.connect(ctx.destination);
-      osc.frequency.setValueAtTime(660, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.12);
-      g.gain.setValueAtTime(0.22, ctx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-      osc.start(); osc.stop(ctx.currentTime + 0.25);
+      const o = ctx.createOscillator(), g = ctx.createGain(); o.connect(g); g.connect(ctx.destination);
+      o.frequency.setValueAtTime(660, ctx.currentTime); o.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + .12);
+      g.gain.setValueAtTime(.22, ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .25);
+      o.start(); o.stop(ctx.currentTime + .25);
     } else if (type === 'wrong') {
-      const osc = ctx.createOscillator(), g = ctx.createGain();
-      osc.connect(g); g.connect(ctx.destination);
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(240, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.2);
-      g.gain.setValueAtTime(0.18, ctx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-      osc.start(); osc.stop(ctx.currentTime + 0.25);
+      const o = ctx.createOscillator(), g = ctx.createGain(); o.connect(g); g.connect(ctx.destination);
+      o.type = 'sawtooth'; o.frequency.setValueAtTime(240, ctx.currentTime); o.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + .2);
+      g.gain.setValueAtTime(.18, ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .25);
+      o.start(); o.stop(ctx.currentTime + .25);
     } else if (type === 'complete') {
       [523, 659, 784, 1047].forEach((freq, i) => {
-        const osc = ctx.createOscillator(), g = ctx.createGain();
-        osc.connect(g); g.connect(ctx.destination);
-        osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.1);
-        g.gain.setValueAtTime(0.18, ctx.currentTime + i * 0.1);
-        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.3);
-        osc.start(ctx.currentTime + i * 0.1);
-        osc.stop(ctx.currentTime  + i * 0.1 + 0.35);
+        const o = ctx.createOscillator(), g = ctx.createGain(); o.connect(g); g.connect(ctx.destination);
+        o.frequency.setValueAtTime(freq, ctx.currentTime + i * .1); g.gain.setValueAtTime(.18, ctx.currentTime + i * .1);
+        g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + i * .1 + .3);
+        o.start(ctx.currentTime + i * .1); o.stop(ctx.currentTime + i * .1 + .35);
       });
     }
   } catch(e) {}
 }
-
-/* ??????????????????????????????????????
-   INIT
-?????????????????????????????????????? */
 initStart();
 </script>
 </body>
