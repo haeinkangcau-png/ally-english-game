@@ -740,6 +740,21 @@
     }
     .hero-mascot { animation: mascot-wave 3.5s ease-in-out infinite; transform-origin: 50% 100%; }
 
+    /* ── Review open button ── */
+    .review-open-btn {
+      margin-top: 14px;
+      background: transparent;
+      border: 2px dashed var(--pink-s);
+      border-radius: 999px;
+      padding: 11px 28px 10px;
+      font-family: 'Jua', sans-serif;
+      font-size: 1rem; color: var(--ink-3);
+      cursor: pointer; touch-action: manipulation;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: color .15s, border-color .15s;
+    }
+    .review-open-btn:active { color: var(--pink-d); border-color: var(--pink); }
+
     /* ── Weekly record strip ── */
     .weekly-strip {
       width: 100%;
@@ -837,7 +852,7 @@
           English<br>
           Game <span class="sparkle">✦</span>
         </div>
-        <div class="hero-sub">이모지를 보고 단어를 맞춰봐 ♡</div>
+
       </div>
       <svg class="hero-mascot" viewBox="0 0 120 140" aria-hidden="true">
         <!-- left ear -->
@@ -875,19 +890,6 @@
 
     <div class="weekly-strip" id="weeklyStrip"></div>
 
-    <div class="mode-tabs">
-      <button class="mode-tab active" id="tabMain" onclick="selectMode('main')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.9l-6.2 4.4 2.4-7.4L2 9.4h7.6z"/></svg>
-        이번 주
-      </button>
-      <button class="mode-tab" id="tabReview" onclick="selectMode('review')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h11v18H6a2 2 0 01-2-2V5z"/><path d="M9 7h6M9 11h6"/></svg>
-        복습하기
-      </button>
-    </div>
-
-    <div class="review-list" id="reviewList"></div>
-
     <div class="section-label">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
       난이도 골라봐!
@@ -910,8 +912,53 @@
       </button>
     </div>
 
-    <div class="info-box" id="infoBox">로딩 중...</div>
     <button class="start-btn" onclick="startGame()">Let's Play!</button>
+
+    <button class="review-open-btn" onclick="goReview()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h11v18H6a2 2 0 01-2-2V5z"/><path d="M9 7h6M9 11h6"/></svg>
+      복습하기
+    </button>
+  </div>
+
+  <!-- ═══ REVIEW SELECT SCREEN ═══ -->
+  <div class="screen" id="screen-review">
+    <div class="top-bar">
+      <button class="home-btn" onclick="goStart()" aria-label="처음으로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="progress-label" style="flex:1;text-align:center">복습하기</div>
+      <div style="width:38px"></div>
+    </div>
+
+    <div class="section-label" style="margin-top:4px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h11v18H6a2 2 0 01-2-2V5z"/><path d="M9 7h6M9 11h6"/></svg>
+      몇 주차 복습할까?
+    </div>
+    <div class="review-list visible" id="reviewList"></div>
+
+    <div class="section-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+      난이도 골라봐!
+    </div>
+    <div class="difficulty-row">
+      <button class="diff-btn selected" id="rdiff-very-easy" data-d="very-easy" onclick="selectDiff('very-easy','r')">
+        <span class="d-face">🌸</span>
+        <span class="d-name">아주쉬움</span>
+        <span class="d-hint">반반 보여줘</span>
+      </button>
+      <button class="diff-btn" id="rdiff-easy" data-d="easy" onclick="selectDiff('easy','r')">
+        <span class="d-face">🌱</span>
+        <span class="d-name">쉬움</span>
+        <span class="d-hint">첫 글자만</span>
+      </button>
+      <button class="diff-btn" id="rdiff-hard" data-d="hard" onclick="selectDiff('hard','r')">
+        <span class="d-face">🔥</span>
+        <span class="d-name">어려움</span>
+        <span class="d-hint">다 스스로!</span>
+      </button>
+    </div>
+
+    <button class="start-btn" onclick="startReviewGame()">Let's Review!</button>
   </div>
 
   <!-- ═══ GAME SCREEN ═══ -->
@@ -1041,20 +1088,18 @@ function getGameEmoji(w) {
   return `<span>${w.emoji}</span>`;
 }
 
-function selectMode(mode) {
-  currentMode = mode;
-  document.getElementById('tabMain').classList.toggle('active', mode === 'main');
-  document.getElementById('tabReview').classList.toggle('active', mode === 'review');
-  const rl = document.getElementById('reviewList');
-  if (mode === 'review') { rl.classList.add('visible'); buildReviewList(); }
-  else { rl.classList.remove('visible'); }
-  updateInfoBox();
+function goReview() {
+  currentMode = 'review';
+  buildReviewList();
+  // 복습 화면 난이도 버튼 동기화
+  ['very-easy','easy','hard'].forEach(k => document.getElementById('rdiff-' + k).classList.toggle('selected', k === difficulty));
+  showScreen('screen-review');
 }
 function buildReviewList() {
   const list = document.getElementById('reviewList');
   list.innerHTML = '';
   const latestKey = WEEK_ORDER[WEEK_ORDER.length - 1];
-  [...WEEK_ORDER].reverse().forEach((key, idx) => {
+  [...WEEK_ORDER].reverse().forEach((key) => {
     const item = document.createElement('div');
     item.className = 'review-item' + (key === selectedReview ? ' selected' : '');
     const isLatest = key === latestKey;
@@ -1068,15 +1113,18 @@ function buildReviewList() {
       selectedReview = key;
       document.querySelectorAll('.review-item').forEach(i => i.classList.remove('selected'));
       item.classList.add('selected');
-      updateInfoBox();
     };
     list.appendChild(item);
   });
 }
-function selectDiff(d) {
+function selectDiff(d, prefix) {
   difficulty = d;
-  ['very-easy','easy','hard'].forEach(k => document.getElementById('diff-' + k).classList.toggle('selected', k === d));
+  const p = prefix === 'r' ? 'rdiff-' : 'diff-';
+  ['very-easy','easy','hard'].forEach(k => {
+    const el = document.getElementById(p + k); if (el) el.classList.toggle('selected', k === d);
+  });
 }
+function startReviewGame() { gameWords = shuffle([...WORDS_DATA[selectedReview].words]); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
 /* ── Weekly record (localStorage) ── */
 const STORAGE_KEY = 'ally_game_records';
 function getTodayKey() {
@@ -1139,23 +1187,8 @@ function buildWeeklyStrip() {
     <div class="day-row">${cells}</div>
   `;
 }
-function initStart() { buildReviewList(); updateInfoBox(); buildWeeklyStrip(); showScreen('screen-start'); }
-function updateInfoBox() {
-  const box = document.getElementById('infoBox');
-  if (currentMode === 'main') {
-    const lk = WEEK_ORDER[WEEK_ORDER.length - 1], lw = WORDS_DATA[lk].words, prev = [];
-    WEEK_ORDER.slice(0, -1).forEach(k => prev.push(...WORDS_DATA[k].words));
-    if (prev.length === 0) {
-      box.innerHTML = `<strong>이번 주 단어 ${lw.length}개</strong> 중에서<br><strong>${Math.min(10, lw.length)}문제</strong> 랜덤으로 풀어요 ♡`;
-    } else {
-      const tc = Math.min(5, lw.length), tp = Math.min(5, prev.length);
-      box.innerHTML = `<strong>이번 주</strong> ${tc}개 + <strong>이전 단어</strong> ${tp}개<br>= 총 <strong>${tc + tp}문제</strong> 랜덤으로 풀어요 ♡`;
-    }
-  } else {
-    const w = WORDS_DATA[selectedReview].words;
-    box.innerHTML = `<strong>${WORDS_DATA[selectedReview].label}</strong> 단어 <strong>${w.length}개</strong>를 전부 복습해요 ♪`;
-  }
-}
+function initStart() { currentMode = 'main'; buildWeeklyStrip(); showScreen('screen-start'); }
+
 function buildGameWords() {
   if (currentMode === 'review') return shuffle([...WORDS_DATA[selectedReview].words]);
   const lk = WEEK_ORDER[WEEK_ORDER.length - 1], cur = shuffle([...WORDS_DATA[lk].words]), prev = [];
@@ -1167,8 +1200,8 @@ function buildGameWords() {
   if (sel.length < 10 && cur.length > tc) sel = [...sel, ...cur.slice(tc, tc + (10 - sel.length))];
   return shuffle(sel);
 }
-function startGame() { gameWords = buildGameWords(); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
-function restartGame() { startGame(); }
+function startGame() { currentMode = 'main'; gameWords = buildGameWords(); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
+function restartGame() { if (currentMode === 'review') startReviewGame(); else startGame(); }
 function goStart() { initStart(); }
 function loadWord() {
   const w = gameWords[currentIdx];
@@ -1261,8 +1294,8 @@ function wordComplete() {
   const w = gameWords[currentIdx]; playSound('complete'); speakWord(w.word);
   const toast = document.createElement('div'); toast.className = 'word-toast';
   const msgs = wordHadMistake
-    ? [{e:'👏', t:'잘했어요!'}, {e:'💪', t:'좋아요!'}, {e:'🌷', t:'다음도!'}]
-    : [{e:'🌟', t:'완벽해요!'}, {e:'✨', t:'대단해!'}, {e:'💖', t:'최고야!'}, {e:'🎀', t:'예쁘다!'}];
+    ? [{e:'👏', t:'정답이에요!'}, {e:'💪', t:'정답이에요!'}, {e:'🌷', t:'정답이에요!'}]
+    : [{e:'🌟', t:'정답이에요!'}, {e:'✨', t:'정답이에요!'}, {e:'💖', t:'정답이에요!'}, {e:'🎀', t:'정답이에요!'}];
   const m = msgs[Math.floor(Math.random() * msgs.length)];
   toast.innerHTML = `<span class="toast-emoji">${m.e}</span><span class="toast-big">${w.word}</span><span>${m.t}</span>`;
   document.body.appendChild(toast);
