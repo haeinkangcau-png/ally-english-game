@@ -739,6 +739,74 @@
       50%      { transform: rotate(4deg); }
     }
     .hero-mascot { animation: mascot-wave 3.5s ease-in-out infinite; transform-origin: 50% 100%; }
+
+    /* ── Weekly record strip ── */
+    .weekly-strip {
+      width: 100%;
+      background: var(--paper);
+      border-radius: 22px;
+      box-shadow: var(--sh-card);
+      padding: 14px 16px 16px;
+      margin-bottom: 18px;
+    }
+    .weekly-strip-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .weekly-strip-title {
+      font-family: 'Jua', sans-serif;
+      font-size: 0.95rem; color: var(--ink);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .weekly-strip-title svg { width: 16px; height: 16px; color: var(--pink); }
+    .weekly-strip-streak {
+      font-family: 'Jua', sans-serif;
+      font-size: 0.85rem; color: var(--pink-d);
+      background: var(--pink-x);
+      padding: 3px 10px 2px;
+      border-radius: 999px;
+    }
+    .day-row {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
+    }
+    .day-cell {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .day-label {
+      font-family: 'Jua', sans-serif;
+      font-size: 0.72rem; color: var(--ink-3);
+    }
+    .day-label.today { color: var(--pink-d); }
+    .day-dot {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: #f6eef3;
+      border: 2px solid #f0e0ea;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      transition: transform .2s;
+    }
+    .day-dot.done {
+      background: linear-gradient(160deg, #ffb8d8 0%, var(--pink) 100%);
+      border-color: var(--pink-d);
+      box-shadow: 0 3px 0 0 var(--pink-d);
+    }
+    .day-dot.today-empty {
+      border-color: var(--pink);
+      border-style: dashed;
+    }
+    .day-dot.done { animation: dot-pop .4s cubic-bezier(.5,1.6,.45,.9); }
+    @keyframes dot-pop {
+      0%   { transform: scale(0.6); }
+      70%  { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+    .day-stars {
+      font-family: 'Jua', sans-serif;
+      font-size: 0.65rem; color: var(--pink-d);
+      letter-spacing: -1px;
+      min-height: 1em;
+    }
   </style>
 </head>
 <body>
@@ -804,6 +872,8 @@
         <path d="M55 96 Q60 100 65 96" stroke="#5a4658" stroke-width="2" fill="none" stroke-linecap="round"/>
       </svg>
     </div>
+
+    <div class="weekly-strip" id="weeklyStrip"></div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" id="tabMain" onclick="selectMode('main')">
@@ -1007,7 +1077,69 @@ function selectDiff(d) {
   difficulty = d;
   ['very-easy','easy','hard'].forEach(k => document.getElementById('diff-' + k).classList.toggle('selected', k === d));
 }
-function initStart() { buildReviewList(); updateInfoBox(); showScreen('screen-start'); }
+/* ── Weekly record (localStorage) ── */
+const STORAGE_KEY = 'ally_game_records';
+function getTodayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function saveRecord(stars, correct, total) {
+  const records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  const key = getTodayKey();
+  // 오늘 기록이 이미 있으면 별이 더 많은 것만 덮어씀
+  if (!records[key] || stars > records[key].stars) {
+    records[key] = { stars, correct, total, ts: Date.now() };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+  }
+}
+function buildWeeklyStrip() {
+  const records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  const today = new Date();
+  const todayKey = getTodayKey();
+  // 이번 주 월요일 구하기
+  const dow = today.getDay(); // 0=일
+  const mondayOffset = dow === 0 ? -6 : 1 - dow;
+  const monday = new Date(today);
+  monday.setDate(today.getDate() + mondayOffset);
+  const DAY_LABELS = ['월','화','수','목','금','토','일'];
+  // 연속 완료 스트릭 계산
+  let streak = 0;
+  for (let i = 0; i < 30; i++) {
+    const d = new Date(today); d.setDate(today.getDate() - i);
+    const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    if (records[k]) streak++; else break;
+  }
+  let cells = '';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday); d.setDate(monday.getDate() + i);
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const isToday = key === todayKey;
+    const rec = records[key];
+    const isFuture = d > today && !isToday;
+    let dotClass = 'day-dot';
+    if (rec) dotClass += ' done';
+    else if (isToday) dotClass += ' today-empty';
+    const emoji = rec ? '⭐' : (isFuture ? '' : (isToday ? '♡' : ''));
+    const starsStr = rec ? '★'.repeat(rec.stars) + '☆'.repeat(3 - rec.stars) : '';
+    cells += `<div class="day-cell">
+      <span class="day-label${isToday ? ' today' : ''}">${DAY_LABELS[i]}</span>
+      <div class="${dotClass}">${emoji}</div>
+      <span class="day-stars">${starsStr}</span>
+    </div>`;
+  }
+  const streakBadge = streak > 1 ? `<span class="weekly-strip-streak">🔥 ${streak}일 연속!</span>` : '';
+  document.getElementById('weeklyStrip').innerHTML = `
+    <div class="weekly-strip-header">
+      <span class="weekly-strip-title">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.9l-6.2 4.4 2.4-7.4L2 9.4h7.6z"/></svg>
+        이번 주 기록
+      </span>
+      ${streakBadge}
+    </div>
+    <div class="day-row">${cells}</div>
+  `;
+}
+function initStart() { buildReviewList(); updateInfoBox(); buildWeeklyStrip(); showScreen('screen-start'); }
 function updateInfoBox() {
   const box = document.getElementById('infoBox');
   if (currentMode === 'main') {
@@ -1168,6 +1300,8 @@ function showResult() {
       section.appendChild(item);
     });
   }
+  saveRecord(stars, cc, gameWords.length);
+  buildWeeklyStrip();
   showScreen('screen-result');
   sendResultEmail(uw, cc, stars);
 }
