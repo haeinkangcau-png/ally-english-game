@@ -243,7 +243,7 @@
 
     /* ── Difficulty ── */
     .difficulty-row {
-      display: grid; grid-template-columns: repeat(4, 1fr);
+      display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 8px; width: 100%; margin-bottom: 20px;
     }
     .diff-btn {
@@ -275,7 +275,6 @@
     }
     .diff-btn[data-d="very-easy"] .d-face { background: var(--mint); }
     .diff-btn[data-d="easy"]      .d-face { background: var(--blue); }
-    .diff-btn[data-d="normal"]    .d-face { background: var(--butter); }
     .diff-btn[data-d="hard"]      .d-face { background: var(--peach); }
     .diff-btn.selected {
       background: linear-gradient(180deg, #fff 0%, #fff5f9 100%);
@@ -535,7 +534,6 @@
     }
     @media (min-width: 720px) {
       .letter-grid {
-        grid-template-columns: repeat(6, 1fr);
         gap: 14px; max-width: 580px;
       }
     }
@@ -828,15 +826,10 @@
         <span class="d-name">쉬움</span>
         <span class="d-hint">첫 글자만</span>
       </button>
-      <button class="diff-btn" id="diff-normal" data-d="normal" onclick="selectDiff('normal')">
-        <span class="d-face">⭐</span>
-        <span class="d-name">보통</span>
-        <span class="d-hint">힌트 있음</span>
-      </button>
       <button class="diff-btn" id="diff-hard" data-d="hard" onclick="selectDiff('hard')">
         <span class="d-face">🔥</span>
         <span class="d-name">어려움</span>
-        <span class="d-hint">힌트 없이</span>
+        <span class="d-hint">다 스스로!</span>
       </button>
     </div>
 
@@ -1005,7 +998,7 @@ function buildReviewList() {
 }
 function selectDiff(d) {
   difficulty = d;
-  ['very-easy','easy','normal','hard'].forEach(k => document.getElementById('diff-' + k).classList.toggle('selected', k === d));
+  ['very-easy','easy','hard'].forEach(k => document.getElementById('diff-' + k).classList.toggle('selected', k === d));
 }
 function initStart() { buildReviewList(); updateInfoBox(); showScreen('screen-start'); }
 function updateInfoBox() {
@@ -1081,10 +1074,13 @@ function revealHalfLetters() {
 }
 function buildLetterButtons(word) {
   const needed = [...new Set(word.split(''))], all = 'abcdefghijklmnopqrstuvwxyz'.split('');
-  const distractCount = {'very-easy': 2, 'easy': 3, 'normal': 4, 'hard': 7}[difficulty] ?? 4;
+  const distractCount = {'very-easy': 2, 'easy': 4, 'hard': 8}[difficulty] ?? 4;
   const distract = shuffle(all.filter(l => !needed.includes(l))).slice(0, distractCount);
   const buttons = [...new Set([...needed, ...distract])].sort();
+  const total = buttons.length;
+  const cols = total <= 4 ? total : total <= 6 ? 3 : total <= 8 ? 4 : 5;
   const grid = document.getElementById('letterGrid'); grid.innerHTML = '';
+  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
   buttons.forEach((letter, i) => {
     const btn = document.createElement('button');
     btn.className = 'letter-btn';
