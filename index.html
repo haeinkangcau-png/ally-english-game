@@ -302,14 +302,17 @@
 
     <div class="section-label">🎯 난이도 선택</div>
     <div class="difficulty-row">
-      <button class="diff-btn selected" id="diff-easy" onclick="selectDiff('easy')">
-        <span class="d-icon">🌱</span>쉬움<br><small style="font-weight:500;font-size:.75rem">첫 글자 표시</small>
+      <button class="diff-btn selected" id="diff-very-easy" onclick="selectDiff('very-easy')">
+        <span class="d-icon">🍀</span>아주쉬움<br><small style="font-weight:500;font-size:.72rem">반반 표시</small>
+      </button>
+      <button class="diff-btn" id="diff-easy" onclick="selectDiff('easy')">
+        <span class="d-icon">🌱</span>쉬움<br><small style="font-weight:500;font-size:.72rem">첫 글자 표시</small>
       </button>
       <button class="diff-btn" id="diff-normal" onclick="selectDiff('normal')">
-        <span class="d-icon">⭐</span>보통<br><small style="font-weight:500;font-size:.75rem">힌트 버튼 있음</small>
+        <span class="d-icon">⭐</span>보통<br><small style="font-weight:500;font-size:.72rem">힌트 버튼 있음</small>
       </button>
       <button class="diff-btn" id="diff-hard" onclick="selectDiff('hard')">
-        <span class="d-icon">🔥</span>어려움<br><small style="font-weight:500;font-size:.75rem">힌트 없음</small>
+        <span class="d-icon">🔥</span>어려움<br><small style="font-weight:500;font-size:.72rem">힌트 없음</small>
       </button>
     </div>
 
@@ -358,7 +361,7 @@ const BTN_COLORS = ['#fde68a','#bbf7d0','#bfdbfe','#fca5a5','#ddd6fe','#fed7aa',
 
 let currentMode = 'main';
 let selectedReview = WEEK_ORDER[WEEK_ORDER.length - 1];
-let difficulty = 'easy';
+let difficulty = 'very-easy';
 let gameWords = [], currentIdx = 0, filledCount = 0, wordHadMistake = false, wrongWords = [], revealedFirst = false;
 
 function shuffle(arr) {
@@ -412,7 +415,7 @@ function buildReviewList() {
 }
 function selectDiff(d) {
   difficulty = d;
-  ['easy','normal','hard'].forEach(k => document.getElementById('diff-' + k).classList.toggle('selected', k === d));
+  ['very-easy','easy','normal','hard'].forEach(k => document.getElementById('diff-' + k).classList.toggle('selected', k === d));
 }
 function initStart() { buildReviewList(); updateInfoBox(); showScreen('screen-start'); }
 function updateInfoBox() {
@@ -464,15 +467,38 @@ function loadWord() {
   document.getElementById('hintBtn').textContent = '💡 힌트 보기';
   document.getElementById('hintBtn').style.display = (difficulty === 'hard') ? 'none' : '';
   buildLetterButtons(w.word);
-  if (difficulty === 'easy') revealFirstLetter();
+  if (difficulty === 'very-easy') revealHalfLetters();
+  else if (difficulty === 'easy') revealFirstLetter();
 }
 function revealFirstLetter() {
   const w = gameWords[currentIdx], t = document.getElementById('tile-0');
   t.textContent = w.word[0]; t.classList.add('revealed'); t.classList.remove('current');
   if (w.word.length > 1) document.getElementById('tile-1').classList.add('current');
   filledCount = 1; revealedFirst = true;
-  document.querySelectorAll('.letter-btn').forEach(b => { if (b.textContent === w.word[0]) b.disabled = true; });
+  // 남은 위치에 같은 글자가 없을 때만 버튼 비활성화 (ewe 같은 경우 e 버튼 유지)
+  const remaining = w.word.slice(1);
+  if (!remaining.includes(w.word[0])) {
+    document.querySelectorAll('.letter-btn').forEach(b => { if (b.textContent === w.word[0]) b.disabled = true; });
+  }
   if (w.word.length === 1) setTimeout(() => wordComplete(), 300);
+}
+function revealHalfLetters() {
+  const w = gameWords[currentIdx];
+  const revealCount = Math.ceil(w.word.length / 2);
+  for (let i = 0; i < revealCount; i++) {
+    const t = document.getElementById('tile-' + i);
+    t.textContent = w.word[i]; t.classList.add('revealed'); t.classList.remove('current');
+  }
+  filledCount = revealCount;
+  if (revealCount < w.word.length) {
+    document.getElementById('tile-' + revealCount).classList.add('current');
+  }
+  // 남은 위치에 없는 글자 버튼만 비활성화
+  const remaining = w.word.slice(revealCount);
+  document.querySelectorAll('.letter-btn').forEach(b => {
+    if (!remaining.includes(b.textContent)) b.disabled = true;
+  });
+  if (revealCount >= w.word.length) setTimeout(() => wordComplete(), 300);
 }
 function buildLetterButtons(word) {
   const needed = [...new Set(word.split(''))], all = 'abcdefghijklmnopqrstuvwxyz'.split('');
