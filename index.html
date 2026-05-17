@@ -123,10 +123,10 @@
        ═══════════════════════════════════════ */
     .hero {
       width: 100%;
-      display: flex;
-      flex-direction: row;
+      display: grid;
+      grid-template-columns: 1fr auto;
       gap: 8px;
-      align-items: center;
+      align-items: end;
       margin: 6px 0 22px;
     }
     .hero-text { padding-bottom: 6px; }
@@ -163,14 +163,14 @@
       margin-top: 6px;
     }
     .hero-mascot {
-      width: 180px;
+      width: 130px;
       height: auto;
       object-fit: contain;
       flex-shrink: 0;
       filter: drop-shadow(0 6px 12px rgba(200, 130, 160, 0.22));
     }
     @media (min-width: 720px) {
-      .hero-mascot { width: 240px; }
+      .hero-mascot { width: 200px; }
       .hero-title { font-size: 3.4rem; }
       .hero-sub { font-size: 1.25rem; }
     }
