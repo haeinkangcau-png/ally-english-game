@@ -4,14 +4,14 @@
   "description": "이모지를 보고 영어 단어를 맞춰보는 게임",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#fff1f5",
-  "theme_color": "#ff8fb8",
+  "background_color": "#fff3ed",
+  "theme_color": "#ff8e9d",
   "lang": "ko",
   "icons": [
     {
-      "src": "favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "assets/bunny.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]
