@@ -27,7 +27,7 @@ const WORDS_DATA = {
       { word: "seven",  meaning: "일곱",              emoji: "7️⃣",  pron: "ˈsevən"   },
       { word: "eight",  meaning: "여덟",              emoji: "8️⃣",  pron: "eɪt"      },
       { word: "japan",  meaning: "일본",              emoji: "🏯🏝️", pron: "dʒəˈpæn", svgEmoji: true },
-      { word: "ally",   meaning: "도은이의 영어이름", emoji: "👧",   pron: "ˈæli"     },
+      { word: "ally",   meaning: "도은이의 영어이름", emoji: "👧",   pron: "ˈæli",  speak: "Allie" },
       { word: "rabbit", meaning: "토끼",              emoji: "🐰",   pron: "ˈræbɪt"   },
     ]
   },

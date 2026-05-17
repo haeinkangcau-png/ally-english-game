@@ -1346,7 +1346,7 @@ function triggerAnim(el, cls) {
   el.addEventListener('animationend', () => el.classList.remove(cls), { once: true });
 }
 function wordComplete() {
-  const w = gameWords[currentIdx]; playSound('complete'); speakWord(w.word);
+  const w = gameWords[currentIdx]; playSound('complete'); speakWord(w.speak || w.word);
   const toast = document.createElement('div'); toast.className = 'word-toast';
   const msgs = wordHadMistake
     ? [{e:'👏', t:'정답이에요!'}, {e:'💪', t:'정답이에요!'}, {e:'🌷', t:'정답이에요!'}]
@@ -1426,7 +1426,7 @@ function speakWord(word) {
   const u = new SpeechSynthesisUtterance(word); u.lang = 'en-US'; u.rate = 0.8; u.pitch = 1.1;
   window.speechSynthesis.speak(u);
 }
-function speakCurrent() { if (gameWords[currentIdx]) speakWord(gameWords[currentIdx].word); }
+function speakCurrent() { const w = gameWords[currentIdx]; if (w) speakWord(w.speak || w.word); }
 function toggleHint() {
   const hint = document.getElementById('hintText'), btn = document.getElementById('hintBtn');
   if (hint.textContent) {
