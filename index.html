@@ -7,7 +7,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="favicon.svg">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#ff8fb8">
+  <meta name="theme-color" content="#ff8e9d">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Ally's Game">
@@ -24,16 +24,16 @@
        ═════════════════════════════════════════ */
     :root {
       /* surfaces */
-      --bg-1:    #fff1f5;     /* cream pink */
+      --bg-1:    #fff3ed;     /* cream pink */
       --bg-2:    #f3e8ff;     /* soft lavender */
       --bg-3:    #e0f2fe;     /* sky baby blue */
-      --paper:   #fffafd;     /* card cream */
-      --paper-2: #fff5f9;     /* card cream subtle */
+      --paper:   #fff8f3;     /* card cream */
+      --paper-2: #fff5ee;     /* card cream subtle */
       /* accents */
-      --pink:    #ff8fb8;     /* primary candy pink */
-      --pink-d:  #f06aa0;     /* deep pink */
-      --pink-s:  #ffd4e3;     /* soft pink */
-      --pink-x:  #ffe7ef;     /* extra soft pink */
+      --pink:    #ff8e9d;     /* primary candy pink */
+      --pink-d:  #ed7589;     /* deep pink */
+      --pink-s:  #ffd3d3;     /* soft pink */
+      --pink-x:  #ffe6e0;     /* extra soft pink */
       --mint:    #9adfc4;     /* sanrio mint */
       --blue:    #a8caff;     /* baby blue */
       --lav:     #c8b9f5;     /* lavender */
@@ -43,10 +43,10 @@
       --ink:     #5a4658;     /* warm plum-brown */
       --ink-2:   #8a7787;     /* muted plum */
       --ink-3:   #b9a8b3;     /* faint plum */
-      --line:    #f6dde7;     /* hairline */
+      --line:    #f5d8d0;     /* hairline */
       /* shadow */
       --sh-soft: 0 6px 0 0 #f0c8d8;
-      --sh-card: 0 12px 28px -8px rgba(255, 143, 184, 0.25), 0 2px 0 0 #fde0ea;
+      --sh-card: 0 12px 28px -8px rgba(255, 142, 157, 0.28), 0 2px 0 0 #fbd7cd;
       --sh-pop:  0 10px 24px -6px rgba(168, 130, 200, 0.35);
     }
 
@@ -64,7 +64,7 @@
       color: var(--ink);
       word-break: keep-all;
       background:
-        radial-gradient(at 12% 8%, #ffe2ee 0%, transparent 38%),
+        radial-gradient(at 12% 8%, #ffdfd5 0%, transparent 38%),
         radial-gradient(at 88% 14%, #e2d9ff 0%, transparent 42%),
         radial-gradient(at 50% 92%, #d6ecff 0%, transparent 45%),
         linear-gradient(170deg, var(--bg-1) 0%, var(--bg-2) 55%, var(--bg-3) 100%);
@@ -162,9 +162,16 @@
       color: var(--ink-2);
       margin-top: 6px;
     }
-    .hero-mascot { width: 96px; height: 110px; }
+    .hero-mascot {
+      width: 130px;
+      aspect-ratio: 1/1;
+      height: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: drop-shadow(0 6px 12px rgba(200, 130, 160, 0.22));
+    }
     @media (min-width: 720px) {
-      .hero-mascot { width: 140px; height: 160px; }
+      .hero-mascot { width: 200px; }
       .hero-title { font-size: 3.4rem; }
       .hero-sub { font-size: 1.25rem; }
     }
@@ -179,7 +186,7 @@
       border-radius: 22px;
       border: none;
       background: var(--paper);
-      box-shadow: 0 4px 0 0 #fadbe8, inset 0 0 0 2px #fde9f0;
+      box-shadow: 0 4px 0 0 #f8d6cd, inset 0 0 0 2px #fbe2d6;
       font-family: 'Jua', 'Pretendard Variable', Pretendard, sans-serif;
       font-size: 1.05rem; color: var(--ink-2);
       cursor: pointer; touch-action: manipulation;
@@ -187,9 +194,9 @@
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
     .mode-tab svg { width: 24px; height: 24px; flex: 0 0 auto; }
-    .mode-tab:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #fadbe8, inset 0 0 0 2px #fde9f0; }
+    .mode-tab:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #f8d6cd, inset 0 0 0 2px #fbe2d6; }
     .mode-tab.active {
-      background: linear-gradient(180deg, #fff 0%, #ffeaf2 100%);
+      background: linear-gradient(180deg, #fff 0%, #ffe5dc 100%);
       color: var(--pink-d);
       box-shadow: 0 4px 0 0 var(--pink), inset 0 0 0 2px var(--pink);
     }
@@ -205,13 +212,13 @@
       padding: 12px 16px;
       border-radius: 18px;
       background: var(--paper);
-      box-shadow: 0 3px 0 0 #f3dee8, inset 0 0 0 1.5px #fbe6ef;
+      box-shadow: 0 3px 0 0 #f0d8cf, inset 0 0 0 1.5px #f9e0d4;
       cursor: pointer; touch-action: manipulation;
       transition: transform .12s, box-shadow .12s;
     }
     .review-item:active { transform: translateY(1px); }
     .review-item.selected {
-      background: linear-gradient(180deg, #fff 0%, #fff5f9 100%);
+      background: linear-gradient(180deg, #fff 0%, #fff5ee 100%);
       box-shadow: 0 3px 0 0 var(--pink), inset 0 0 0 2px var(--pink);
     }
     .ri-dot {
@@ -228,7 +235,9 @@
     }
     .ri-count {
       font-family: 'Pretendard Variable', Pretendard, sans-serif;
-      font-size: 0.95rem; color: var(--ink-3);
+      font-size: 0.9rem; color: var(--ink-3);
+      white-space: nowrap; word-break: keep-all;
+      flex: 0 0 auto;
     }
     .badge {
       display: inline-block; vertical-align: 1px;
@@ -241,51 +250,72 @@
     /* ── Section label ── */
     .section-label {
       font-family: 'Jua', sans-serif;
-      font-size: 1rem; color: var(--ink);
+      font-size: 1.05rem; color: var(--ink);
       align-self: flex-start;
       margin: 6px 0 10px 4px;
       display: flex; align-items: center; gap: 6px;
+      white-space: nowrap; word-break: keep-all;
     }
-    .section-label svg { width: 18px; height: 18px; }
+    .section-label svg { width: 18px; height: 18px; color: var(--pink); flex: 0 0 auto; }
+
+    /* Generic screen title used in non-game screens */
+    .screen-title {
+      flex: 1; text-align: center;
+      font-family: 'Jua', sans-serif;
+      font-size: 1.15rem; color: var(--ink);
+      white-space: nowrap; word-break: keep-all;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .screen-title svg { width: 18px; height: 18px; color: var(--pink); }
 
     /* ── Difficulty ── */
     .difficulty-row {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 8px; width: 100%; margin-bottom: 20px;
+      gap: 10px; width: 100%; margin-bottom: 22px;
     }
     .diff-btn {
-      padding: 10px 4px 12px;
-      border-radius: 18px;
+      padding: 14px 6px 14px;
+      border-radius: 22px;
       border: none;
       background: var(--paper);
-      box-shadow: 0 3px 0 0 #f3dee8, inset 0 0 0 1.5px #fbe6ef;
+      box-shadow: 0 4px 0 0 #f0d8cf, inset 0 0 0 2px #f9e0d4;
       cursor: pointer; touch-action: manipulation;
       transition: transform .12s, box-shadow .12s;
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
       font-family: 'Jua', 'Pretendard Variable', Pretendard, sans-serif;
+      position: relative;
     }
-    .diff-btn:active { transform: translateY(1px); }
+    .diff-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #f0d8cf, inset 0 0 0 2px #f9e0d4; }
     .diff-btn .d-face {
-      width: 44px; height: 44px; border-radius: 50%;
+      width: 54px; height: 54px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem;
-      box-shadow: inset 0 -3px 0 0 rgba(0,0,0,0.04);
+      font-size: 1.8rem;
+      box-shadow: inset 0 -4px 0 0 rgba(0,0,0,0.05), 0 2px 0 0 rgba(255,255,255,0.6);
+      margin-bottom: 2px;
     }
     .diff-btn .d-name {
-      font-size: 0.95rem; color: var(--ink); line-height: 1;
+      font-size: 1.05rem; color: var(--ink); line-height: 1;
       white-space: nowrap; word-break: keep-all;
     }
     .diff-btn .d-hint {
       font-family: 'Pretendard Variable', Pretendard, sans-serif;
-      font-weight: 400; font-size: 0.78rem; color: var(--ink-3); line-height: 1.1;
+      font-weight: 500; font-size: 0.78rem; color: var(--ink-3); line-height: 1.1;
       white-space: nowrap; word-break: keep-all;
+      letter-spacing: -0.2px;
     }
-    .diff-btn[data-d="very-easy"] .d-face { background: var(--mint); }
-    .diff-btn[data-d="easy"]      .d-face { background: var(--blue); }
-    .diff-btn[data-d="hard"]      .d-face { background: var(--peach); }
+    .diff-btn[data-d="very-easy"] .d-face { background: linear-gradient(160deg, #c5ecdc 0%, var(--mint) 100%); }
+    .diff-btn[data-d="easy"]      .d-face { background: linear-gradient(160deg, #c8defc 0%, var(--blue) 100%); }
+    .diff-btn[data-d="hard"]      .d-face { background: linear-gradient(160deg, #ffd2b8 0%, var(--peach) 100%); }
     .diff-btn.selected {
-      background: linear-gradient(180deg, #fff 0%, #fff5f9 100%);
-      box-shadow: 0 3px 0 0 var(--pink), inset 0 0 0 2px var(--pink);
+      background: linear-gradient(180deg, #fff 0%, #fff5ee 100%);
+      box-shadow: 0 4px 0 0 var(--pink), inset 0 0 0 2px var(--pink);
+    }
+    .diff-btn.selected .d-hint { color: var(--pink-d); font-weight: 600; }
+    @media (min-width: 720px) {
+      .diff-btn { padding: 18px 8px 18px; }
+      .diff-btn .d-face { width: 64px; height: 64px; font-size: 2.1rem; }
+      .diff-btn .d-name { font-size: 1.15rem; }
+      .diff-btn .d-hint { font-size: 0.85rem; }
     }
 
     /* ── Info box ── */
@@ -309,31 +339,57 @@
     }
     .info-box strong { font-weight: 700; color: var(--pink-d); }
 
-    /* ── Start button ── */
+    /* ── Start screen actions group (Let's Play + 복습하기) ── */
+    .start-actions {
+      width: 100%;
+      display: flex; flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .actions-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 10px 4px 6px;
+      color: var(--pink-s);
+      user-select: none;
+    }
+    .actions-divider::before, .actions-divider::after {
+      content: ''; flex: 1; height: 2px;
+      background: repeating-linear-gradient(90deg, #f2c4b3 0 5px, transparent 5px 10px);
+    }
+    .actions-divider .heart {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem;
+      color: var(--pink);
+      letter-spacing: 2px;
+    }
+
+    /* ── Start button (primary) ── */
     .start-btn {
       position: relative;
-      background: linear-gradient(180deg, #ff9fc2 0%, var(--pink) 60%, var(--pink-d) 100%);
+      width: 100%;
+      background: linear-gradient(180deg, #ff9da6 0%, var(--pink) 60%, var(--pink-d) 100%);
       color: white; border: none;
-      border-radius: 28px;
-      padding: 16px 56px 18px;
+      border-radius: 24px;
+      padding: 18px 28px 20px;
       font-family: 'Fredoka', 'Jua', sans-serif;
       font-weight: 700;
-      font-size: 1.5rem;
+      font-size: 1.55rem;
       letter-spacing: 0.5px;
       cursor: pointer; touch-action: manipulation;
-      box-shadow: 0 6px 0 0 var(--pink-d), 0 14px 26px -8px rgba(240,106,160,0.6);
+      box-shadow: 0 6px 0 0 var(--pink-d), 0 14px 26px -8px rgba(237,117,137,0.55);
       transition: transform .1s, box-shadow .1s;
     }
     .start-btn:active {
       transform: translateY(4px);
-      box-shadow: 0 2px 0 0 var(--pink-d), 0 6px 14px -6px rgba(240,106,160,0.6);
+      box-shadow: 0 2px 0 0 var(--pink-d), 0 6px 14px -6px rgba(237,117,137,0.6);
     }
     .start-btn::after {
       content: '♡';
       position: absolute; top: -10px; right: -8px;
-      width: 28px; height: 28px;
+      width: 30px; height: 30px;
       background: var(--butter); color: var(--pink-d);
-      font-family: 'Fredoka', sans-serif; font-size: 1rem;
+      font-family: 'Fredoka', sans-serif; font-size: 1.05rem;
       border-radius: 50%;
       display: grid; place-items: center;
       box-shadow: 0 2px 0 0 #e8c454;
@@ -352,19 +408,19 @@
       width: 38px; height: 38px;
       border: none; border-radius: 50%;
       background: var(--paper);
-      box-shadow: 0 3px 0 0 #f3dee8;
+      box-shadow: 0 3px 0 0 #f0d8cf;
       cursor: pointer;
       display: grid; place-items: center;
       flex: 0 0 auto;
     }
     .home-btn svg { width: 18px; height: 18px; color: var(--pink-d); }
-    .home-btn:active { transform: translateY(1px); box-shadow: 0 1px 0 0 #f3dee8; }
+    .home-btn:active { transform: translateY(1px); box-shadow: 0 1px 0 0 #f0d8cf; }
     .progress-track {
       flex: 1; height: 16px;
       background: white;
       border-radius: 999px;
       overflow: hidden;
-      box-shadow: inset 0 2px 0 0 #fde0ea, inset 0 0 0 2px #fde0ea;
+      box-shadow: inset 0 2px 0 0 #fbd7cd, inset 0 0 0 2px #fbd7cd;
       position: relative;
     }
     .progress-fill {
@@ -386,7 +442,7 @@
       background: white;
       padding: 6px 12px 5px;
       border-radius: 999px;
-      box-shadow: 0 3px 0 0 #fde0ea;
+      box-shadow: 0 3px 0 0 #fbd7cd;
       white-space: nowrap;
     }
 
@@ -404,7 +460,7 @@
     .game-card::before {
       content: ''; position: absolute; top: 14px; left: 14px; right: 14px; bottom: 14px;
       border-radius: 22px;
-      border: 2px dashed #ffd4e3;
+      border: 2px dashed #ffd3d3;
       pointer-events: none;
       opacity: 0.5;
     }
@@ -583,7 +639,7 @@
       pointer-events: none;
       animation: toast-in 0.45s cubic-bezier(.4,1.6,.45,.95);
       z-index: 200;
-      box-shadow: 0 12px 40px -8px rgba(255, 143, 184, 0.5), 0 0 0 4px white, 0 0 0 6px var(--pink-s);
+      box-shadow: 0 12px 40px -8px rgba(255, 142, 157, 0.5), 0 0 0 4px white, 0 0 0 6px var(--pink-s);
       text-align: center;
       max-width: 80vw;
     }
@@ -610,12 +666,16 @@
       position: relative;
     }
     .result-mascot {
-      width: 110px; height: 110px;
-      margin: 0 auto -28px;
+      width: 150px;
+      aspect-ratio: 1/1;
+      height: auto;
+      object-fit: contain;
       display: block;
+      margin: 0 auto;
       position: relative;
-      top: -50px;
-      margin-bottom: -38px;
+      top: -64px;
+      margin-bottom: -50px;
+      filter: drop-shadow(0 8px 14px rgba(200, 130, 160, 0.25));
     }
     .stars-display {
       display: inline-flex;
@@ -695,9 +755,9 @@
     .action-btn.primary:active { box-shadow: 0 2px 0 0 var(--pink-d); }
     .action-btn.secondary {
       background: white; color: var(--ink-2);
-      box-shadow: 0 4px 0 0 #fde0ea, inset 0 0 0 2px #fde0ea;
+      box-shadow: 0 4px 0 0 #fbd7cd, inset 0 0 0 2px #fbd7cd;
     }
-    .action-btn.secondary:active { box-shadow: 0 2px 0 0 #fde0ea, inset 0 0 0 2px #fde0ea; }
+    .action-btn.secondary:active { box-shadow: 0 2px 0 0 #fbd7cd, inset 0 0 0 2px #fbd7cd; }
 
     .email-status {
       font-family: 'Pretendard Variable', Pretendard, sans-serif; font-weight: 400;
@@ -740,76 +800,106 @@
     }
     .hero-mascot { animation: mascot-wave 3.5s ease-in-out infinite; transform-origin: 50% 100%; }
 
-    /* ── Review open button ── */
+    /* ── Review open button (secondary) ── */
     .review-open-btn {
-      margin-top: 14px;
-      background: transparent;
-      border: 2px dashed var(--pink-s);
-      border-radius: 999px;
-      padding: 11px 28px 10px;
+      width: 100%;
+      margin-top: 0;
+      background: white;
+      border: none;
+      border-radius: 22px;
+      padding: 14px 24px;
       font-family: 'Jua', sans-serif;
-      font-size: 1rem; color: var(--ink-3);
+      font-size: 1.1rem; color: var(--pink-d);
       cursor: pointer; touch-action: manipulation;
-      display: inline-flex; align-items: center; gap: 8px;
-      transition: color .15s, border-color .15s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      transition: transform .1s, box-shadow .1s;
+      box-shadow: 0 4px 0 0 var(--pink-s), inset 0 0 0 2px var(--pink-s);
     }
-    .review-open-btn:active { color: var(--pink-d); border-color: var(--pink); }
+    .review-open-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 0 var(--pink-s), inset 0 0 0 2px var(--pink-s); }
+    .review-open-btn svg { width: 20px; height: 20px; }
 
     /* ── Weekly record strip ── */
     .weekly-strip {
       width: 100%;
       background: var(--paper);
-      border-radius: 22px;
+      border-radius: 24px;
       box-shadow: var(--sh-card);
-      padding: 14px 16px 16px;
-      margin-bottom: 18px;
+      padding: 18px 18px 22px;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .weekly-strip::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 6px;
+      background: repeating-linear-gradient(90deg, var(--pink) 0 14px, transparent 14px 22px);
+      opacity: 0.45;
     }
     .weekly-strip-header {
       display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 12px;
+      gap: 10px;
+      margin-bottom: 14px;
+      margin-top: 4px;
     }
     .weekly-strip-title {
       font-family: 'Jua', sans-serif;
-      font-size: 0.95rem; color: var(--ink);
-      display: flex; align-items: center; gap: 6px;
+      font-size: 1rem; color: var(--ink);
+      display: inline-flex; align-items: center; gap: 6px;
+      white-space: nowrap; word-break: keep-all;
     }
-    .weekly-strip-title svg { width: 16px; height: 16px; color: var(--pink); }
+    .weekly-strip-title svg { width: 16px; height: 16px; color: var(--pink); flex: 0 0 auto; }
     .weekly-strip-streak {
       font-family: 'Jua', sans-serif;
       font-size: 0.85rem; color: var(--pink-d);
       background: var(--pink-x);
-      padding: 3px 10px 2px;
+      padding: 4px 11px 3px;
       border-radius: 999px;
+      white-space: nowrap; word-break: keep-all;
+      box-shadow: inset 0 0 0 1.5px #f8c2b3;
     }
     .day-row {
-      display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
     }
     .day-cell {
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      padding: 6px 0 4px;
+      border-radius: 14px;
+      position: relative;
+      min-width: 0;
+    }
+    .day-cell.is-today {
+      background: linear-gradient(180deg, #fff3ec 0%, #ffe4d8 100%);
+      box-shadow: inset 0 0 0 1.5px #ffd3d3;
     }
     .day-label {
       font-family: 'Jua', sans-serif;
-      font-size: 0.72rem; color: var(--ink-3);
+      font-size: 0.78rem; color: var(--ink-3);
+      line-height: 1;
     }
     .day-label.today { color: var(--pink-d); }
     .day-dot {
-      width: 36px; height: 36px;
+      width: 38px; height: 38px;
       border-radius: 50%;
-      background: #f6eef3;
-      border: 2px solid #f0e0ea;
+      background: #f8ebe2;
+      border: 2px solid #e5d2c5;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       transition: transform .2s;
+      box-shadow: inset 0 -2px 0 0 rgba(0,0,0,0.03);
     }
     .day-dot.done {
-      background: linear-gradient(160deg, #ffb8d8 0%, var(--pink) 100%);
+      background: linear-gradient(160deg, #ffc1b3 0%, var(--pink) 100%);
       border-color: var(--pink-d);
-      box-shadow: 0 3px 0 0 var(--pink-d);
+      box-shadow: 0 3px 0 0 var(--pink-d), inset 0 2px 0 0 rgba(255,255,255,0.35);
+      color: white;
     }
     .day-dot.today-empty {
       border-color: var(--pink);
       border-style: dashed;
+      background: white;
+      color: var(--pink);
     }
+    .day-dot.is-future { opacity: 0.35; }
     .day-dot.done { animation: dot-pop .4s cubic-bezier(.5,1.6,.45,.9); }
     @keyframes dot-pop {
       0%   { transform: scale(0.6); }
@@ -818,9 +908,17 @@
     }
     .day-stars {
       font-family: 'Jua', sans-serif;
-      font-size: 0.65rem; color: var(--pink-d);
-      letter-spacing: -1px;
-      min-height: 1em;
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+      min-height: 1em; line-height: 1;
+      color: var(--pink-d);
+    }
+    .day-stars .off { color: #e5d0c3; }
+    .day-stars.today-label { color: var(--pink-d); font-size: 0.7rem; }
+    @media (min-width: 720px) {
+      .day-dot { width: 46px; height: 46px; font-size: 1.45rem; }
+      .day-label { font-size: 0.88rem; }
+      .day-stars { font-size: 0.8rem; }
     }
   </style>
 </head>
@@ -829,7 +927,7 @@
   <!-- ═══ Decorative background ═══ -->
   <div class="deco" aria-hidden="true">
     <svg class="d1" viewBox="0 0 40 40"><path d="M20 4 L24 16 L36 18 L26 26 L29 38 L20 32 L11 38 L14 26 L4 18 L16 16 Z" fill="#ffe186"/></svg>
-    <svg class="d2" viewBox="0 0 40 40"><path d="M20 36 L7 23 a8 8 0 0 1 13-10 a8 8 0 0 1 13 10 Z" fill="#ff9fc2"/></svg>
+    <svg class="d2" viewBox="0 0 40 40"><path d="M20 36 L7 23 a8 8 0 0 1 13-10 a8 8 0 0 1 13 10 Z" fill="#ff9da6"/></svg>
     <svg class="d3" viewBox="0 0 40 40"><circle cx="14" cy="22" r="10" fill="#fff"/><circle cx="26" cy="22" r="10" fill="#fff"/><circle cx="20" cy="16" r="10" fill="#fff"/></svg>
     <svg class="d4" viewBox="0 0 40 40"><path d="M20 4 L24 16 L36 18 L26 26 L29 38 L20 32 L11 38 L14 26 L4 18 L16 16 Z" fill="#c8b9f5"/></svg>
     <svg class="d5" viewBox="0 0 40 40"><path d="M20 36 L7 23 a8 8 0 0 1 13-10 a8 8 0 0 1 13 10 Z" fill="#a8caff"/></svg>
@@ -854,38 +952,7 @@
         </div>
 
       </div>
-      <svg class="hero-mascot" viewBox="0 0 120 140" aria-hidden="true">
-        <!-- left ear -->
-        <g transform="rotate(-10 40 35)">
-          <ellipse cx="40" cy="35" rx="14" ry="32" fill="#fff" stroke="#e8b8c8" stroke-width="2.5"/>
-          <ellipse cx="40" cy="35" rx="6" ry="22" fill="#ffc8d8"/>
-        </g>
-        <!-- right ear -->
-        <g transform="rotate(10 80 35)">
-          <ellipse cx="80" cy="35" rx="14" ry="32" fill="#fff" stroke="#e8b8c8" stroke-width="2.5"/>
-          <ellipse cx="80" cy="35" rx="6" ry="22" fill="#ffc8d8"/>
-        </g>
-        <!-- bow on right ear -->
-        <g transform="translate(0 -4)">
-          <path d="M86 28 Q78 24 78 32 Q78 40 86 36 Z" fill="#ff8fb8"/>
-          <path d="M92 28 Q100 24 100 32 Q100 40 92 36 Z" fill="#ff8fb8"/>
-          <circle cx="89" cy="32" r="3" fill="#f06aa0"/>
-        </g>
-        <!-- head -->
-        <circle cx="60" cy="85" r="38" fill="#fff" stroke="#e8b8c8" stroke-width="2.5"/>
-        <!-- blush -->
-        <ellipse cx="38" cy="98" rx="7" ry="4.5" fill="#ffb8cc" opacity=".75"/>
-        <ellipse cx="82" cy="98" rx="7" ry="4.5" fill="#ffb8cc" opacity=".75"/>
-        <!-- eyes -->
-        <ellipse cx="46" cy="83" rx="3.2" ry="5" fill="#5a4658"/>
-        <ellipse cx="74" cy="83" rx="3.2" ry="5" fill="#5a4658"/>
-        <circle cx="47.4" cy="81" r="1.1" fill="#fff"/>
-        <circle cx="75.4" cy="81" r="1.1" fill="#fff"/>
-        <!-- nose -->
-        <ellipse cx="60" cy="92" rx="2.2" ry="1.6" fill="#ff9bb8"/>
-        <!-- mouth -->
-        <path d="M55 96 Q60 100 65 96" stroke="#5a4658" stroke-width="2" fill="none" stroke-linecap="round"/>
-      </svg>
+      <img class="hero-mascot" src="assets/bunny.png?v=1778935397334" alt="bunny mascot">
     </div>
 
     <div class="weekly-strip" id="weeklyStrip"></div>
@@ -912,12 +979,16 @@
       </button>
     </div>
 
-    <button class="start-btn" onclick="startGame()">Let's Play!</button>
+    <div class="start-actions">
+      <button class="start-btn" onclick="startGame()">Let's Play!</button>
 
-    <button class="review-open-btn" onclick="goReview()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h11v18H6a2 2 0 01-2-2V5z"/><path d="M9 7h6M9 11h6"/></svg>
-      복습하기
-    </button>
+      <div class="actions-divider" aria-hidden="true"><span class="heart">♡ ♡ ♡</span></div>
+
+      <button class="review-open-btn" onclick="goReview()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h11v18H6a2 2 0 01-2-2V5z"/><path d="M9 7h6M9 11h6"/></svg>
+        복습하기
+      </button>
+    </div>
   </div>
 
   <!-- ═══ REVIEW SELECT SCREEN ═══ -->
@@ -926,7 +997,10 @@
       <button class="home-btn" onclick="goStart()" aria-label="처음으로">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-      <div class="progress-label" style="flex:1;text-align:center">복습하기</div>
+      <div class="screen-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h11v18H6a2 2 0 01-2-2V5z"/><path d="M9 7h6M9 11h6"/></svg>
+        복습하기
+      </div>
       <div style="width:38px"></div>
     </div>
 
@@ -960,7 +1034,6 @@
 
     <button class="start-btn" onclick="startReviewGame()">Let's Review!</button>
   </div>
-
   <!-- ═══ GAME SCREEN ═══ -->
   <div class="screen" id="screen-game">
     <div class="top-bar">
@@ -999,29 +1072,7 @@
   <!-- ═══ RESULT SCREEN ═══ -->
   <div class="screen" id="screen-result">
     <div class="result-card">
-      <svg class="result-mascot" viewBox="0 0 120 140" aria-hidden="true">
-        <g transform="rotate(-10 40 35)">
-          <ellipse cx="40" cy="35" rx="14" ry="32" fill="#fff" stroke="#e8b8c8" stroke-width="2.5"/>
-          <ellipse cx="40" cy="35" rx="6" ry="22" fill="#ffc8d8"/>
-        </g>
-        <g transform="rotate(10 80 35)">
-          <ellipse cx="80" cy="35" rx="14" ry="32" fill="#fff" stroke="#e8b8c8" stroke-width="2.5"/>
-          <ellipse cx="80" cy="35" rx="6" ry="22" fill="#ffc8d8"/>
-        </g>
-        <g transform="translate(0 -4)">
-          <path d="M86 28 Q78 24 78 32 Q78 40 86 36 Z" fill="#ff8fb8"/>
-          <path d="M92 28 Q100 24 100 32 Q100 40 92 36 Z" fill="#ff8fb8"/>
-          <circle cx="89" cy="32" r="3" fill="#f06aa0"/>
-        </g>
-        <circle cx="60" cy="85" r="38" fill="#fff" stroke="#e8b8c8" stroke-width="2.5"/>
-        <ellipse cx="38" cy="98" rx="7" ry="4.5" fill="#ffb8cc" opacity=".75"/>
-        <ellipse cx="82" cy="98" rx="7" ry="4.5" fill="#ffb8cc" opacity=".75"/>
-        <!-- happy eyes (^_^) -->
-        <path d="M42 86 Q46 81 50 86" stroke="#5a4658" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <path d="M70 86 Q74 81 78 86" stroke="#5a4658" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <ellipse cx="60" cy="93" rx="2.2" ry="1.6" fill="#ff9bb8"/>
-        <path d="M53 97 Q60 104 67 97" stroke="#5a4658" stroke-width="2" fill="none" stroke-linecap="round"/>
-      </svg>
+      <img class="result-mascot" src="assets/bunny.png?v=1778935397334" alt="bunny celebration">
       <div class="stars-display" id="starsDisplay"></div>
       <div class="result-msg"   id="resultMsg"></div>
       <div class="result-sub"   id="resultSub"></div>
@@ -1047,13 +1098,13 @@ emailjs.init({ publicKey: 'SmEGPotCOv7j_TAqw' });
 
 /* Candy palette for letter buttons */
 const BTN_COLORS = [
-  '#ff9fc2', // candy pink
+  '#ff9da6', // candy pink
   '#a8caff', // baby blue
   '#9adfc4', // mint
   '#c8b9f5', // lavender
-  '#ffc78a', // peach
+  '#ffba7a', // peach
   '#ffd66e', // butter
-  '#ff8fb8', // hot pink
+  '#ff8e9d', // hot pink
   '#88c7f5', // sky
   '#ffb1d4', // rose
   '#bce0a5', // pistachio
@@ -1167,12 +1218,16 @@ function buildWeeklyStrip() {
     let dotClass = 'day-dot';
     if (rec) dotClass += ' done';
     else if (isToday) dotClass += ' today-empty';
-    const emoji = rec ? '⭐' : (isFuture ? '' : (isToday ? '♡' : ''));
-    const starsStr = rec ? '★'.repeat(rec.stars) + '☆'.repeat(3 - rec.stars) : '';
-    cells += `<div class="day-cell">
+    else if (isFuture) dotClass += ' is-future';
+    const emoji = rec ? '★' : (isFuture ? '' : (isToday ? '♡' : ''));
+    const starsStr = rec
+      ? '★'.repeat(rec.stars) + `<span class="off">${'★'.repeat(3 - rec.stars)}</span>`
+      : (isToday ? '오늘' : '');
+    const starsClass = (!rec && isToday) ? 'day-stars today-label' : 'day-stars';
+    cells += `<div class="day-cell${isToday ? ' is-today' : ''}">
       <span class="day-label${isToday ? ' today' : ''}">${DAY_LABELS[i]}</span>
       <div class="${dotClass}">${emoji}</div>
-      <span class="day-stars">${starsStr}</span>
+      <span class="${starsClass}">${starsStr}</span>
     </div>`;
   }
   const streakBadge = streak > 1 ? `<span class="weekly-strip-streak">🔥 ${streak}일 연속!</span>` : '';
