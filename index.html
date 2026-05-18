@@ -338,31 +338,6 @@
     }
     .info-box strong { font-weight: 700; color: var(--pink-d); }
 
-    /* ── Start screen actions group (Let's Play + 복습하기) ── */
-    .start-actions {
-      width: 100%;
-      display: flex; flex-direction: column;
-      gap: 12px;
-      margin-top: 4px;
-    }
-
-    .actions-divider {
-      display: flex; align-items: center; gap: 12px;
-      margin: 10px 4px 6px;
-      color: var(--pink-s);
-      user-select: none;
-    }
-    .actions-divider::before, .actions-divider::after {
-      content: ''; flex: 1; height: 2px;
-      background: repeating-linear-gradient(90deg, #f2c4b3 0 5px, transparent 5px 10px);
-    }
-    .actions-divider .heart {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1rem;
-      color: var(--pink);
-      letter-spacing: 2px;
-    }
-
     /* ── Start button (primary) ── */
     .start-btn {
       position: relative;
@@ -798,6 +773,57 @@
     }
     .hero-mascot { animation: mascot-wave 3.5s ease-in-out infinite; transform-origin: 50% 100%; }
 
+    /* ── Start screen actions group ── */
+    .start-actions {
+      width: 100%;
+      display: flex; flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .actions-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 2px 4px;
+      color: var(--pink-s);
+      user-select: none;
+    }
+    .actions-divider::before, .actions-divider::after {
+      content: ''; flex: 1; height: 2px;
+      background: repeating-linear-gradient(90deg, #f2c4b3 0 5px, transparent 5px 10px);
+    }
+    .actions-divider .heart {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem; color: var(--pink); letter-spacing: 2px;
+    }
+
+    /* ── 두 버튼 행 ── */
+    .two-btn-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; width: 100%;
+    }
+    .short-btn {
+      border: none; border-radius: 22px;
+      padding: 14px 10px 17px;
+      font-family: 'Jua', 'Fredoka', sans-serif; font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer; touch-action: manipulation;
+      transition: transform .1s, box-shadow .1s;
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+    }
+    .short-btn:active { transform: translateY(4px); }
+    .short-btn .btn-icon { font-size: 1.6rem; line-height: 1; display: block; }
+    .review-shortcut {
+      background: linear-gradient(180deg, #ccdaff 0%, var(--blue) 60%, #7aabee 100%);
+      color: white;
+      box-shadow: 0 5px 0 0 #7aabee, 0 12px 22px -8px rgba(122,171,238,0.4);
+    }
+    .review-shortcut:active { box-shadow: 0 1px 0 0 #7aabee; }
+    .quiz-shortcut {
+      background: linear-gradient(180deg, #ff9da6 0%, var(--pink) 60%, var(--pink-d) 100%);
+      color: white;
+      box-shadow: 0 5px 0 0 var(--pink-d), 0 12px 22px -8px rgba(237,117,137,0.45);
+    }
+    .quiz-shortcut:active { box-shadow: 0 1px 0 0 var(--pink-d); }
+
     /* ── Review open button (secondary) ── */
     .review-open-btn {
       width: 100%;
@@ -1000,7 +1026,16 @@
     </div>
 
     <div class="start-actions">
-      <button class="start-btn" onclick="startGame()">Let's Play!</button>
+      <div class="two-btn-row">
+        <button class="short-btn review-shortcut" onclick="startThisWeekReview()">
+          <span class="btn-icon">📖</span>
+          이번 주 복습
+        </button>
+        <button class="short-btn quiz-shortcut" onclick="startGame()">
+          <span class="btn-icon">⭐</span>
+          오늘의 퀴즈
+        </button>
+      </div>
 
       <div class="actions-divider" aria-hidden="true"><span class="heart">♡ ♡ ♡</span></div>
 
@@ -1283,6 +1318,7 @@ function buildGameWords() {
   return shuffle(sel);
 }
 function startGame() { currentMode = 'main'; gameWords = buildGameWords(); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
+function startThisWeekReview() { currentMode = 'review'; selectedReview = WEEK_ORDER[WEEK_ORDER.length - 1]; gameWords = shuffle([...WORDS_DATA[selectedReview].words]); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
 function restartGame() { if (currentMode === 'review') startReviewGame(); else startGame(); }
 function goStart() { initStart(); }
 function loadWord() {
