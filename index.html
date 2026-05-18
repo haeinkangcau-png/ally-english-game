@@ -916,11 +916,7 @@
       box-shadow: inset 0 -2px 0 0 rgba(0,0,0,0.03);
       position: relative;
     }
-    .day-dot .dot-label {
-      position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
-      font-family: 'Jua', sans-serif; font-size: 0.55rem;
-      color: var(--ink-3); white-space: nowrap;
-    }
+    .day-dot .dot-label { display: none; }
     .day-dot.done {
       background: linear-gradient(160deg, #ffc1b3 0%, var(--pink) 100%);
       border-color: var(--pink-d);
@@ -1283,8 +1279,8 @@ function buildWeeklyStrip() {
     cells += `<div class="day-cell${isToday ? ' is-today' : ''}">
       <span class="day-label${isToday ? ' today' : ''}">${DAY_LABELS[i]}</span>
       <div class="day-dots-row">
-        <div class="${mainClass}"><span class="dot-label">문제</span>${mainEmoji}</div>
         <div class="${reviewClass}"><span class="dot-label">복습</span>${reviewEmoji}</div>
+        <div class="${mainClass}"><span class="dot-label">퀴즈</span>${mainEmoji}</div>
       </div>
       <div class="day-bottom">
         ${mainStars ? `<div class="day-stars">${mainStars}</div>` : ''}
