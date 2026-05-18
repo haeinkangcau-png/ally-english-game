@@ -45,16 +45,25 @@ const WORDS_DATA = {
     ]
   },
 
-  /* ── 다음 주차는 여기에 추가 ──
+  /* ── 5월 4주차 ── */
   "may_w4": {
     label: "5월 4주차",
     words: [
-      { word: "apple", meaning: "사과", emoji: "🍎", pron: "ˈæpəl" },
+      { word: "jump",   meaning: "점프",  emoji: "⬆️",  pron: "dʒʌmp"    },
+      { word: "kiwi",   meaning: "키위",  emoji: "🥝",  pron: "ˈkiːwi"   },
+      { word: "king",   meaning: "왕",    emoji: "👑",  pron: "kɪŋ"      },
+      { word: "jam",    meaning: "잼",    emoji: "🍓",  pron: "dʒæm"     },
+      { word: "kid",    meaning: "아이",  emoji: "👦",  pron: "kɪd"      },
+      { word: "lid",    meaning: "뚜껑",  emoji: "🫙",  pron: "lɪd"      },
+      { word: "legs",   meaning: "다리",  emoji: "🦵",  pron: "lɛɡz"     },
+      { word: "lips",   meaning: "입술",  emoji: "👄",  pron: "lɪps"     },
+      { word: "jet",    meaning: "제트기", emoji: "✈️",  pron: "dʒɛt"     },
+      { word: "clown",  meaning: "광대",  emoji: "🤡",  pron: "klaʊn"    },
+      { word: "circle", meaning: "원",    emoji: "⭕",  pron: "ˈsɜːrkəl" },
     ]
   },
-  */
 
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4"];
