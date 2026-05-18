@@ -859,7 +859,7 @@
       display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
     }
     .day-cell {
-      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
       padding: 6px 0 4px;
       border-radius: 14px;
       position: relative;
@@ -875,15 +875,25 @@
       line-height: 1;
     }
     .day-label.today { color: var(--pink-d); }
+    /* 두 개 점 행 */
+    .day-dots-row {
+      display: flex; gap: 4px; align-items: center; justify-content: center;
+    }
     .day-dot {
-      width: 38px; height: 38px;
+      width: 26px; height: 26px;
       border-radius: 50%;
       background: #f8ebe2;
       border: 2px solid #e5d2c5;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.25rem;
+      font-size: 0.85rem;
       transition: transform .2s;
       box-shadow: inset 0 -2px 0 0 rgba(0,0,0,0.03);
+      position: relative;
+    }
+    .day-dot .dot-label {
+      position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
+      font-family: 'Jua', sans-serif; font-size: 0.55rem;
+      color: var(--ink-3); white-space: nowrap;
     }
     .day-dot.done {
       background: linear-gradient(160deg, #ffc1b3 0%, var(--pink) 100%);
@@ -891,6 +901,14 @@
       box-shadow: 0 3px 0 0 var(--pink-d), inset 0 2px 0 0 rgba(255,255,255,0.35);
       color: white;
     }
+    .day-dot.done .dot-label { color: var(--pink-d); }
+    .day-dot.review-done {
+      background: linear-gradient(160deg, #c8d8ff 0%, var(--blue) 100%);
+      border-color: #7aabee;
+      box-shadow: 0 3px 0 0 #7aabee, inset 0 2px 0 0 rgba(255,255,255,0.35);
+      color: white;
+    }
+    .day-dot.review-done .dot-label { color: #5a8fd4; }
     .day-dot.today-empty {
       border-color: var(--pink);
       border-style: dashed;
@@ -898,25 +916,29 @@
       color: var(--pink);
     }
     .day-dot.is-future { opacity: 0.35; }
-    .day-dot.done { animation: dot-pop .4s cubic-bezier(.5,1.6,.45,.9); }
+    .day-dot.done, .day-dot.review-done { animation: dot-pop .4s cubic-bezier(.5,1.6,.45,.9); }
     @keyframes dot-pop {
       0%   { transform: scale(0.6); }
       70%  { transform: scale(1.15); }
       100% { transform: scale(1); }
     }
+    .day-bottom {
+      min-height: 1em;
+      margin-top: 14px;
+    }
     .day-stars {
       font-family: 'Jua', sans-serif;
-      font-size: 0.72rem;
-      letter-spacing: 1px;
-      min-height: 1em; line-height: 1;
+      font-size: 0.65rem;
+      letter-spacing: 0px;
+      line-height: 1;
       color: var(--pink-d);
     }
     .day-stars .off { color: #e5d0c3; }
-    .day-stars.today-label { color: var(--pink-d); font-size: 0.7rem; }
+    .day-stars.today-label { color: var(--pink-d); font-size: 0.65rem; }
     @media (min-width: 720px) {
-      .day-dot { width: 46px; height: 46px; font-size: 1.45rem; }
+      .day-dot { width: 32px; height: 32px; font-size: 1rem; }
       .day-label { font-size: 0.88rem; }
-      .day-stars { font-size: 0.8rem; }
+      .day-stars { font-size: 0.75rem; }
     }
   </style>
 </head>
@@ -1180,12 +1202,14 @@ function getTodayKey() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
-function saveRecord(stars, correct, total) {
+function saveRecord(stars, correct, total, mode) {
   const records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
   const key = getTodayKey();
-  // 오늘 기록이 이미 있으면 별이 더 많은 것만 덮어씀
-  if (!records[key] || stars > records[key].stars) {
-    records[key] = { stars, correct, total, ts: Date.now() };
+  if (!records[key]) records[key] = {};
+  const prev = records[key][mode];
+  // 별이 더 많은 것만 덮어씀
+  if (!prev || stars > prev.stars) {
+    records[key][mode] = { stars, correct, total, ts: Date.now() };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
   }
 }
@@ -1193,39 +1217,44 @@ function buildWeeklyStrip() {
   const records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
   const today = new Date();
   const todayKey = getTodayKey();
-  // 이번 주 월요일 구하기
-  const dow = today.getDay(); // 0=일
+  const dow = today.getDay();
   const mondayOffset = dow === 0 ? -6 : 1 - dow;
   const monday = new Date(today);
   monday.setDate(today.getDate() + mondayOffset);
   const DAY_LABELS = ['월','화','수','목','금','토','일'];
-  // 연속 완료 스트릭 계산
+  // 연속 스트릭: main 또는 review 둘 다 완료한 날 기준
   let streak = 0;
   for (let i = 0; i < 30; i++) {
     const d = new Date(today); d.setDate(today.getDate() - i);
     const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    if (records[k]) streak++; else break;
+    const r = records[k];
+    if (r && (r.main || r.review)) streak++; else break;
   }
   let cells = '';
   for (let i = 0; i < 7; i++) {
     const d = new Date(monday); d.setDate(monday.getDate() + i);
     const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     const isToday = key === todayKey;
-    const rec = records[key];
+    const rec = records[key] || {};
     const isFuture = d > today && !isToday;
-    let dotClass = 'day-dot';
-    if (rec) dotClass += ' done';
-    else if (isToday) dotClass += ' today-empty';
-    else if (isFuture) dotClass += ' is-future';
-    const emoji = rec ? '★' : (isFuture ? '' : (isToday ? '♡' : ''));
-    const starsStr = rec
-      ? '★'.repeat(rec.stars) + `<span class="off">${'★'.repeat(3 - rec.stars)}</span>`
-      : (isToday ? '오늘' : '');
-    const starsClass = (!rec && isToday) ? 'day-stars today-label' : 'day-stars';
+    const mainDone = !!rec.main;
+    const reviewDone = !!rec.review;
+    const mainClass = 'day-dot' + (mainDone ? ' done' : (isToday ? ' today-empty' : (isFuture ? ' is-future' : '')));
+    const reviewClass = 'day-dot' + (reviewDone ? ' review-done' : (isToday ? ' today-empty' : (isFuture ? ' is-future' : '')));
+    const mainEmoji = mainDone ? '⭐' : (isToday && !isFuture ? '♡' : '');
+    const reviewEmoji = reviewDone ? '📖' : (isToday && !isFuture ? '♡' : '');
+    const mainStars = mainDone ? '★'.repeat(rec.main.stars) + `<span class="off">${'★'.repeat(3-rec.main.stars)}</span>` : '';
+    const reviewStars = reviewDone ? '★'.repeat(rec.review.stars) + `<span class="off">${'★'.repeat(3-rec.review.stars)}</span>` : '';
     cells += `<div class="day-cell${isToday ? ' is-today' : ''}">
       <span class="day-label${isToday ? ' today' : ''}">${DAY_LABELS[i]}</span>
-      <div class="${dotClass}">${emoji}</div>
-      <span class="${starsClass}">${starsStr}</span>
+      <div class="day-dots-row">
+        <div class="${mainClass}"><span class="dot-label">문제</span>${mainEmoji}</div>
+        <div class="${reviewClass}"><span class="dot-label">복습</span>${reviewEmoji}</div>
+      </div>
+      <div class="day-bottom">
+        ${mainStars ? `<div class="day-stars">${mainStars}</div>` : ''}
+        ${reviewStars ? `<div class="day-stars" style="color:var(--blue)">${reviewStars}</div>` : ''}
+      </div>
     </div>`;
   }
   const streakBadge = streak > 1 ? `<span class="weekly-strip-streak">🔥 ${streak}일 연속!</span>` : '';
@@ -1386,7 +1415,7 @@ function showResult() {
       section.appendChild(item);
     });
   }
-  saveRecord(stars, cc, gameWords.length);
+  saveRecord(stars, cc, gameWords.length, currentMode);
   buildWeeklyStrip();
   showScreen('screen-result');
   sendResultEmail(uw, cc, stars);
