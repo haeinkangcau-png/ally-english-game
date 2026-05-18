@@ -55,7 +55,7 @@ const WORDS_DATA = {
       { word: "jam",    meaning: "잼",    emoji: "🍓🍇🍑🫐", pron: "dʒæm"     },
       { word: "kid",    meaning: "아이",  emoji: "👦",  pron: "kɪd"      },
       { word: "lid",    meaning: "뚜껑",  emoji: "🫙",  pron: "lɪd"      },
-      { word: "leg",    meaning: "다리",  emoji: "🦵",  pron: "lɛɡ"      },
+      { word: "legs",   meaning: "다리",  emoji: "🦵🦵", pron: "lɛɡz"     },
       { word: "lips",   meaning: "입술",  emoji: "👄",  pron: "lɪps"     },
       { word: "jet",    meaning: "제트기", emoji: "✈️",  pron: "dʒɛt"     },
       { word: "clown",  meaning: "광대",  emoji: "🤡",  pron: "klaʊn"    },
