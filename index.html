@@ -918,19 +918,7 @@
       overflow: hidden;
       flex-shrink: 0;
     }
-    /* 완료 안 된 과거 날 → 미니 레이블 표시 */
-    .day-dot .dot-label {
-      display: block;
-      font-family: 'Jua', sans-serif;
-      font-size: 0.46rem;
-      color: #c8b5ac;
-      line-height: 1;
-      user-select: none;
-    }
-    .day-dot.done .dot-label,
-    .day-dot.review-done .dot-label,
-    .day-dot.today-empty .dot-label,
-    .day-dot.is-future .dot-label { display: none; }
+    .day-dot .dot-label { display: none; }
     .day-dot.done {
       background: linear-gradient(160deg, #ffc1b3 0%, var(--pink) 100%);
       border-color: var(--pink-d);
