@@ -901,38 +901,48 @@
       line-height: 1;
     }
     .day-label.today { color: var(--pink-d); }
-    /* 두 개 점 행 */
+    /* 두 개 점 열 (수직) */
     .day-dots-row {
-      display: flex; gap: 4px; align-items: center; justify-content: center;
+      display: flex; flex-direction: column; gap: 3px; align-items: center; justify-content: center;
     }
     .day-dot {
-      width: 26px; height: 26px;
+      width: 22px; height: 22px;
       border-radius: 50%;
       background: #f8ebe2;
       border: 2px solid #e5d2c5;
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem;
+      font-size: 0.72rem;
       transition: transform .2s;
       box-shadow: inset 0 -2px 0 0 rgba(0,0,0,0.03);
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
     }
-    .day-dot .dot-label { display: none; }
+    /* 완료 안 된 과거 날 → 미니 레이블 표시 */
+    .day-dot .dot-label {
+      display: block;
+      font-family: 'Jua', sans-serif;
+      font-size: 0.46rem;
+      color: #c8b5ac;
+      line-height: 1;
+      user-select: none;
+    }
+    .day-dot.done .dot-label,
+    .day-dot.review-done .dot-label,
+    .day-dot.today-empty .dot-label,
+    .day-dot.is-future .dot-label { display: none; }
     .day-dot.done {
       background: linear-gradient(160deg, #ffc1b3 0%, var(--pink) 100%);
       border-color: var(--pink-d);
       box-shadow: 0 3px 0 0 var(--pink-d), inset 0 2px 0 0 rgba(255,255,255,0.35);
       color: white;
     }
-    .day-dot.done .dot-label { color: var(--pink-d); }
     .day-dot.review-done {
       background: linear-gradient(160deg, #c8d8ff 0%, var(--blue) 100%);
       border-color: #7aabee;
       box-shadow: 0 3px 0 0 #7aabee, inset 0 2px 0 0 rgba(255,255,255,0.35);
       color: white;
     }
-    .day-dot.review-done .dot-label { color: #5a8fd4; }
     .day-dot.today-empty {
       border-color: var(--pink);
       border-style: dashed;
@@ -947,8 +957,8 @@
       100% { transform: scale(1); }
     }
     .day-bottom {
-      min-height: 1em;
-      margin-top: 14px;
+      min-height: 0;
+      margin-top: 4px;
     }
     .day-stars {
       font-family: 'Jua', sans-serif;
@@ -959,23 +969,14 @@
     }
     .day-stars .off { color: #e5d0c3; }
     .day-stars.today-label { color: var(--pink-d); font-size: 0.65rem; }
-    @media (max-width: 420px) {
+    @media (max-width: 380px) {
       .weekly-strip { padding: 14px 10px 18px; }
       .day-row { gap: 2px; }
-      .day-cell { padding: 4px 0 2px; gap: 2px; }
-      .day-dots-row { gap: 2px; }
-      .day-dot { width: 20px; height: 20px; font-size: 0.65rem; }
+      .day-dot { width: 19px; height: 19px; font-size: 0.65rem; }
       .day-label { font-size: 0.68rem; }
-      .day-stars { font-size: 0.6rem; }
-    }
-    @media (min-width: 421px) and (max-width: 520px) {
-      .weekly-strip { padding: 14px 14px 18px; }
-      .day-row { gap: 3px; }
-      .day-dots-row { gap: 3px; }
-      .day-dot { width: 22px; height: 22px; font-size: 0.72rem; }
     }
     @media (min-width: 720px) {
-      .day-dot { width: 32px; height: 32px; font-size: 1rem; }
+      .day-dot { width: 28px; height: 28px; font-size: 0.9rem; }
       .day-label { font-size: 0.88rem; }
       .day-stars { font-size: 0.75rem; }
     }
@@ -1296,8 +1297,8 @@ function buildWeeklyStrip() {
     cells += `<div class="day-cell${isToday ? ' is-today' : ''}">
       <span class="day-label${isToday ? ' today' : ''}">${DAY_LABELS[i]}</span>
       <div class="day-dots-row">
-        <div class="${reviewClass}"><span class="dot-label">복습</span>${reviewEmoji}</div>
-        <div class="${mainClass}"><span class="dot-label">퀴즈</span>${mainEmoji}</div>
+        <div class="${reviewClass}"><span class="dot-label">복</span>${reviewEmoji}</div>
+        <div class="${mainClass}"><span class="dot-label">퀴</span>${mainEmoji}</div>
       </div>
       <div class="day-bottom">
         ${reviewStars ? `<div class="day-stars" style="color:var(--blue)">${reviewStars}</div>` : ''}
