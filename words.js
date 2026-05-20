@@ -67,15 +67,15 @@ const WORDS_DATA = {
   "may_w5": {
     label: "5월 5주차",
     words: [
-      { word: "nine",     meaning: "아홉",  emoji: "9️⃣",  pron: "naɪn"      },
-      { word: "ten",      meaning: "열",    emoji: "🔟",  pron: "tɛn"       },
-      { word: "eleven",   meaning: "열하나", emoji: "1️⃣1️⃣", pron: "ɪˈlɛvən"  },
-      { word: "twelve",   meaning: "열둘",  emoji: "1️⃣2️⃣", pron: "twɛlv"    },
-      { word: "thirteen", meaning: "열셋",  emoji: "1️⃣3️⃣", pron: "ˌθɜːrˈtiːn" },
-      { word: "fourteen", meaning: "열넷",  emoji: "1️⃣4️⃣", pron: "ˌfɔːrˈtiːn" },
-      { word: "hour",     meaning: "시간",  emoji: "🕐",  pron: "aʊər"      },
-      { word: "minute",   meaning: "분",    emoji: "⏱️",  pron: "ˈmɪnɪt"   },
-      { word: "second",   meaning: "초",    emoji: "⚡",  pron: "ˈsɛkənd"  },
+      { word: "nine",     meaning: "아홉",  emoji: "9️⃣",  pron: "naɪn"       },
+      { word: "ten",      meaning: "열",    emoji: "🔟",  pron: "tɛn"        },
+      { word: "eleven",   meaning: "열하나", emoji: "⚽",  pron: "ɪˈlɛvən"   },
+      { word: "twelve",   meaning: "열둘",  emoji: "🕛",  pron: "twɛlv"      },
+      { word: "thirteen", meaning: "열셋",  emoji: "⭐",  pron: "ˌθɜːrˈtiːn" },
+      { word: "fourteen", meaning: "열넷",  emoji: "❤️",  pron: "ˌfɔːrˈtiːn" },
+      { word: "hour",     meaning: "시간",  emoji: "⏰",  pron: "aʊər"       },
+      { word: "minute",   meaning: "분",    emoji: "⏱️",  pron: "ˈmɪnɪt"    },
+      { word: "second",   meaning: "초",    emoji: "⚡",  pron: "ˈsɛkənd"   },
     ]
   },
 

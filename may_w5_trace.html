@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Ally's English Homework - Trace (5월 5주차)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#fff; font-family:'Nunito',sans-serif; }
+
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { margin:0; }
+    .page { margin:0; box-shadow:none; page-break-after:always; }
+    .page:last-child { page-break-after:avoid; }
+  }
+
+  .page {
+    width:210mm; height:297mm;
+    margin:0 auto;
+    background:#fff;
+    padding:8mm 12mm 8mm;
+    display:flex; flex-direction:column;
+  }
+
+  .header {
+    text-align:center; margin-bottom:4mm;
+    border-bottom:2.5px solid #f59e0b; padding-bottom:3mm;
+  }
+  .header h1 { font-family:'Fredoka One',cursive; font-size:26pt; color:#f59e0b; }
+  .header h1 .ally-name { color:#ff6b35; font-size:30pt; }
+  .header p { font-size:11pt; color:#888; margin-top:2mm; }
+
+  .name-row {
+    display:flex; gap:10mm; margin-bottom:5mm;
+    font-size:14pt; color:#555;
+  }
+  .name-row span { display:flex; align-items:center; gap:3mm; }
+  .name-row .ul {
+    display:inline-block; width:50mm; height:8mm;
+    border-bottom:1.5px solid #aaa;
+  }
+
+  .words {
+    flex:1; display:flex; flex-direction:column;
+    justify-content:space-between;
+  }
+
+  .word-block { }
+  .word-label { display:flex; align-items:center; gap:3mm; margin-bottom:2mm; }
+  .word-num {
+    background:#f59e0b; color:#fff; font-size:10pt; font-weight:700;
+    width:6mm; height:6mm; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .word-text { font-family:'Fredoka One',cursive; font-size:15pt; color:#333; }
+  .word-pron { font-size:10pt; color:#999; font-family:'Nunito',sans-serif; }
+  .word-meaning { font-size:11pt; color:#bbb; font-family:'Nunito',sans-serif; }
+  .staff-wrap { margin-bottom:1mm; }
+</style>
+</head>
+<body>
+
+<!-- ▼ 페이지 1: 단어 1~6 ▼ -->
+<div class="page">
+  <div class="header">
+    <h1>✏️ <span class="ally-name">Ally's</span> English Homework</h1>
+    <p>Trace &amp; Write — 5월 5주차 | 이번 주에 공부한 단어를 함께 써 보자!</p>
+  </div>
+  <div class="name-row">
+    <span>Name <span class="ul"></span></span>
+    <span>Date <span class="ul"></span></span>
+  </div>
+  <div class="words" id="words-p1"></div>
+</div>
+
+<!-- ▼ 페이지 2: 단어 7~9 ▼ -->
+<div class="page">
+  <div class="header">
+    <h1>✏️ <span class="ally-name">Ally's</span> English Homework</h1>
+    <p>Trace &amp; Write — 5월 5주차 | 계속 써 보자! 거의 다 왔어!</p>
+  </div>
+  <div class="name-row">
+    <span>Name <span class="ul"></span></span>
+    <span>Date <span class="ul"></span></span>
+  </div>
+  <div class="words" id="words-p2"></div>
+</div>
+
+<script>
+const allWords = [
+  { word:"nine",     meaning:"아홉",  emoji:"9️⃣",  pron:"naɪn"        },
+  { word:"ten",      meaning:"열",    emoji:"🔟",  pron:"tɛn"         },
+  { word:"eleven",   meaning:"열하나", emoji:"⚽",  pron:"ɪˈlɛvən"    },
+  { word:"twelve",   meaning:"열둘",  emoji:"🕛",  pron:"twɛlv"       },
+  { word:"thirteen", meaning:"열셋",  emoji:"⭐",  pron:"ˌθɜːrˈtiːn"  },
+  { word:"fourteen", meaning:"열넷",  emoji:"❤️",  pron:"ˌfɔːrˈtiːn"  },
+  { word:"hour",     meaning:"시간",  emoji:"⏰",  pron:"aʊər"        },
+  { word:"minute",   meaning:"분",    emoji:"⏱️",  pron:"ˈmɪnɪt"     },
+  { word:"second",   meaning:"초",    emoji:"⚡",  pron:"ˈsɛkənd"    },
+];
+
+function makeStaff(traceWord) {
+  const display = traceWord ? (traceWord + '     ' + traceWord) : '';
+  let svg = '<svg width="100%" height="60" viewBox="0 0 800 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">';
+  svg += '<line x1="0" y1="1"  x2="800" y2="1"  stroke="#000" stroke-width="1"   opacity="0.25"/>';
+  svg += '<line x1="0" y1="20" x2="800" y2="20" stroke="#000" stroke-width="1"   opacity="0.25"/>';
+  svg += '<line x1="0" y1="40" x2="800" y2="40" stroke="#c00" stroke-width="1.5" opacity="0.35"/>';
+  svg += '<line x1="0" y1="59" x2="800" y2="59" stroke="#000" stroke-width="1"   opacity="0.25"/>';
+  if (display) {
+    svg += '<text x="10" y="39" font-family="Nunito,sans-serif" font-size="38" font-weight="700" fill="none" stroke="#ccc" stroke-width="1.2" letter-spacing="4">' + display + '</text>';
+  }
+  svg += '</svg>';
+  return '<div class="staff-wrap">' + svg + '</div>';
+}
+
+function renderWords(containerId, words, startIdx) {
+  const container = document.getElementById(containerId);
+  words.forEach((item, i) => {
+    const block = document.createElement('div');
+    block.className = 'word-block';
+    block.innerHTML =
+      '<div class="word-label">' +
+        '<div class="word-num">' + (startIdx + i + 1) + '</div>' +
+        '<span style="font-size:20pt;">' + item.emoji + '</span>' +
+        '<div class="word-text">' + item.word +
+          ' <span class="word-pron">[' + item.pron + ']</span>' +
+          ' <span class="word-meaning">' + item.meaning + '</span>' +
+        '</div>' +
+      '</div>' +
+      makeStaff(item.word);
+    container.appendChild(block);
+  });
+}
+
+renderWords('words-p1', allWords.slice(0, 6), 0);
+renderWords('words-p2', allWords.slice(6),    6);
+</script>
+</body>
+</html>
