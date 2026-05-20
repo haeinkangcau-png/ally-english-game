@@ -915,6 +915,8 @@
       transition: transform .2s;
       box-shadow: inset 0 -2px 0 0 rgba(0,0,0,0.03);
       position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
     }
     .day-dot .dot-label { display: none; }
     .day-dot.done {
@@ -957,6 +959,21 @@
     }
     .day-stars .off { color: #e5d0c3; }
     .day-stars.today-label { color: var(--pink-d); font-size: 0.65rem; }
+    @media (max-width: 420px) {
+      .weekly-strip { padding: 14px 10px 18px; }
+      .day-row { gap: 2px; }
+      .day-cell { padding: 4px 0 2px; gap: 2px; }
+      .day-dots-row { gap: 2px; }
+      .day-dot { width: 20px; height: 20px; font-size: 0.65rem; }
+      .day-label { font-size: 0.68rem; }
+      .day-stars { font-size: 0.6rem; }
+    }
+    @media (min-width: 421px) and (max-width: 520px) {
+      .weekly-strip { padding: 14px 14px 18px; }
+      .day-row { gap: 3px; }
+      .day-dots-row { gap: 3px; }
+      .day-dot { width: 22px; height: 22px; font-size: 0.72rem; }
+    }
     @media (min-width: 720px) {
       .day-dot { width: 32px; height: 32px; font-size: 1rem; }
       .day-label { font-size: 0.88rem; }
