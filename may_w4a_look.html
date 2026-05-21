@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Ally's English Homework - Look &amp; Write (5월 4주차 ①)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#fff; font-family:'Nunito',sans-serif; }
+
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { margin:0; }
+    .page { margin:0; box-shadow:none; page-break-after:always; }
+    .page:last-child { page-break-after:avoid; }
+  }
+
+  .page {
+    width:210mm; height:297mm;
+    margin:0 auto;
+    background:#fff;
+    padding:8mm 12mm 8mm;
+    display:flex; flex-direction:column;
+  }
+
+  .header {
+    text-align:center; margin-bottom:5mm;
+    border-bottom:2.5px solid #6366f1; padding-bottom:4mm;
+  }
+  .header h1 { font-family:'Fredoka One',cursive; font-size:26pt; color:#6366f1; }
+  .header h1 .ally-name { color:#ff6b35; font-size:30pt; }
+  .header p { font-size:11pt; color:#888; margin-top:2mm; }
+
+  .name-row {
+    display:flex; gap:10mm; margin-bottom:5mm;
+    font-size:14pt; color:#555;
+  }
+  .name-row span { display:flex; align-items:center; gap:3mm; }
+  .name-row .ul {
+    display:inline-block; width:50mm; height:8mm;
+    border-bottom:1.5px solid #aaa;
+  }
+
+  .grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:4mm;
+    flex:1;
+  }
+
+  .grid .card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 2mm);
+    margin: 0 auto;
+  }
+
+  .card {
+    border:1.5px solid #e0e7ff; border-radius:3mm;
+    padding:4mm; background:#fafaff;
+    display:flex; flex-direction:column;
+  }
+  .card-top { display:flex; align-items:center; gap:3mm; margin-bottom:2mm; }
+  .card-num {
+    background:#6366f1; color:#fff; font-size:9pt; font-weight:700;
+    width:6mm; height:6mm; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .card-clue { font-size:10pt; color:#6366f1; font-weight:600; }
+  .emoji-box { text-align:center; font-size:48pt; line-height:1; margin-bottom:3mm; }
+  .letter-hint {
+    text-align:center; font-size:18pt; color:#4f46e5;
+    letter-spacing:7px; font-weight:700;
+    font-family:'Fredoka One',cursive; margin-bottom:5mm;
+  }
+  .staff-wrap { margin-top:auto; }
+</style>
+</head>
+<body>
+
+<!-- ▼ 페이지 1: 카드 1~6 ▼ -->
+<div class="page">
+  <div class="header">
+    <h1>🖼️ <span class="ally-name">Ally's</span> English Homework</h1>
+    <p>Look &amp; Write — 5월 4주차 ① | 그림을 보고 어떤 단어인지 맞춰 보자!</p>
+  </div>
+  <div class="name-row">
+    <span>Name <span class="ul"></span></span>
+    <span>Date <span class="ul"></span></span>
+  </div>
+  <div class="grid" id="cards-p1"></div>
+</div>
+
+<!-- ▼ 페이지 2: 카드 7~11 ▼ -->
+<div class="page">
+  <div class="header">
+    <h1>🖼️ <span class="ally-name">Ally's</span> English Homework</h1>
+    <p>Look &amp; Write — 5월 4주차 ① | 계속! 거의 다 왔어!</p>
+  </div>
+  <div class="name-row">
+    <span>Name <span class="ul"></span></span>
+    <span>Date <span class="ul"></span></span>
+  </div>
+  <div class="grid" id="cards-p2"></div>
+</div>
+
+<script>
+const allCards = [
+  { emoji:"⬆️",   hint:"j _ m p",     clue:"높이 뛰어올라요!"       },
+  { emoji:"🥝",   hint:"k _ w _",     clue:"초록색 과일이에요!"      },
+  { emoji:"👑",   hint:"k _ n g",     clue:"왕관을 써요!"            },
+  { emoji:"🍓🍇🍑", hint:"j _ m",    clue:"빵에 발라 먹어요!"       },
+  { emoji:"👦",   hint:"k _ d",       clue:"어린 아이예요!"          },
+  { emoji:"🍯",   hint:"l _ d",       clue:"항아리 위에 있어요!"     },
+  { emoji:"🏃",   hint:"l _ g s",     clue:"걷고 뛸 때 써요!"        },
+  { emoji:"👄",   hint:"l _ p s",     clue:"말할 때 움직여요!"       },
+  { emoji:"✈️",   hint:"j _ t",       clue:"하늘을 빠르게 날아요!"   },
+  { emoji:"🤡",   hint:"c _ _ w n",   clue:"서커스에서 웃겨줘요!"    },
+  { emoji:"⭕",   hint:"c _ r c _ _", clue:"동그란 모양이에요!"      },
+];
+
+function makeStaff() {
+  return '<div class="staff-wrap">' +
+    '<svg width="100%" height="50" viewBox="0 0 600 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">' +
+    '<line x1="0" y1="1"  x2="600" y2="1"  stroke="#000" stroke-width="1"   opacity="0.25"/>' +
+    '<line x1="0" y1="17" x2="600" y2="17" stroke="#000" stroke-width="1"   opacity="0.25"/>' +
+    '<line x1="0" y1="33" x2="600" y2="33" stroke="#c00" stroke-width="1.5" opacity="0.35"/>' +
+    '<line x1="0" y1="49" x2="600" y2="49" stroke="#000" stroke-width="1"   opacity="0.25"/>' +
+    '</svg></div>';
+}
+
+function renderCards(containerId, cards, startIdx) {
+  const container = document.getElementById(containerId);
+  cards.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML =
+      '<div class="card-top">' +
+        '<div class="card-num">' + (startIdx + i + 1) + '</div>' +
+        '<div class="card-clue">' + item.clue + '</div>' +
+      '</div>' +
+      '<div class="emoji-box">' + item.emoji + '</div>' +
+      '<div class="letter-hint">' + item.hint + '</div>' +
+      makeStaff();
+    container.appendChild(card);
+  });
+}
+
+renderCards('cards-p1', allCards.slice(0, 6), 0);
+renderCards('cards-p2', allCards.slice(6),    6);
+</script>
+</body>
+</html>
