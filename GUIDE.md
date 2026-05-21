@@ -165,7 +165,7 @@ jul_w1 ...
 | 5 | acorn | ˈeɪkɔːrn | 도토리 | 🐿️ | a _ _ _ n |
 | 6 | angel | ˈeɪndʒəl | 천사 | 😇 | a _ _ _ l |
 
-### 5월 4주차 (may_w4) — 11단어, 2페이지
+### 5월 4주차 (may_w4) — 20단어, 2페이지씩
 | # | 단어 | 발음기호 | 뜻 | 이모지 | 힌트 |
 |---|------|---------|-----|--------|------|
 | 1 | jump | dʒʌmp | 점프 | ⬆️ | j _ m p |
@@ -179,16 +179,12 @@ jul_w1 ...
 | 9 | jet | dʒɛt | 제트기 | ✈️ | j _ t |
 | 10 | clown | klaʊn | 광대 | 🤡 | c _ _ w n |
 | 11 | circle | ˈsɜːrkəl | 원 | ⭕ | c _ r c _ _ |
-
-### 5월 5주차 (may_w5) — 9단어, 2페이지
-| # | 단어 | 발음기호 | 뜻 | 이모지 | 힌트 |
-|---|------|---------|-----|--------|------|
-| 1 | nine | naɪn | 아홉 | 9️⃣ | n _ _ e |
-| 2 | ten | tɛn | 열 | 🔟 | t _ n |
-| 3 | eleven | ɪˈlɛvən | 열하나 | ⚽ | e _ _ v _ n |
-| 4 | twelve | twɛlv | 열둘 | 🕛 | t _ _ l _ e |
-| 5 | thirteen | ˌθɜːrˈtiːn | 열셋 | ⭐ | t _ _ r _ _ _ n |
-| 6 | fourteen | ˌfɔːrˈtiːn | 열넷 | ❤️ | f _ _ r _ _ _ n |
-| 7 | hour | aʊər | 시간 | ⏰ | h _ _ r |
-| 8 | minute | ˈmɪnɪt | 분 | ⏱️ | m _ n _ t _ |
-| 9 | second | ˈsɛkənd | 초 | ⚡ | s _ c _ n _ |
+| 12 | nine | naɪn | 아홉 | 9️⃣ | n _ _ e |
+| 13 | ten | tɛn | 열 | 🔟 | t _ n |
+| 14 | eleven | ɪˈlɛvən | 열하나 | ⚽ | e _ _ v _ n |
+| 15 | twelve | twɛlv | 열둘 | 🕛 | t _ _ l _ e |
+| 16 | thirteen | ˌθɜːrˈtiːn | 열셋 | ⭐ | t _ _ r _ _ _ n |
+| 17 | fourteen | ˌfɔːrˈtiːn | 열넷 | ❤️ | f _ _ r _ _ _ n |
+| 18 | hour | aʊər | 시간 | ⏰ | h _ _ r |
+| 19 | minute | ˈmɪnɪt | 분 | ⏱️ | m _ n _ t _ |
+| 20 | second | ˈsɛkənd | 초 | ⚡ | s _ c _ n _ |
