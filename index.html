@@ -1274,7 +1274,7 @@
       </div>
 
       <button class="conv-shortcut-btn" onclick="startConvGame()">
-        오늘의 대화
+        💬 오늘의 대화
       </button>
 
       <div class="actions-divider" aria-hidden="true"><span class="heart">♡ ♡ ♡</span></div>
@@ -1642,16 +1642,23 @@ function revealFirstLetter() {
 }
 function revealHalfLetters() {
   const w = gameWords[currentIdx];
-  const revealCount = Math.ceil(w.word.length / 2);
-  for (let i = 0; i < revealCount; i++) {
+  // Reveal about half+1 letters at RANDOM positions, always leave at least 1 for the player
+  const revealCount = Math.min(Math.ceil(w.word.length / 2) + 1, w.word.length - 1);
+  const revealPositions = shuffle(Array.from({length: w.word.length}, (_, i) => i)).slice(0, revealCount);
+  revealPositions.forEach(i => {
     const t = document.getElementById('tile-' + i);
     t.textContent = w.word[i]; t.classList.add('revealed'); t.classList.remove('current');
+  });
+  // Advance filledCount to the first unrevealed tile from the left
+  filledCount = 0;
+  while (filledCount < w.word.length && document.getElementById('tile-' + filledCount).classList.contains('revealed')) {
+    filledCount++;
   }
-  filledCount = revealCount;
-  if (revealCount < w.word.length) {
-    document.getElementById('tile-' + revealCount).classList.add('current');
+  if (filledCount < w.word.length) {
+    document.getElementById('tile-' + filledCount).classList.add('current');
+  } else {
+    setTimeout(() => wordComplete(), 300);
   }
-  if (revealCount >= w.word.length) setTimeout(() => wordComplete(), 300);
 }
 function buildLetterButtons(word) {
   const needed = [...new Set(word.split(''))], all = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -1688,6 +1695,10 @@ function handleTap(letter, btn) {
     const t = document.getElementById('tile-' + filledCount);
     t.textContent = letter; t.classList.add('filled'); t.classList.remove('current'); triggerAnim(t, 'pop');
     filledCount++; playSound('correct');
+    // Skip over any pre-revealed tiles
+    while (filledCount < w.word.length && document.getElementById('tile-' + filledCount).classList.contains('revealed')) {
+      filledCount++;
+    }
     if (filledCount < w.word.length) document.getElementById('tile-' + filledCount).classList.add('current');
     else wordComplete();
   } else {
