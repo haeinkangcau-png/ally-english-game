@@ -1235,11 +1235,11 @@
 
     <div class="weekly-strip" id="weeklyStrip"></div>
 
-    <div class="section-label">
+    <div class="section-label" style="display:none">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
       난이도 골라봐!
     </div>
-    <div class="difficulty-row">
+    <div class="difficulty-row" style="display:none">
       <button class="diff-btn selected" id="diff-very-easy" data-d="very-easy" onclick="selectDiff('very-easy')">
         <span class="d-face">🌸</span>
         <span class="d-name">아주쉬움</span>
@@ -1280,7 +1280,7 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h11v18H6a2 2 0 01-2-2V5z"/><path d="M9 7h6M9 11h6"/></svg>
         복습하기
       </button>
-      <button class="vt-btn" onclick="openVoiceTest()">🎙️ 목소리 테스트</button>
+      <button class="vt-btn" onclick="openVoiceTest()" style="display:none">🎙️ 목소리 테스트</button>
     </div>
   </div>
 
@@ -1303,11 +1303,11 @@
     </div>
     <div class="review-list visible" id="reviewList"></div>
 
-    <div class="section-label">
+    <div class="section-label" style="display:none">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
       난이도 골라봐!
     </div>
-    <div class="difficulty-row">
+    <div class="difficulty-row" style="display:none">
       <button class="diff-btn selected" id="rdiff-very-easy" data-d="very-easy" onclick="selectDiff('very-easy','r')">
         <span class="d-face">🌸</span>
         <span class="d-name">아주쉬움</span>
@@ -1396,22 +1396,20 @@
       <div class="progress-label" id="convProgressLabel">1 / 2</div>
     </div>
 
-    <div class="conv-chat-area">
-      <img class="conv-bunny-char" src="assets/bunny.png" alt="Bun Bun">
-      <div class="conv-speech-bubble">
-        <div class="conv-bun-name">🐰 Bun Bun</div>
-        <div class="conv-question-text" id="convQuestionText"></div>
-        <div class="conv-korean-hint" id="convKoreanQuestion"></div>
-        <div class="conv-bubble-actions">
-          <button class="speak-btn" onclick="speakConvQuestion()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 010 6"/><path d="M19 6a8 8 0 010 12"/></svg>
-            질문 듣기
-          </button>
-          <button class="conv-korean-btn" id="convKoreanToggle" onclick="toggleConvKorean()">
-            🇰🇷 한국어 표현 보기
-          </button>
-        </div>
+    <div class="conv-question-card">
+      <div class="conv-tag">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+        어떻게 대답할까?
       </div>
+      <div class="conv-question-text" id="convQuestionText"></div>
+      <div class="conv-korean-hint" id="convKoreanQuestion"></div>
+      <button class="speak-btn" onclick="speakConvQuestion()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 010 6"/><path d="M19 6a8 8 0 010 12"/></svg>
+        질문 듣기
+      </button>
+      <button class="conv-korean-btn" id="convKoreanToggle" onclick="toggleConvKorean()">
+        🇰🇷 한국어 표현 보기
+      </button>
     </div>
 
     <div class="conv-choices" id="convChoices"></div>

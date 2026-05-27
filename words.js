@@ -72,10 +72,27 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 5월 5주차 ── */
+  "may_w5": {
+    label: "5월 5주차",
+    words: [
+      { word: "eleven",    meaning: "열하나", emoji: "⚽",   pron: "ɪˈlɛvən"    },
+      { word: "twelve",    meaning: "열둘",   emoji: "🕛",   pron: "twɛlv"       },
+      { word: "thirteen",  meaning: "열셋",   emoji: "🌙",   pron: "ˌθɜːrˈtiːn" },
+      { word: "fourteen",  meaning: "열넷",   emoji: "❤️",   pron: "ˌfɔːrˈtiːn" },
+      { word: "fifteen",   meaning: "열다섯", emoji: "🎯",   pron: "ˌfɪfˈtiːn"  },
+      { word: "sixteen",   meaning: "열여섯", emoji: "🎲",   pron: "ˌsɪksˈtiːn" },
+      { word: "seventeen", meaning: "열일곱", emoji: "🌟",   pron: "ˌsɛvənˈtiːn"},
+      { word: "eighteen",  meaning: "열여덟", emoji: "🎂",   pron: "ˌeɪˈtiːn"   },
+      { word: "nineteen",  meaning: "열아홉", emoji: "🎸",   pron: "ˌnaɪnˈtiːn" },
+      { word: "twenty",    meaning: "스물",   emoji: "🎉",   pron: "ˈtwɛnti"    },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기
