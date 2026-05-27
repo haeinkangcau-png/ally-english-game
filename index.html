@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -1068,6 +1068,10 @@
       font-family: 'Jua', sans-serif; font-size: 0.82rem;
       color: var(--lav); line-height: 1.2;
     }
+    .conv-choice-row {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+    }
+    .conv-choice-row .conv-choice-btn { flex: 1; min-width: 0; }
     .choice-speak-btn {
       flex: 0 0 auto;
       width: 34px; height: 34px; border-radius: 50%;
@@ -1270,8 +1274,7 @@
       </div>
 
       <button class="conv-shortcut-btn" onclick="startConvGame()">
-        <span class="btn-icon">�</span>
-        Talk to Bun Bun
+        오늘의 대화
       </button>
 
       <div class="actions-divider" aria-hidden="true"><span class="heart">♡ ♡ ♡</span></div>
@@ -1407,12 +1410,12 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 010 6"/><path d="M19 6a8 8 0 010 12"/></svg>
         질문 듣기
       </button>
-      <button class="conv-korean-btn" id="convKoreanToggle" onclick="toggleConvKorean()">
-        🇰🇷 한국어 표현 보기
-      </button>
     </div>
 
     <div class="conv-choices" id="convChoices"></div>
+    <button class="conv-korean-btn" id="convKoreanToggle" onclick="toggleConvKorean()" style="margin-top:8px">
+      🇰🇷 한국어 표현 보기
+    </button>
   </div>
 
   </div><!-- /.stage -->
@@ -1848,6 +1851,7 @@ function renderConvChoices() {
   container.innerHTML = '';
   const labels = ['①', '②', '③', '④'];
   convChoicesData.forEach((choice, i) => {
+    const row = document.createElement('div'); row.className = 'conv-choice-row';
     const btn = document.createElement('div');
     btn.className = 'conv-choice-btn'; btn.id = 'conv-choice-' + i;
     const num = document.createElement('span'); num.className = 'choice-num'; num.textContent = labels[i];
@@ -1855,12 +1859,13 @@ function renderConvChoices() {
     const text = document.createElement('span'); text.className = 'choice-text'; text.textContent = choice.text;
     const korean = document.createElement('span'); korean.className = 'choice-korean'; korean.id = 'choice-korean-' + i; korean.textContent = choice.korean || '';
     textGroup.appendChild(text); textGroup.appendChild(korean);
+    btn.appendChild(num); btn.appendChild(textGroup);
+    btn.addEventListener('click', () => selectConvAnswer(i));
     const spk = document.createElement('button'); spk.className = 'choice-speak-btn';
     spk.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15 9a4 4 0 010 6"/></svg>`;
-    spk.addEventListener('click', e => { e.stopPropagation(); speakConvVoice(choice.text); });
-    btn.appendChild(num); btn.appendChild(textGroup); btn.appendChild(spk);
-    btn.addEventListener('click', () => selectConvAnswer(i));
-    container.appendChild(btn);
+    spk.addEventListener('click', () => speakConvVoice(choice.text));
+    row.appendChild(btn); row.appendChild(spk);
+    container.appendChild(row);
   });
 }
 function selectConvAnswer(idx) {
