@@ -1894,7 +1894,7 @@ function speakConvVoice(text) {
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-US'; u.rate = 0.72; u.pitch = 1.9;
+  u.lang = 'en-US'; u.rate = 1.0; u.pitch = 1.8;
   const voices = window.speechSynthesis.getVoices();
   const preferred = ['Zira', 'Samantha', 'Karen', 'Eva', 'Victoria', 'Aria', 'Jenny', 'Moira', 'Tessa'];
   const v = voices.find(v => v.lang.startsWith('en') && preferred.some(n => v.name.includes(n)));
@@ -1914,7 +1914,7 @@ const VOICE_PRESETS = [
   { label: '높고 활발하게',      pitch: 1.8, rate: 1.15 },
   { label: '매우 높게',          pitch: 2.0, rate: 1.0  },
   { label: '매우 높고 빠르게',   pitch: 2.0, rate: 1.15 },
-  { label: '현재 설정 ★',       pitch: 1.9, rate: 0.72, current: true },
+  { label: '현재 설정 ★',       pitch: 1.8, rate: 1.0,  current: true },
 ];
 let _deviceVoices = [];
 function buildDeviceVoices() {
