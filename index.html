@@ -968,6 +968,184 @@
       .day-label { font-size: 0.88rem; }
       .day-stars { font-size: 0.75rem; }
     }
+
+    /* ═══════════════════════════════════════
+       CONVERSATION GAME (대답 고르기)
+       ═══════════════════════════════════════ */
+    .conv-shortcut-btn {
+      width: 100%;
+      border: none; border-radius: 22px;
+      padding: 14px 20px 17px;
+      font-family: 'Jua', 'Fredoka', sans-serif; font-weight: 700;
+      font-size: 1.15rem;
+      cursor: pointer; touch-action: manipulation;
+      transition: transform .1s, box-shadow .1s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: linear-gradient(180deg, #ddd2ff 0%, var(--lav) 60%, #9b89d8 100%);
+      color: white;
+      box-shadow: 0 5px 0 0 #9b89d8, 0 12px 22px -8px rgba(155,137,216,0.4);
+    }
+    .conv-shortcut-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 0 #9b89d8; }
+    .conv-shortcut-btn .btn-icon { font-size: 1.5rem; }
+
+    .conv-question-card {
+      position: relative;
+      width: 100%;
+      background: var(--paper);
+      border-radius: 32px;
+      box-shadow: var(--sh-card);
+      padding: 42px 24px 28px;
+      display: flex; flex-direction: column; align-items: center;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .conv-question-card::before {
+      content: ''; position: absolute; top: 14px; left: 14px; right: 14px; bottom: 14px;
+      border-radius: 22px;
+      border: 2px dashed #e8d8ff;
+      pointer-events: none; opacity: 0.6;
+    }
+    .conv-tag {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--lav); color: white;
+      font-family: 'Jua', sans-serif; font-size: 0.85rem;
+      padding: 4px 16px 3px; border-radius: 999px;
+      box-shadow: 0 3px 0 0 #9b89d8;
+      white-space: nowrap;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .conv-tag svg { width: 13px; height: 13px; }
+    .conv-question-text {
+      font-family: 'Fredoka', 'Jua', sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.35rem, 5vw, 1.75rem);
+      color: var(--ink); line-height: 1.35;
+      margin: 10px 0 20px; z-index: 2;
+    }
+
+    .conv-choices {
+      display: flex; flex-direction: column; gap: 10px; width: 100%;
+    }
+    .conv-choice-btn {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--paper);
+      border-radius: 20px;
+      border: 2.5px solid var(--line);
+      padding: 13px 14px;
+      cursor: pointer; touch-action: manipulation;
+      transition: transform .12s, box-shadow .12s, background .15s, border-color .15s;
+      box-shadow: 0 4px 0 0 #f0d8cf;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .conv-choice-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #f0d8cf; }
+    .conv-choice-btn.conv-correct {
+      background: linear-gradient(180deg, #e8fff5 0%, #cffaeb 100%);
+      border-color: var(--mint); box-shadow: 0 4px 0 0 #6abf9a;
+    }
+    .conv-choice-btn.conv-wrong {
+      background: linear-gradient(180deg, #ffe0e5 0%, #ffc8d0 100%);
+      border-color: var(--pink); box-shadow: 0 4px 0 0 var(--pink-d);
+    }
+    .conv-choice-btn.conv-correct .choice-text { color: #2a7a5a; }
+    .conv-choice-btn.conv-wrong   .choice-text { color: var(--pink-d); }
+    .choice-num {
+      flex: 0 0 auto;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--pink-s);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Jua', sans-serif; font-size: 0.85rem; color: var(--pink-d);
+    }
+    .conv-choice-btn.conv-correct .choice-num { background: var(--mint); color: white; }
+    .conv-choice-btn.conv-wrong   .choice-num { background: var(--pink); color: white; }
+    .choice-text-group { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .choice-text {
+      font-family: 'Fredoka', sans-serif; font-weight: 600;
+      font-size: 1.08rem; color: var(--ink); line-height: 1.3; text-align: left;
+    }
+    .choice-korean {
+      display: none;
+      font-family: 'Jua', sans-serif; font-size: 0.82rem;
+      color: var(--lav); line-height: 1.2;
+    }
+    .choice-speak-btn {
+      flex: 0 0 auto;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: white; border: none;
+      cursor: pointer; touch-action: manipulation;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 0 0 var(--pink-s), inset 0 0 0 1.5px var(--pink-s);
+      transition: transform .1s; color: var(--pink-d);
+    }
+    .choice-speak-btn:active { transform: scale(0.88); }
+    .choice-speak-btn svg { width: 15px; height: 15px; }
+
+    .day-dot.conv-done {
+      background: linear-gradient(160deg, #d8c8ff 0%, var(--lav) 100%);
+      border-color: #9b89d8;
+      box-shadow: 0 3px 0 0 #9b89d8, inset 0 2px 0 0 rgba(255,255,255,0.35);
+      color: white;
+    }
+    .conv-korean-hint {
+      display: none;
+      font-family: 'Jua', sans-serif; font-size: 1rem;
+      color: var(--lav);
+      background: #f1ebff; padding: 6px 18px 5px; border-radius: 999px;
+      margin-bottom: 4px; z-index: 2;
+    }
+    .conv-korean-btn {
+      background: transparent; border: none;
+      padding: 5px 14px;
+      font-family: 'Pretendard Variable', Pretendard, sans-serif; font-weight: 700;
+      font-size: 0.88rem; color: var(--ink-3);
+      cursor: pointer; touch-action: manipulation;
+      transition: color .2s;
+      display: inline-flex; align-items: center; gap: 5px; z-index: 2;
+    }
+    .conv-korean-btn:active { color: var(--lav); }
+
+    /* ── Bun Bun chat layout ── */
+    .conv-chat-area {
+      width: 100%;
+      display: flex; flex-direction: column; align-items: center;
+      margin-bottom: 16px;
+    }
+    .conv-bunny-char {
+      width: 110px; height: auto;
+      filter: drop-shadow(0 6px 14px rgba(200,130,160,0.3));
+      animation: mascot-wave 3.5s ease-in-out infinite;
+      transform-origin: 50% 100%;
+      position: relative; z-index: 2;
+      margin-bottom: -4px;
+    }
+    .conv-speech-bubble {
+      position: relative;
+      width: 100%;
+      background: white;
+      border-radius: 28px;
+      padding: 22px 22px 18px;
+      box-shadow: var(--sh-card);
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .conv-speech-bubble::before {
+      content: '';
+      position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;
+      border-bottom: 15px solid white;
+    }
+    .conv-bun-name {
+      font-family: 'Fredoka', 'Jua', sans-serif; font-weight: 700;
+      font-size: 0.95rem; color: var(--pink-d);
+      background: var(--pink-x); padding: 3px 14px 2px; border-radius: 999px;
+      margin-bottom: 10px;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .conv-bubble-actions {
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      margin-top: 6px;
+    }
   </style>
 </head>
 <body>
@@ -1038,6 +1216,11 @@
           오늘의 퀴즈
         </button>
       </div>
+
+      <button class="conv-shortcut-btn" onclick="startConvGame()">
+        <span class="btn-icon">�</span>
+        Talk to Bun Bun
+      </button>
 
       <div class="actions-divider" aria-hidden="true"><span class="heart">♡ ♡ ♡</span></div>
 
@@ -1146,6 +1329,39 @@
       </div>
       <div class="email-status" id="emailStatus"></div>
     </div>
+  </div>
+
+  <!-- ═══ CONVERSATION GAME SCREEN ═══ -->
+  <div class="screen" id="screen-conv">
+    <div class="top-bar">
+      <button class="home-btn" onclick="goStart()" aria-label="처음으로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8"/><path d="M5 10v10h14V10"/></svg>
+      </button>
+      <div class="progress-track">
+        <div class="progress-fill" id="convProgressFill"></div>
+      </div>
+      <div class="progress-label" id="convProgressLabel">1 / 2</div>
+    </div>
+
+    <div class="conv-chat-area">
+      <img class="conv-bunny-char" src="assets/bunny.png" alt="Bun Bun">
+      <div class="conv-speech-bubble">
+        <div class="conv-bun-name">🐰 Bun Bun</div>
+        <div class="conv-question-text" id="convQuestionText"></div>
+        <div class="conv-korean-hint" id="convKoreanQuestion"></div>
+        <div class="conv-bubble-actions">
+          <button class="speak-btn" onclick="speakConvQuestion()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 010 6"/><path d="M19 6a8 8 0 010 12"/></svg>
+            질문 듣기
+          </button>
+          <button class="conv-korean-btn" id="convKoreanToggle" onclick="toggleConvKorean()">
+            🇰🇷 한국어 표현 보기
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="conv-choices" id="convChoices"></div>
   </div>
 
   </div><!-- /.stage -->
@@ -1265,7 +1481,7 @@ function buildWeeklyStrip() {
     const d = new Date(today); d.setDate(today.getDate() - i);
     const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     const r = records[k];
-    if (r && (r.main || r.review)) streak++; else break;
+    if (r && (r.main || r.review || r.conv)) streak++; else break;
   }
   let cells = '';
   for (let i = 0; i < 7; i++) {
@@ -1276,21 +1492,27 @@ function buildWeeklyStrip() {
     const isFuture = d > today && !isToday;
     const mainDone = !!rec.main;
     const reviewDone = !!rec.review;
+    const convDone = !!rec.conv;
     const mainClass = 'day-dot' + (mainDone ? ' done' : (isToday ? ' today-empty' : (isFuture ? ' is-future' : '')));
     const reviewClass = 'day-dot' + (reviewDone ? ' review-done' : (isToday ? ' today-empty' : (isFuture ? ' is-future' : '')));
+    const convClass = 'day-dot' + (convDone ? ' conv-done' : (isToday ? ' today-empty' : (isFuture ? ' is-future' : '')));
     const mainEmoji = mainDone ? '⭐' : (isToday && !isFuture ? '♡' : '');
     const reviewEmoji = reviewDone ? '📖' : (isToday && !isFuture ? '♡' : '');
+    const convEmoji = convDone ? '💬' : (isToday && !isFuture ? '♡' : '');
     const mainStars = mainDone ? '★'.repeat(rec.main.stars) + `<span class="off">${'★'.repeat(3-rec.main.stars)}</span>` : '';
     const reviewStars = reviewDone ? '★'.repeat(rec.review.stars) + `<span class="off">${'★'.repeat(3-rec.review.stars)}</span>` : '';
+    const convStars = convDone ? '★'.repeat(rec.conv.stars) + `<span class="off">${'★'.repeat(3-rec.conv.stars)}</span>` : '';
     cells += `<div class="day-cell${isToday ? ' is-today' : ''}">
       <span class="day-label${isToday ? ' today' : ''}">${DAY_LABELS[i]}</span>
       <div class="day-dots-row">
         <div class="${reviewClass}"><span class="dot-label">복</span>${reviewEmoji}</div>
         <div class="${mainClass}"><span class="dot-label">퀴</span>${mainEmoji}</div>
+        <div class="${convClass}"><span class="dot-label">말</span>${convEmoji}</div>
       </div>
       <div class="day-bottom">
         ${reviewStars ? `<div class="day-stars" style="color:var(--blue)">${reviewStars}</div>` : ''}
         ${mainStars ? `<div class="day-stars">${mainStars}</div>` : ''}
+        ${convStars ? `<div class="day-stars" style="color:var(--lav)">${convStars}</div>` : ''}
       </div>
     </div>`;
   }
@@ -1321,7 +1543,7 @@ function buildGameWords() {
 }
 function startGame() { currentMode = 'main'; gameWords = buildGameWords(); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
 function startThisWeekReview() { currentMode = 'review'; selectedReview = WEEK_ORDER[WEEK_ORDER.length - 1]; gameWords = shuffle([...WORDS_DATA[selectedReview].words]); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
-function restartGame() { if (currentMode === 'review') startReviewGame(); else startGame(); }
+function restartGame() { if (currentMode === 'conv') startConvGame(); else if (currentMode === 'review') startReviewGame(); else startGame(); }
 function goStart() { initStart(); }
 function loadWord() {
   const w = gameWords[currentIdx];
@@ -1527,6 +1749,142 @@ function playSound(type) {
     }
   } catch(e) {}
 }
+/* ─── Conversation Game (대답 고르기) ───────── */
+let convQuestions = [], convCurrentIdx = 0, convWrong = 0, convWrongQuestions = [], convChoicesData = [], convAnswered = false, convShowKorean = false;
+
+function startConvGame() {
+  currentMode = 'conv';
+  const latestKey = CONVERSATION_WEEK_ORDER[CONVERSATION_WEEK_ORDER.length - 1];
+  const base = CONVERSATION_DATA[latestKey].questions;
+  convQuestions = shuffle([...base, ...base, ...base]);
+  convCurrentIdx = 0; convWrong = 0; convWrongQuestions = []; convAnswered = false; convShowKorean = false;
+  showScreen('screen-conv');
+  loadConvQuestion();
+}
+function loadConvQuestion() {
+  const q = convQuestions[convCurrentIdx];
+  convAnswered = false;
+  const pct = (convCurrentIdx / convQuestions.length) * 100;
+  document.getElementById('convProgressFill').style.width = pct + '%';
+  document.getElementById('convProgressLabel').textContent = `${convCurrentIdx + 1} / ${convQuestions.length}`;
+  document.getElementById('convQuestionText').textContent = q.question;
+  // 1 correct + 3 wrong
+  const correctAnswer = q.correct[Math.floor(Math.random() * q.correct.length)];
+  const wrongPool = shuffle([...q.wrong]);
+  convChoicesData = shuffle([
+    { text: correctAnswer.text, korean: correctAnswer.korean, isCorrect: true },
+    ...wrongPool.slice(0, 3).map(t => ({ text: t.text, korean: t.korean, isCorrect: false }))
+  ]);
+  renderConvChoices();
+  applyConvKorean();
+  setTimeout(() => speakConvVoice(q.question), 450);
+}
+function renderConvChoices() {
+  const container = document.getElementById('convChoices');
+  container.innerHTML = '';
+  const labels = ['①', '②', '③', '④'];
+  convChoicesData.forEach((choice, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'conv-choice-btn'; btn.id = 'conv-choice-' + i;
+    const num = document.createElement('span'); num.className = 'choice-num'; num.textContent = labels[i];
+    const textGroup = document.createElement('span'); textGroup.className = 'choice-text-group';
+    const text = document.createElement('span'); text.className = 'choice-text'; text.textContent = choice.text;
+    const korean = document.createElement('span'); korean.className = 'choice-korean'; korean.id = 'choice-korean-' + i; korean.textContent = choice.korean || '';
+    textGroup.appendChild(text); textGroup.appendChild(korean);
+    const spk = document.createElement('button'); spk.className = 'choice-speak-btn';
+    spk.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15 9a4 4 0 010 6"/></svg>`;
+    spk.addEventListener('click', e => { e.stopPropagation(); speakConvVoice(choice.text); });
+    btn.appendChild(num); btn.appendChild(textGroup); btn.appendChild(spk);
+    btn.addEventListener('click', () => selectConvAnswer(i));
+    container.appendChild(btn);
+  });
+}
+function selectConvAnswer(idx) {
+  if (convAnswered) return;
+  convAnswered = true;
+  const chosen = convChoicesData[idx];
+  convChoicesData.forEach((c, i) => {
+    const btn = document.getElementById('conv-choice-' + i);
+    btn.style.pointerEvents = 'none';
+    if (c.isCorrect) btn.classList.add('conv-correct');
+    else if (i === idx) btn.classList.add('conv-wrong');
+  });
+  if (!chosen.isCorrect) {
+    convWrong++;
+    const correct = convChoicesData.find(c => c.isCorrect);
+    convWrongQuestions.push({ question: convQuestions[convCurrentIdx].question, correctAnswer: correct.text });
+    playSound('wrong');
+    setTimeout(() => speakConvVoice(correct.text), 600);
+  } else {
+    playSound('complete');
+    speakConvVoice(chosen.text);
+  }
+  setTimeout(() => {
+    convCurrentIdx++;
+    if (convCurrentIdx < convQuestions.length) loadConvQuestion(); else showConvResult();
+  }, 2200);
+}
+function speakConvVoice(text) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 0.72; u.pitch = 1.9;
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = ['Zira', 'Samantha', 'Karen', 'Eva', 'Victoria', 'Aria', 'Jenny', 'Moira', 'Tessa'];
+  const v = voices.find(v => v.lang.startsWith('en') && preferred.some(n => v.name.includes(n)));
+  if (v) u.voice = v;
+  window.speechSynthesis.speak(u);
+}
+function speakConvQuestion() { if (convQuestions[convCurrentIdx]) speakConvVoice(convQuestions[convCurrentIdx].question); }
+function applyConvKorean() {
+  const toggleBtn = document.getElementById('convKoreanToggle');
+  const qKorean = document.getElementById('convKoreanQuestion');
+  const q = convQuestions[convCurrentIdx];
+  if (qKorean) {
+    qKorean.textContent = q ? (q.questionKorean || '') : '';
+    qKorean.style.display = convShowKorean ? 'block' : 'none';
+  }
+  if (toggleBtn) toggleBtn.textContent = convShowKorean ? '🇰🇷 한국어 숨기기' : '🇰🇷 한국어 표현 보기';
+  convChoicesData.forEach((c, i) => {
+    const el = document.getElementById('choice-korean-' + i);
+    if (el) el.style.display = convShowKorean ? 'block' : 'none';
+  });
+}
+function toggleConvKorean() { convShowKorean = !convShowKorean; applyConvKorean(); }
+function showConvResult() {
+  const total = convQuestions.length, correct = total - convWrong;
+  let stars;
+  if (convWrong === 0) stars = 3;
+  else if (convWrong < total) stars = 2;
+  else stars = 1;
+  document.getElementById('starsDisplay').innerHTML = [0,1,2].map(i => starSvg(i < stars)).join('');
+  const msgs = [
+    ['다시 한번 해봐요!', '괜찮아요, 연습하면 잘할 수 있어요!'],
+    ['잘하고 있어요!',   '다음엔 더 잘할 수 있을 거예요!'],
+    ['아주 잘했어요!',   '거의 다 맞췄어요 👏'],
+    ['완벽해요! 🎉',     '모든 대화를 완벽히 맞췄어요!']
+  ];
+  const [mm, sm] = msgs[stars];
+  document.getElementById('resultMsg').textContent = `${total}개 중 ${correct}개 정답! ${mm}`;
+  document.getElementById('resultSub').textContent = sm;
+  const section = document.getElementById('wrongSection'); section.innerHTML = '';
+  if (convWrongQuestions.length > 0) {
+    const h = document.createElement('div'); h.className = 'wrong-header';
+    h.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.9l-6.2 4.4 2.4-7.4L2 9.4h7.6z"/></svg> 다시 확인해요`;
+    section.appendChild(h);
+    convWrongQuestions.forEach(wq => {
+      const item = document.createElement('div'); item.className = 'wrong-item';
+      item.style.cssText = 'flex-direction:column;align-items:flex-start;gap:4px';
+      item.innerHTML = `<div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:0.95rem;color:var(--ink-2)">${wq.question}</div><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:1.1rem;color:var(--pink-d)">✓ ${wq.correctAnswer}</div>`;
+      section.appendChild(item);
+    });
+  }
+  saveRecord(stars, correct, total, 'conv');
+  buildWeeklyStrip();
+  document.getElementById('emailStatus').textContent = '';
+  showScreen('screen-result');
+}
+
 initStart();
 </script>
 </body>

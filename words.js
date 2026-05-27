@@ -76,3 +76,85 @@ const WORDS_DATA = {
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
 const WEEK_ORDER = ["may_w2", "may_w3", "may_w4"];
+
+/* ══════════════════════════════════════════════
+   대화 게임 데이터 — 표현 듣고 대답 고르기
+   ══════════════════════════════════════════════
+   필드 설명:
+     question : 질문 문장
+     correct  : 올바른 대답 후보 (게임마다 1개 랜덤 선택)
+     wrong    : 틀린 대답 후보 (게임마다 3개 랜덤 선택)
+*/
+const CONVERSATION_DATA = {
+
+  /* ── 5월 5주차 ── */
+  "may_conv_w1": {
+    label: "5월 5주차",
+    questions: [
+      {
+        question: "How are you today?",
+        questionKorean: "오늘 어떻게 지냈어요?",
+        correct: [
+          { text: "I'm pretty good!",   korean: "꽤 잘 지내요!" },
+          { text: "I'm great, thanks!", korean: "너무 좋아요, 고마워요!" },
+          { text: "Not bad, thanks!",   korean: "나쁘지 않아요, 고마워요!" },
+          { text: "I'm doing well!",    korean: "잘 지내고 있어요!" },
+          { text: "Not so good.",       korean: "그다지 좋지 않아요." },
+          { text: "I'm a little tired.", korean: "조금 피곤해요." },
+          { text: "Not great.",         korean: "별로예요." }
+        ],
+        wrong: [
+          { text: "No, thanks.",        korean: "아니요, 괜찮아요." },
+          { text: "Yes, please.",       korean: "네, 부탁해요." },
+          { text: "It's a cat.",        korean: "그건 고양이예요." },
+          { text: "I like pizza.",      korean: "나는 피자를 좋아해요." },
+          { text: "My name is Allie.",   korean: "제 이름은 Ally예요." },
+          { text: "I am 8 years old.",  korean: "나는 8살이에요." },
+          { text: "It's sunny today.",  korean: "오늘 날씨가 맑아요." },
+          { text: "I like dogs.",       korean: "나는 강아지를 좋아해요." },
+          { text: "It's on the table.", korean: "그건 탁자 위에 있어요." },
+          { text: "She is my sister.",  korean: "그녀는 내 여동생이에요." },
+          { text: "I want some water.", korean: "물이 마시고 싶어요." },
+          { text: "It's blue.",         korean: "그건 파란색이에요." },
+          { text: "I can swim.",        korean: "나는 수영할 수 있어요." },
+          { text: "I go to school.",    korean: "나는 학교에 가요." },
+          { text: "It's very big.",     korean: "그건 매우 커요." }
+        ]
+      },
+      {
+        question: "Do you like it?",
+        questionKorean: "이거 좋아해요?",
+        correct: [
+          { text: "Yes, I love it!",       korean: "네, 정말 좋아해요!" },
+          { text: "Yes, I like it a lot!", korean: "네, 많이 좋아해요!" },
+          { text: "I really like it!",     korean: "진짜 좋아해요!" },
+          { text: "Of course I do!",       korean: "당연하죠!" },
+          { text: "Not really.",           korean: "별로요." },
+          { text: "No, I don't.",          korean: "아니요, 안 좋아해요." },
+          { text: "Not much.",             korean: "그다지요." }
+        ],
+        wrong: [
+          { text: "I'm fine, thanks.",  korean: "잘 지내요, 고마워요." },
+          { text: "It's a dog.",        korean: "그건 강아지예요." },
+          { text: "I'm 8 years old.",   korean: "나는 8살이에요." },
+          { text: "My name is Allie.",   korean: "제 이름은 Ally예요." },
+          { text: "She is happy.",      korean: "그녀는 행복해요." },
+          { text: "It's very cold.",    korean: "날씨가 매우 추워요." },
+          { text: "I can run fast.",    korean: "나는 빨리 달릴 수 있어요." },
+          { text: "It's purple.",       korean: "그건 보라색이에요." },
+          { text: "I have a sister.",   korean: "나는 여동생이 있어요." },
+          { text: "It's Monday.",       korean: "오늘은 월요일이에요." },
+          { text: "We go to the park.", korean: "우리는 공원에 가요." },
+          { text: "He is my brother.",  korean: "그는 내 오빠예요." },
+          { text: "I want to sleep.",   korean: "나는 자고 싶어요." },
+          { text: "It's very small.",   korean: "그건 매우 작아요." },
+          { text: "I like bananas.",    korean: "나는 바나나를 좋아해요." }
+        ]
+      }
+    ]
+  }
+
+};
+
+/* 대화 주차 순서 */
+const CONVERSATION_WEEK_ORDER = ["may_conv_w1"];
