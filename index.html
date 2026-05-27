@@ -1186,6 +1186,11 @@
       transition: .12s;
     }
     .vt-play:active { transform: scale(0.9); }
+    .vt-section-title {
+      font-family: 'Fredoka','Jua',sans-serif; font-weight: 700;
+      font-size: 0.82rem; color: #aaa; letter-spacing: 0.05em;
+      text-transform: uppercase; margin: 14px 0 8px 2px;
+    }
     .vt-close-btn {
       display: block; margin: 16px auto 0;
       background: var(--pink); color: white; border: none;
@@ -1418,7 +1423,10 @@
   <div class="vt-overlay" id="vtOverlay" style="display:none" onclick="if(event.target===this)closeVoiceTest()">
     <div class="vt-modal">
       <div class="vt-title">🎙️ 목소리 테스트</div>
-      <div class="vt-subtitle">"How are you today?" 로 각 샘플을 들어보세요</div>
+      <div class="vt-subtitle">"How are you today?" 로 들어보세요</div>
+      <div class="vt-section-title">📱 기기 목소리</div>
+      <div class="vt-grid" id="vtVoiceGrid"><div style="color:#bbb;font-size:.82rem;text-align:center;padding:8px">로딩 중...</div></div>
+      <div class="vt-section-title" style="margin-top:18px">⚙️ 속도·높낙이 샘플</div>
       <div class="vt-grid" id="vtGrid"></div>
       <button class="vt-close-btn" onclick="closeVoiceTest()">닫기</button>
     </div>
@@ -1908,7 +1916,45 @@ const VOICE_PRESETS = [
   { label: '매우 높고 빠르게',   pitch: 2.0, rate: 1.15 },
   { label: '현재 설정 ★',       pitch: 1.9, rate: 0.72, current: true },
 ];
+let _deviceVoices = [];
+function buildDeviceVoices() {
+  const all = window.speechSynthesis.getVoices();
+  _deviceVoices = all.filter(v => v.lang.startsWith('en'));
+  const grid = document.getElementById('vtVoiceGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  if (_deviceVoices.length === 0) {
+    grid.innerHTML = '<div style="color:#bbb;font-size:.82rem;text-align:center;padding:8px">영어 목소리를 찾을 수 없어요</div>';
+    return;
+  }
+  _deviceVoices.forEach((v, i) => {
+    const card = document.createElement('div');
+    card.className = 'vt-card'; card.id = 'vtVCard' + i;
+    card.innerHTML = `
+      <div class="vt-num">${i + 1}</div>
+      <div class="vt-info">
+        <div class="vt-label">${v.name}</div>
+        <div class="vt-params">${v.lang}${v.localService ? ' · 내장' : ' · 온라인'}</div>
+      </div>
+      <button class="vt-play" onclick="playDeviceVoice(${i})">&#9654;</button>`;
+    grid.appendChild(card);
+  });
+}
+function playDeviceVoice(idx) {
+  document.querySelectorAll('.vt-card').forEach(c => c.classList.remove('vt-playing'));
+  document.getElementById('vtVCard' + idx)?.classList.add('vt-playing');
+  const v = _deviceVoices[idx];
+  if (!v || !('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance('How are you today?');
+  u.voice = v; u.lang = v.lang; u.rate = 1.0; u.pitch = 1.6;
+  u.onend = () => document.getElementById('vtVCard' + idx)?.classList.remove('vt-playing');
+  window.speechSynthesis.speak(u);
+}
 function openVoiceTest() {
+  document.getElementById('vtOverlay').style.display = 'flex';
+  buildDeviceVoices();
+  if (_deviceVoices.length === 0) setTimeout(buildDeviceVoices, 400);
   const grid = document.getElementById('vtGrid');
   grid.innerHTML = '';
   VOICE_PRESETS.forEach((p, i) => {
@@ -1924,7 +1970,6 @@ function openVoiceTest() {
       <button class="vt-play" onclick="playVoicePreset(${i})">&#9654;</button>`;
     grid.appendChild(card);
   });
-  document.getElementById('vtOverlay').style.display = 'flex';
 }
 function closeVoiceTest() {
   window.speechSynthesis.cancel();
