@@ -1146,6 +1146,53 @@
       display: flex; flex-direction: column; align-items: center; gap: 2px;
       margin-top: 6px;
     }
+
+    /* ── Voice Test Modal ── */
+    .vt-btn {
+      display: block; margin: 2px auto 0;
+      background: none; border: none; color: #bbb;
+      font-size: 0.78rem; cursor: pointer; padding: 4px 8px;
+      letter-spacing: 0.02em;
+    }
+    .vt-btn:hover { color: var(--lav-d); }
+    .vt-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+      z-index: 9000; display: flex; align-items: center; justify-content: center;
+    }
+    .vt-modal {
+      background: white; border-radius: 28px;
+      padding: 26px 20px 20px; width: min(94%, 390px);
+      max-height: 82vh; overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+    .vt-title { font-family: 'Fredoka','Jua',sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--pink-d); text-align: center; margin-bottom: 2px; }
+    .vt-subtitle { font-size: 0.78rem; color: #999; text-align: center; margin-bottom: 16px; }
+    .vt-grid { display: flex; flex-direction: column; gap: 9px; }
+    .vt-card {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--bg); border-radius: 16px; padding: 11px 13px;
+      border: 2px solid transparent; transition: .15s;
+    }
+    .vt-card.vt-playing { border-color: var(--pink); background: var(--pink-x); }
+    .vt-card.vt-current-preset { border-color: var(--lav); }
+    .vt-num { font-family: 'Fredoka',sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--lav-d); min-width: 26px; text-align: center; }
+    .vt-info { flex: 1; }
+    .vt-label { font-weight: 700; font-size: 0.88rem; color: #333; }
+    .vt-params { font-size: 0.72rem; color: #aaa; margin-top: 1px; }
+    .vt-play {
+      background: var(--lav); color: white; border: none; border-radius: 50%;
+      width: 34px; height: 34px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: .12s;
+    }
+    .vt-play:active { transform: scale(0.9); }
+    .vt-close-btn {
+      display: block; margin: 16px auto 0;
+      background: var(--pink); color: white; border: none;
+      border-radius: 20px; padding: 10px 36px;
+      font-family: 'Fredoka','Jua',sans-serif; font-weight: 700; font-size: 1rem;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -1228,6 +1275,7 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h11v18H6a2 2 0 01-2-2V5z"/><path d="M9 7h6M9 11h6"/></svg>
         복습하기
       </button>
+      <button class="vt-btn" onclick="openVoiceTest()">🎙️ 목소리 테스트</button>
     </div>
   </div>
 
@@ -1365,6 +1413,16 @@
   </div>
 
   </div><!-- /.stage -->
+
+  <!-- ═══ VOICE TEST MODAL ═══ -->
+  <div class="vt-overlay" id="vtOverlay" style="display:none" onclick="if(event.target===this)closeVoiceTest()">
+    <div class="vt-modal">
+      <div class="vt-title">🎙️ 목소리 테스트</div>
+      <div class="vt-subtitle">"How are you today?" 로 각 샘플을 들어보세요</div>
+      <div class="vt-grid" id="vtGrid"></div>
+      <button class="vt-close-btn" onclick="closeVoiceTest()">닫기</button>
+    </div>
+  </div>
 
 <script>
 emailjs.init({ publicKey: 'SmEGPotCOv7j_TAqw' });
@@ -1836,6 +1894,57 @@ function speakConvVoice(text) {
   window.speechSynthesis.speak(u);
 }
 function speakConvQuestion() { if (convQuestions[convCurrentIdx]) speakConvVoice(convQuestions[convCurrentIdx].question); }
+
+/* ── Voice Test ── */
+const VOICE_PRESETS = [
+  { label: '자연스럽게',         pitch: 1.0, rate: 1.0  },
+  { label: '살짝 높게',          pitch: 1.3, rate: 1.0  },
+  { label: '귀엽게',             pitch: 1.5, rate: 1.0  },
+  { label: '밝고 귀엽게',        pitch: 1.6, rate: 1.05 },
+  { label: '활발하게',           pitch: 1.7, rate: 1.1  },
+  { label: '높고 밝게',          pitch: 1.8, rate: 1.0  },
+  { label: '높고 활발하게',      pitch: 1.8, rate: 1.15 },
+  { label: '매우 높게',          pitch: 2.0, rate: 1.0  },
+  { label: '매우 높고 빠르게',   pitch: 2.0, rate: 1.15 },
+  { label: '현재 설정 ★',       pitch: 1.9, rate: 0.72, current: true },
+];
+function openVoiceTest() {
+  const grid = document.getElementById('vtGrid');
+  grid.innerHTML = '';
+  VOICE_PRESETS.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'vt-card' + (p.current ? ' vt-current-preset' : '');
+    card.id = 'vtCard' + i;
+    card.innerHTML = `
+      <div class="vt-num">${i + 1}</div>
+      <div class="vt-info">
+        <div class="vt-label">${p.label}</div>
+        <div class="vt-params">pitch ${p.pitch} &middot; rate ${p.rate}</div>
+      </div>
+      <button class="vt-play" onclick="playVoicePreset(${i})">&#9654;</button>`;
+    grid.appendChild(card);
+  });
+  document.getElementById('vtOverlay').style.display = 'flex';
+}
+function closeVoiceTest() {
+  window.speechSynthesis.cancel();
+  document.getElementById('vtOverlay').style.display = 'none';
+}
+function playVoicePreset(idx) {
+  document.querySelectorAll('.vt-card').forEach(c => c.classList.remove('vt-playing'));
+  document.getElementById('vtCard' + idx).classList.add('vt-playing');
+  const p = VOICE_PRESETS[idx];
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance('How are you today?');
+  u.lang = 'en-US'; u.rate = p.rate; u.pitch = p.pitch;
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = ['Zira', 'Samantha', 'Karen', 'Eva', 'Victoria', 'Aria', 'Jenny', 'Moira', 'Tessa'];
+  const v = voices.find(v => v.lang.startsWith('en') && preferred.some(n => v.name.includes(n)));
+  if (v) u.voice = v;
+  u.onend = () => document.getElementById('vtCard' + idx)?.classList.remove('vt-playing');
+  window.speechSynthesis.speak(u);
+}
 function applyConvKorean() {
   const toggleBtn = document.getElementById('convKoreanToggle');
   const qKorean = document.getElementById('convKoreanQuestion');
