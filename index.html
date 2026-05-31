@@ -1023,8 +1023,13 @@
       margin: 10px 0 20px; z-index: 2;
     }
 
+    .conv-question-card .speak-btn {
+      margin-bottom: 38px;
+    }
+
     .conv-choices {
       display: flex; flex-direction: column; gap: 10px; width: 100%;
+      margin-top: 8px;
     }
     .conv-choice-btn {
       display: flex; align-items: center; gap: 10px;
@@ -1456,6 +1461,9 @@ let currentMode = 'main';
 let selectedReview = WEEK_ORDER[WEEK_ORDER.length - 1];
 let difficulty = 'very-easy';
 let gameWords = [], currentIdx = 0, filledCount = 0, wordHadMistake = false, wrongWords = [], revealedFirst = false;
+const TODAY_QUIZ_TOTAL = 10;
+const TODAY_QUIZ_CURRENT_TARGET = 3;
+const TODAY_QUIZ_PREV_TARGET = 7;
 
 function shuffle(arr) {
   const a = [...arr];
@@ -1602,10 +1610,15 @@ function buildGameWords() {
   const lk = WEEK_ORDER[WEEK_ORDER.length - 1], cur = shuffle([...WORDS_DATA[lk].words]), prev = [];
   WEEK_ORDER.slice(0, -1).forEach(k => prev.push(...WORDS_DATA[k].words));
   const sp = shuffle(prev);
-  if (prev.length === 0) return cur.slice(0, Math.min(10, cur.length));
-  const tc = Math.min(5, cur.length), tp = Math.min(5, sp.length);
+  if (prev.length === 0) return cur.slice(0, Math.min(TODAY_QUIZ_TOTAL, cur.length));
+  const tc = Math.min(TODAY_QUIZ_CURRENT_TARGET, cur.length), tp = Math.min(TODAY_QUIZ_PREV_TARGET, sp.length);
   let sel = [...cur.slice(0, tc), ...sp.slice(0, tp)];
-  if (sel.length < 10 && cur.length > tc) sel = [...sel, ...cur.slice(tc, tc + (10 - sel.length))];
+  if (sel.length < TODAY_QUIZ_TOTAL && sp.length > tp) {
+    sel = [...sel, ...sp.slice(tp, tp + (TODAY_QUIZ_TOTAL - sel.length))];
+  }
+  if (sel.length < TODAY_QUIZ_TOTAL && cur.length > tc) {
+    sel = [...sel, ...cur.slice(tc, tc + (TODAY_QUIZ_TOTAL - sel.length))];
+  }
   return shuffle(sel);
 }
 function startGame() { currentMode = 'main'; gameWords = buildGameWords(); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
@@ -1829,12 +1842,22 @@ function playSound(type) {
 }
 /* ─── Conversation Game (대답 고르기) ───────── */
 let convQuestions = [], convCurrentIdx = 0, convWrong = 0, convWrongQuestions = [], convChoicesData = [], convAnswered = false, convShowKorean = false;
+let convUsedCorrectAnswers = new Set();
+
+function pickConvCorrectAnswer(q) {
+  const available = q.correct.filter(a => !convUsedCorrectAnswers.has(a.text));
+  const pool = available.length > 0 ? available : q.correct;
+  const picked = pool[Math.floor(Math.random() * pool.length)];
+  convUsedCorrectAnswers.add(picked.text);
+  return picked;
+}
 
 function startConvGame() {
   currentMode = 'conv';
   const latestKey = CONVERSATION_WEEK_ORDER[CONVERSATION_WEEK_ORDER.length - 1];
   const base = CONVERSATION_DATA[latestKey].questions;
   convQuestions = shuffle([...base, ...base, ...base]);
+  convUsedCorrectAnswers = new Set();
   convCurrentIdx = 0; convWrong = 0; convWrongQuestions = []; convAnswered = false; convShowKorean = false;
   showScreen('screen-conv');
   loadConvQuestion();
@@ -1847,7 +1870,7 @@ function loadConvQuestion() {
   document.getElementById('convProgressLabel').textContent = `${convCurrentIdx + 1} / ${convQuestions.length}`;
   document.getElementById('convQuestionText').textContent = q.question;
   // 1 correct + 3 wrong
-  const correctAnswer = q.correct[Math.floor(Math.random() * q.correct.length)];
+  const correctAnswer = pickConvCorrectAnswer(q);
   const wrongPool = shuffle([...q.wrong]);
   convChoicesData = shuffle([
     { text: correctAnswer.text, korean: correctAnswer.korean, isCorrect: true },
