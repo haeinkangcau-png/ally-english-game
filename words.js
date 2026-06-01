@@ -182,6 +182,52 @@ const CONVERSATION_DATA = {
           { text: "It's very small.",   korean: "그건 매우 작아요." },
           { text: "I like bananas.",    korean: "나는 바나나를 좋아해요." }
         ]
+      },
+      {
+        question: "What is your favorite animal?",
+        questionKorean: "네가 가장 좋아하는 동물은 뭐야?",
+        correct: [
+          { text: "My favorite animal is a cat.",   korean: "제가 가장 좋아하는 동물은 고양이예요." },
+          { text: "I like dogs the most.",          korean: "저는 강아지를 제일 좋아해요." },
+          { text: "I love ducks the most.",         korean: "저는 오리를 제일 좋아해요." },
+          { text: "My favorite animal is a sheep.", korean: "제가 가장 좋아하는 동물은 양이에요." },
+          { text: "I like cows the most.",          korean: "저는 소를 제일 좋아해요." }
+        ],
+        wrong: [
+          { text: "I am eight years old.",   korean: "저는 여덟 살이에요." },
+          { text: "It's rainy today.",       korean: "오늘은 비가 와요." },
+          { text: "My name is Allie.",       korean: "제 이름은 Ally예요." },
+          { text: "I go to school.",         korean: "저는 학교에 가요." },
+          { text: "It's on the table.",      korean: "그건 탁자 위에 있어요." },
+          { text: "I can swim fast.",        korean: "저는 빨리 수영할 수 있어요." },
+          { text: "She is my sister.",       korean: "그녀는 제 여동생이에요." },
+          { text: "It's very big.",          korean: "그건 아주 커요." },
+          { text: "No, thank you.",          korean: "아니요, 괜찮아요." },
+          { text: "I want some water.",      korean: "물을 좀 마시고 싶어요." }
+        ]
+      },
+      {
+        question: "What is your favorite food?",
+        questionKorean: "네가 가장 좋아하는 음식은 뭐야?",
+        correct: [
+          { text: "My favorite food is pizza.",   korean: "제가 가장 좋아하는 음식은 피자예요." },
+          { text: "I like noodles the most.",    korean: "저는 국수를 제일 좋아해요." },
+          { text: "I love chicken the most.",    korean: "저는 치킨을 제일 좋아해요." },
+          { text: "My favorite food is rice.",   korean: "제가 가장 좋아하는 음식은 밥이에요." },
+          { text: "I like apples the most.",     korean: "저는 사과를 제일 좋아해요." }
+        ],
+        wrong: [
+          { text: "I am very happy.",         korean: "저는 아주 행복해요." },
+          { text: "It's a blue bag.",         korean: "그건 파란 가방이에요." },
+          { text: "My favorite animal is a dog.", korean: "제가 가장 좋아하는 동물은 강아지예요." },
+          { text: "I can jump high.",         korean: "저는 높이 뛸 수 있어요." },
+          { text: "It's very cold.",          korean: "아주 추워요." },
+          { text: "He is my brother.",        korean: "그는 제 오빠예요." },
+          { text: "I have a pencil.",         korean: "저는 연필이 있어요." },
+          { text: "It's Monday today.",       korean: "오늘은 월요일이에요." },
+          { text: "I go home now.",           korean: "저는 지금 집에 가요." },
+          { text: "It's under the chair.",    korean: "그건 의자 아래에 있어요." }
+        ]
       }
     ]
   }
