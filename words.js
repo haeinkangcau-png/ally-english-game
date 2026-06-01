@@ -89,10 +89,25 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 6월 1주차 ── */
+  "jun_w1": {
+    label: "6월 1주차",
+    words: [
+      { word: "cat",   meaning: "고양이", emoji: "🐱", pron: "kæt"   },
+      { word: "dog",   meaning: "강아지", emoji: "🐶", pron: "dɔːɡ"  },
+      { word: "duck",  meaning: "오리",   emoji: "🦆", pron: "dʌk"   },
+      { word: "sheep", meaning: "양",     emoji: "🐑", pron: "ʃiːp"  },
+      { word: "pig",   meaning: "돼지",   emoji: "🐷", pron: "pɪɡ"   },
+      { word: "goat",  meaning: "염소",   emoji: "🐐", pron: "ɡoʊt"  },
+      { word: "hen",   meaning: "암탉",   emoji: "🐔", pron: "hɛn"   },
+      { word: "cow",   meaning: "소",     emoji: "🐄", pron: "kaʊ"   },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기
