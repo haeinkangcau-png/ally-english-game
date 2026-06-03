@@ -1278,9 +1278,16 @@
         </button>
       </div>
 
-      <button class="conv-shortcut-btn" onclick="startConvGame()">
-        💬 오늘의 대화
-      </button>
+      <div class="two-btn-row">
+        <button class="short-btn review-shortcut" style="background:linear-gradient(180deg,#ddd2ff 0%,var(--lav) 60%,#9b89d8 100%);box-shadow:0 5px 0 0 #9b89d8,0 12px 22px -8px rgba(155,137,216,0.4)" onclick="startConvReview()">
+          <span class="btn-icon">💬</span>
+          대화 복습
+        </button>
+        <button class="short-btn quiz-shortcut" style="background:linear-gradient(180deg,#ddd2ff 0%,var(--lav) 60%,#9b89d8 100%);box-shadow:0 5px 0 0 #9b89d8,0 12px 22px -8px rgba(155,137,216,0.4)" onclick="startConvQuiz()">
+          <span class="btn-icon">🗣️</span>
+          대화 퀴즈
+        </button>
+      </div>
 
       <div class="actions-divider" aria-hidden="true"><span class="heart">♡ ♡ ♡</span></div>
 
@@ -1623,7 +1630,7 @@ function buildGameWords() {
 }
 function startGame() { currentMode = 'main'; gameWords = buildGameWords(); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
 function startThisWeekReview() { currentMode = 'review'; selectedReview = WEEK_ORDER[WEEK_ORDER.length - 1]; gameWords = shuffle([...WORDS_DATA[selectedReview].words]); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
-function restartGame() { if (currentMode === 'conv') startConvGame(); else if (currentMode === 'review') startReviewGame(); else startGame(); }
+function restartGame() { if (currentMode === 'conv') startConvQuiz(); else if (currentMode === 'review') startReviewGame(); else startGame(); }
 function goStart() { initStart(); }
 function loadWord() {
   const w = gameWords[currentIdx];
@@ -1852,16 +1859,34 @@ function pickConvCorrectAnswer(q) {
   return picked;
 }
 
-function startConvGame() {
+function startConvReview() {
   currentMode = 'conv';
   const latestKey = CONVERSATION_WEEK_ORDER[CONVERSATION_WEEK_ORDER.length - 1];
   const base = CONVERSATION_DATA[latestKey].questions;
-  convQuestions = shuffle([...base, ...base, ...base]);
+  convQuestions = shuffle([...base]);
   convUsedCorrectAnswers = new Set();
   convCurrentIdx = 0; convWrong = 0; convWrongQuestions = []; convAnswered = false; convShowKorean = false;
   showScreen('screen-conv');
   loadConvQuestion();
 }
+function startConvQuiz() {
+  currentMode = 'conv';
+  const latestKey = CONVERSATION_WEEK_ORDER[CONVERSATION_WEEK_ORDER.length - 1];
+  const curQ = shuffle([...CONVERSATION_DATA[latestKey].questions]);
+  const prevQ = [];
+  CONVERSATION_WEEK_ORDER.slice(0, -1).forEach(k => prevQ.push(...CONVERSATION_DATA[k].questions));
+  const sp = shuffle(prevQ);
+  const tc = Math.min(3, curQ.length);
+  const tp = Math.min(3, sp.length);
+  let sel = [...curQ.slice(0, tc), ...sp.slice(0, tp)];
+  if (sel.length < 6 && curQ.length > tc) sel = [...sel, ...curQ.slice(tc, tc + (6 - sel.length))];
+  convQuestions = shuffle(sel);
+  convUsedCorrectAnswers = new Set();
+  convCurrentIdx = 0; convWrong = 0; convWrongQuestions = []; convAnswered = false; convShowKorean = false;
+  showScreen('screen-conv');
+  loadConvQuestion();
+}
+function startConvGame() { startConvQuiz(); }
 function loadConvQuestion() {
   const q = convQuestions[convCurrentIdx];
   convAnswered = false;
