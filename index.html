@@ -1863,7 +1863,10 @@ function startConvReview() {
   currentMode = 'conv';
   const latestKey = CONVERSATION_WEEK_ORDER[CONVERSATION_WEEK_ORDER.length - 1];
   const base = CONVERSATION_DATA[latestKey].questions;
-  convQuestions = shuffle([...base]);
+  // 이번 주 질문 각각 3번 반복 = 6문제
+  let pool = [];
+  base.forEach(q => { pool.push(q, q, q); });
+  convQuestions = shuffle(pool).slice(0, 6);
   convUsedCorrectAnswers = new Set();
   convCurrentIdx = 0; convWrong = 0; convWrongQuestions = []; convAnswered = false; convShowKorean = false;
   showScreen('screen-conv');
@@ -1880,7 +1883,8 @@ function startConvQuiz() {
   const tp = Math.min(3, sp.length);
   let sel = [...curQ.slice(0, tc), ...sp.slice(0, tp)];
   if (sel.length < 6 && curQ.length > tc) sel = [...sel, ...curQ.slice(tc, tc + (6 - sel.length))];
-  convQuestions = shuffle(sel);
+  if (sel.length < 6 && sp.length > tp) sel = [...sel, ...sp.slice(tp, tp + (6 - sel.length))];
+  convQuestions = shuffle(sel.slice(0, 6));
   convUsedCorrectAnswers = new Set();
   convCurrentIdx = 0; convWrong = 0; convWrongQuestions = []; convAnswered = false; convShowKorean = false;
   showScreen('screen-conv');
