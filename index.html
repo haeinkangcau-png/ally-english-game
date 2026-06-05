@@ -2261,6 +2261,16 @@ function showConvResult() {
 /* ══════════════════════════════════════════
    Flash Card Game
    ══════════════════════════════════════════ */
+function showToast(emoji, msg) {
+  removeToast();
+  const t = document.createElement('div');
+  t.className = 'word-toast'; t.id = 'fcToast';
+  t.innerHTML = `<span class="toast-big">${emoji}</span>${msg}`;
+  document.body.appendChild(t);
+}
+function removeToast() {
+  document.getElementById('fcToast')?.remove();
+}
 const FC_COLORS = [
   { bg:'#fff0f5', border:'#ffd3d3', shadow:'#f0c8d8' },
   { bg:'#f0f5ff', border:'#c8daff', shadow:'#b0c8f5' },
