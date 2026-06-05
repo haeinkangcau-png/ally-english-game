@@ -1387,13 +1387,6 @@
         </button>
       </div>
 
-      <div class="two-btn-row">
-        <button class="short-btn flash-shortcut" onclick="startFlashGame()">
-          <span class="btn-icon">🃏</span>
-          이번 주 플래시카드
-        </button>
-      </div>
-
       <div class="actions-divider" aria-hidden="true"><span class="heart">♡ ♡ ♡</span></div>
 
       <button class="review-open-btn" onclick="goReview()">
@@ -1771,8 +1764,16 @@ function buildGameWords() {
   }
   return shuffle(sel);
 }
-function startGame() { currentMode = 'main'; gameWords = buildGameWords(); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
-function startThisWeekReview() { currentMode = 'review'; selectedReview = WEEK_ORDER[WEEK_ORDER.length - 1]; gameWords = shuffle([...WORDS_DATA[selectedReview].words]); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
+function startGame() {
+  const key = WEEK_ORDER[WEEK_ORDER.length - 1];
+  if (WORDS_DATA[key].quizMode === 'flash') { startFlashGame(); return; }
+  currentMode = 'main'; gameWords = buildGameWords(); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord();
+}
+function startThisWeekReview() {
+  const key = WEEK_ORDER[WEEK_ORDER.length - 1];
+  if (WORDS_DATA[key].quizMode === 'flash') { startFlashGame(); return; }
+  currentMode = 'review'; selectedReview = key; gameWords = shuffle([...WORDS_DATA[key].words]); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord();
+}
 function restartGame() { if (currentMode === 'conv') startConvQuiz(); else if (currentMode === 'review') startReviewGame(); else if (currentMode === 'flash') startFlashGame(); else startGame(); }
 function goStart() { initStart(); }
 function loadWord() {

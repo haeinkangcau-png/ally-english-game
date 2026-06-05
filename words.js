@@ -92,6 +92,7 @@ const WORDS_DATA = {
   /* ── 6월 1주차 A ── */
   "jun_w1a": {
     label: "6월 1주차 A",
+    quizMode: "flash",
     words: [
       { word: "cat",   meaning: "고양이", emoji: "🐱", pron: "kæt"   },
       { word: "dog",   meaning: "강아지", emoji: "🐶", pron: "dɔːɡ"  },
@@ -107,6 +108,7 @@ const WORDS_DATA = {
   /* ── 6월 1주차 B ── */
   "jun_w1b": {
     label: "6월 1주차 B",
+    quizMode: "flash",
     words: [
       { word: "wild animal", meaning: "야생 동물", emoji: "🦁",  pron: "waɪld ˈænɪməl" },
       { word: "livestock",   meaning: "가축",     emoji: "🐄",  pron: "ˈlaɪvstɒk"     },
