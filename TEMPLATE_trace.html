@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Ally's English Homework - Trace (5월 5주차)</title>
+<title>Ally's English Homework - Trace</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -46,7 +46,6 @@
     justify-content:flex-start; gap:10mm;
   }
 
-  .word-block { }
   .word-label { display:flex; align-items:center; gap:3mm; margin-bottom:2mm; }
   .word-num {
     background:#f59e0b; color:#fff; font-size:10pt; font-weight:700;
@@ -61,45 +60,34 @@
 </head>
 <body>
 
-<!-- ▼ 페이지 1: 단어 1~5 ▼ -->
+<!-- ▼▼▼ 페이지가 2개인 경우 이 블록을 복사해서 아래에 붙여넣으세요 ▼▼▼ -->
 <div class="page">
   <div class="header">
     <h1>✏️ <span class="ally-name">Ally's</span> English Homework</h1>
-    <p>Trace &amp; Write — 5월 5주차 | 이번 주에 공부한 단어를 함께 써 보자!</p>
+    <!-- 부제 수정: 주차 표시 필요 시 | 5월 4주차 추가 -->
+    <p>Trace &amp; Write — 이번 주에 공부한 단어를 함께 써 보자!</p>
   </div>
   <div class="name-row">
     <span>Name <span class="ul"></span></span>
     <span>Date <span class="ul"></span></span>
   </div>
-  <div class="words" id="words-p1"></div>
-</div>
-
-<!-- ▼ 페이지 2: 단어 6~10 ▼ -->
-<div class="page">
-  <div class="header">
-    <h1>✏️ <span class="ally-name">Ally's</span> English Homework</h1>
-    <p>Trace &amp; Write — 5월 5주차 | 계속 써 보자! 거의 다 왔어!</p>
-  </div>
-  <div class="name-row">
-    <span>Name <span class="ul"></span></span>
-    <span>Date <span class="ul"></span></span>
-  </div>
-  <div class="words" id="words-p2"></div>
+  <div class="words" id="words"></div>
 </div>
 
 <script>
-const allWords = [
-  { word:"eleven",    meaning:"열하나", emoji:"⚽",  pron:"ɪˈlɛvən"     },
-  { word:"twelve",    meaning:"열둘",   emoji:"🕛",  pron:"twɛlv"        },
-  { word:"thirteen",  meaning:"열셋",   emoji:"🌙",  pron:"ˌθɜːrˈtiːn"  },
-  { word:"fourteen",  meaning:"열넷",   emoji:"❤️",  pron:"ˌfɔːrˈtiːn"  },
-  { word:"fifteen",   meaning:"열다섯", emoji:"🎯",  pron:"ˌfɪfˈtiːn"   },
-  { word:"sixteen",   meaning:"열여섯", emoji:"🎲",  pron:"ˌsɪksˈtiːn"  },
-  { word:"seventeen", meaning:"열일곱", emoji:"🌟",  pron:"ˌsɛvənˈtiːn" },
-  { word:"eighteen",  meaning:"열여덟", emoji:"🎂",  pron:"ˌeɪˈtiːn"    },
-  { word:"nineteen",  meaning:"열아홉", emoji:"🎸",  pron:"ˌnaɪnˈtiːn"  },
-  { word:"twenty",    meaning:"스물",   emoji:"🎉",  pron:"ˈtwɛnti"     },
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ✏️ 매주 여기만 수정하세요!
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const words = [
+  // { word:"단어", meaning:"뜻", emoji:"이모지", pron:"발음기호" },
+  { word:"ewe",    meaning:"암양",   emoji:"🐑", pron:"juː"      },
+  { word:"alien",  meaning:"외계인", emoji:"👽", pron:"ˈeɪliən"  },
+  { word:"anchor", meaning:"닻",     emoji:"⚓", pron:"ˈæŋkər"  },
+  { word:"ape",    meaning:"유인원", emoji:"🦍", pron:"eɪp"      },
+  { word:"acorn",  meaning:"도토리", emoji:"🐿️", pron:"ˈeɪkɔːrn" },
+  { word:"angel",  meaning:"천사",   emoji:"😇", pron:"ˈeɪndʒəl" },
 ];
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 const TRACE_SLOTS_PER_PAGE = 5;
 
@@ -117,28 +105,23 @@ function makeStaff(traceWord) {
   return '<div class="staff-wrap">' + svg + '</div>';
 }
 
-function renderWords(containerId, words, startIdx) {
-  const container = document.getElementById(containerId);
-  // 실제 단어가 있는 항목만 렌더링 (빈 슬롯은 번호·줄 모두 생략)
-  words.forEach((item, i) => {
-    const block = document.createElement('div');
-    block.className = 'word-block';
-    block.innerHTML =
-      '<div class="word-label">' +
-        '<div class="word-num">' + (startIdx + i + 1) + '</div>' +
-        '<span style="font-size:20pt;">' + item.emoji + '</span>' +
-        '<div class="word-text">' + item.word +
-          ' <span class="word-pron">[' + item.pron + ']</span>' +
-          ' <span class="word-meaning">' + item.meaning + '</span>' +
-        '</div>' +
+const container = document.getElementById('words');
+// 실제 단어가 있는 항목만 렌더링 (빈 슬롯은 번호·줄 모두 생략)
+words.forEach((item, idx) => {
+  const block = document.createElement('div');
+  block.className = 'word-block';
+  block.innerHTML =
+    '<div class="word-label">' +
+      '<div class="word-num">' + (idx + 1) + '</div>' +
+      '<span style="font-size:20pt;">' + item.emoji + '</span>' +
+      '<div class="word-text">' + item.word +
+        ' <span class="word-pron">[' + item.pron + ']</span>' +
+        ' <span class="word-meaning">' + item.meaning + '</span>' +
       '</div>' +
-      makeStaff(item.word);
-    container.appendChild(block);
-  });
-}
-
-renderWords('words-p1', allWords.slice(0, 5), 0);
-renderWords('words-p2', allWords.slice(5),    5);
+    '</div>' +
+    makeStaff(item.word);
+  container.appendChild(block);
+});
 </script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Ally's English Homework - Trace (5월 5주차)</title>
+<title>Ally's English Homework - Trace (6월 1주차)</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -46,7 +46,6 @@
     justify-content:flex-start; gap:10mm;
   }
 
-  .word-block { }
   .word-label { display:flex; align-items:center; gap:3mm; margin-bottom:2mm; }
   .word-num {
     background:#f59e0b; color:#fff; font-size:10pt; font-weight:700;
@@ -61,11 +60,10 @@
 </head>
 <body>
 
-<!-- ▼ 페이지 1: 단어 1~5 ▼ -->
 <div class="page">
   <div class="header">
     <h1>✏️ <span class="ally-name">Ally's</span> English Homework</h1>
-    <p>Trace &amp; Write — 5월 5주차 | 이번 주에 공부한 단어를 함께 써 보자!</p>
+    <p>Trace &amp; Write — 6월 1주차 | 이번 주에 공부한 단어를 함께 써 보자!</p>
   </div>
   <div class="name-row">
     <span>Name <span class="ul"></span></span>
@@ -74,11 +72,10 @@
   <div class="words" id="words-p1"></div>
 </div>
 
-<!-- ▼ 페이지 2: 단어 6~10 ▼ -->
 <div class="page">
   <div class="header">
     <h1>✏️ <span class="ally-name">Ally's</span> English Homework</h1>
-    <p>Trace &amp; Write — 5월 5주차 | 계속 써 보자! 거의 다 왔어!</p>
+    <p>Trace &amp; Write — 6월 1주차 | 계속 써 보자! 거의 다 왔어!</p>
   </div>
   <div class="name-row">
     <span>Name <span class="ul"></span></span>
@@ -89,19 +86,17 @@
 
 <script>
 const allWords = [
-  { word:"eleven",    meaning:"열하나", emoji:"⚽",  pron:"ɪˈlɛvən"     },
-  { word:"twelve",    meaning:"열둘",   emoji:"🕛",  pron:"twɛlv"        },
-  { word:"thirteen",  meaning:"열셋",   emoji:"🌙",  pron:"ˌθɜːrˈtiːn"  },
-  { word:"fourteen",  meaning:"열넷",   emoji:"❤️",  pron:"ˌfɔːrˈtiːn"  },
-  { word:"fifteen",   meaning:"열다섯", emoji:"🎯",  pron:"ˌfɪfˈtiːn"   },
-  { word:"sixteen",   meaning:"열여섯", emoji:"🎲",  pron:"ˌsɪksˈtiːn"  },
-  { word:"seventeen", meaning:"열일곱", emoji:"🌟",  pron:"ˌsɛvənˈtiːn" },
-  { word:"eighteen",  meaning:"열여덟", emoji:"🎂",  pron:"ˌeɪˈtiːn"    },
-  { word:"nineteen",  meaning:"열아홉", emoji:"🎸",  pron:"ˌnaɪnˈtiːn"  },
-  { word:"twenty",    meaning:"스물",   emoji:"🎉",  pron:"ˈtwɛnti"     },
+  { word:"cat",   meaning:"고양이", emoji:"🐱", pron:"kæt"  },
+  { word:"dog",   meaning:"강아지", emoji:"🐶", pron:"dɔːɡ" },
+  { word:"duck",  meaning:"오리",   emoji:"🦆", pron:"dʌk"  },
+  { word:"sheep", meaning:"양",     emoji:"🐑", pron:"ʃiːp" },
+  { word:"pig",   meaning:"돼지",   emoji:"🐷", pron:"pɪɡ"  },
+  { word:"goat",  meaning:"염소",   emoji:"🐐", pron:"ɡoʊt" },
+  { word:"hen",   meaning:"암탉",   emoji:"🐔", pron:"hɛn"  },
+  { word:"cow",   meaning:"소",     emoji:"🐄", pron:"kaʊ"  },
 ];
 
-const TRACE_SLOTS_PER_PAGE = 5;
+const TRACE_SLOTS_PER_PAGE = 6;
 
 function makeStaff(traceWord) {
   const display = traceWord || '';
@@ -137,8 +132,8 @@ function renderWords(containerId, words, startIdx) {
   });
 }
 
-renderWords('words-p1', allWords.slice(0, 5), 0);
-renderWords('words-p2', allWords.slice(5),    5);
+renderWords('words-p1', allWords.slice(0, 6), 0);
+renderWords('words-p2', allWords.slice(6),    6);
 </script>
 </body>
 </html>

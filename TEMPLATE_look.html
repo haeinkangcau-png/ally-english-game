@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Ally's English Homework - Look (5월 5주차)</title>
+<title>Ally's English Homework - Look</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -41,6 +41,7 @@
     border-bottom:1.5px solid #aaa;
   }
 
+  /* 기본: 2열 그리드 */
   .grid {
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -50,6 +51,7 @@
     align-content:start;
   }
 
+  /* 홀수 마지막 카드 중앙 배치용 */
   .grid .card:last-child:nth-child(odd) {
     grid-column: 1 / -1;
     max-width: calc(50% - 2mm);
@@ -79,45 +81,34 @@
 </head>
 <body>
 
-<!-- ▼ 페이지 1: 카드 1~5 ▼ -->
+<!-- ▼▼▼ 페이지가 2개인 경우 이 블록을 복사해서 아래에 붙여넣으세요 ▼▼▼ -->
 <div class="page">
   <div class="header">
     <h1>🖼️ <span class="ally-name">Ally's</span> English Homework</h1>
-    <p>Look &amp; Write — 5월 5주차 | 그림을 보고 어떤 단어인지 맞춰 보자!</p>
+    <!-- 부제 수정: 주차 표시 필요 시 | 5월 4주차 추가 -->
+    <p>Look &amp; Write — 그림을 보고 어떤 단어인지 맞춰 보자!</p>
   </div>
   <div class="name-row">
     <span>Name <span class="ul"></span></span>
     <span>Date <span class="ul"></span></span>
   </div>
-  <div class="grid" id="cards-p1"></div>
-</div>
-
-<!-- ▼ 페이지 2: 카드 6~10 ▼ -->
-<div class="page">
-  <div class="header">
-    <h1>🖼️ <span class="ally-name">Ally's</span> English Homework</h1>
-    <p>Look &amp; Write — 5월 5주차 | 계속 써 보자! 거의 다 왔어!</p>
-  </div>
-  <div class="name-row">
-    <span>Name <span class="ul"></span></span>
-    <span>Date <span class="ul"></span></span>
-  </div>
-  <div class="grid" id="cards-p2"></div>
+  <div class="grid" id="cards"></div>
 </div>
 
 <script>
-const allCards = [
-  { emoji:"⚽",  hint:"e _ _ v _ n",   clue:"11! 축구팀 선수 수예요!" },
-  { emoji:"🕛",  hint:"t _ _ l _ e",   clue:"12! 1년은 몇 달이에요?" },
-  { emoji:"🌙",  hint:"t _ _ r _ _ _ n", clue:"13! 10+3은?" },
-  { emoji:"❤️",  hint:"f _ _ r _ _ _ n", clue:"14! 10+4는?" },
-  { emoji:"🎯",  hint:"f _ f _ _ _ n", clue:"15! 10+5는?" },
-  { emoji:"🎲",  hint:"s _ x _ _ _ n", clue:"16! 10+6은?" },
-  { emoji:"🌟",  hint:"s _ v _ n _ _ _ n", clue:"17! 10+7은?" },
-  { emoji:"🎂",  hint:"e _ g _ t _ _ n", clue:"18! 10+8은?" },
-  { emoji:"🎸",  hint:"n _ n _ t _ _ n", clue:"19! 10+9는?" },
-  { emoji:"🎉",  hint:"t w _ n _ y",   clue:"20! 스물! 10+10은?" },
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ✏️ 매주 여기만 수정하세요!
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const words = [
+  // { emoji:"이모지", hint:"빈칸힌트", clue:"힌트문구" },
+  { emoji:"🐑", hint:"e _ e",       clue:"어미 양이에요!"      },
+  { emoji:"👽", hint:"a _ _ _ n",   clue:"우주에서 왔어요!"    },
+  { emoji:"⚓",  hint:"a _ _ _ _ r", clue:"배를 멈춰요!"        },
+  { emoji:"🦍", hint:"a _ e",       clue:"원숭이 친척이에요!"  },
+  { emoji:"🐿️", hint:"a _ _ _ n",   clue:"다람쥐가 좋아해요!" },
+  { emoji:"😇", hint:"a _ _ _ l",   clue:"날개가 달려있어요!" },
 ];
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 function makeStaff() {
   return '<div class="staff-wrap">' +
@@ -129,25 +120,20 @@ function makeStaff() {
     '</svg></div>';
 }
 
-function renderCards(containerId, cards, startIdx) {
-  const container = document.getElementById(containerId);
-  cards.forEach((item, i) => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML =
-      '<div class="card-top">' +
-        '<div class="card-num">' + (startIdx + i + 1) + '</div>' +
-        '<div class="card-clue">' + item.clue + '</div>' +
-      '</div>' +
-      '<div class="emoji-box">' + item.emoji + '</div>' +
-      '<div class="letter-hint">' + item.hint + '</div>' +
-      makeStaff();
-    container.appendChild(card);
-  });
-}
-
-renderCards('cards-p1', allCards.slice(0, 5), 0);
-renderCards('cards-p2', allCards.slice(5),    5);
+const container = document.getElementById('cards');
+words.forEach((item, idx) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML =
+    '<div class="card-top">' +
+      '<div class="card-num">' + (idx + 1) + '</div>' +
+      '<div class="card-clue">' + item.clue + '</div>' +
+    '</div>' +
+    '<div class="emoji-box">' + item.emoji + '</div>' +
+    '<div class="letter-hint">' + item.hint + '</div>' +
+    makeStaff();
+  container.appendChild(card);
+});
 </script>
 </body>
 </html>

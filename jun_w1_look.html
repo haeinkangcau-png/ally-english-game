@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Ally's English Homework - Look (5월 5주차)</title>
+<title>Ally's English Homework - Look (6월 1주차)</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -79,11 +79,10 @@
 </head>
 <body>
 
-<!-- ▼ 페이지 1: 카드 1~5 ▼ -->
 <div class="page">
   <div class="header">
     <h1>🖼️ <span class="ally-name">Ally's</span> English Homework</h1>
-    <p>Look &amp; Write — 5월 5주차 | 그림을 보고 어떤 단어인지 맞춰 보자!</p>
+    <p>Look &amp; Write — 6월 1주차 | 그림을 보고 어떤 단어인지 맞춰 보자!</p>
   </div>
   <div class="name-row">
     <span>Name <span class="ul"></span></span>
@@ -92,11 +91,10 @@
   <div class="grid" id="cards-p1"></div>
 </div>
 
-<!-- ▼ 페이지 2: 카드 6~10 ▼ -->
 <div class="page">
   <div class="header">
     <h1>🖼️ <span class="ally-name">Ally's</span> English Homework</h1>
-    <p>Look &amp; Write — 5월 5주차 | 계속 써 보자! 거의 다 왔어!</p>
+    <p>Look &amp; Write — 6월 1주차 | 계속 써 보자! 거의 다 왔어!</p>
   </div>
   <div class="name-row">
     <span>Name <span class="ul"></span></span>
@@ -107,16 +105,14 @@
 
 <script>
 const allCards = [
-  { emoji:"⚽",  hint:"e _ _ v _ n",   clue:"11! 축구팀 선수 수예요!" },
-  { emoji:"🕛",  hint:"t _ _ l _ e",   clue:"12! 1년은 몇 달이에요?" },
-  { emoji:"🌙",  hint:"t _ _ r _ _ _ n", clue:"13! 10+3은?" },
-  { emoji:"❤️",  hint:"f _ _ r _ _ _ n", clue:"14! 10+4는?" },
-  { emoji:"🎯",  hint:"f _ f _ _ _ n", clue:"15! 10+5는?" },
-  { emoji:"🎲",  hint:"s _ x _ _ _ n", clue:"16! 10+6은?" },
-  { emoji:"🌟",  hint:"s _ v _ n _ _ _ n", clue:"17! 10+7은?" },
-  { emoji:"🎂",  hint:"e _ g _ t _ _ n", clue:"18! 10+8은?" },
-  { emoji:"🎸",  hint:"n _ n _ t _ _ n", clue:"19! 10+9는?" },
-  { emoji:"🎉",  hint:"t w _ n _ y",   clue:"20! 스물! 10+10은?" },
+  { emoji:"🐱", hint:"c _ t",     clue:"야옹! 집에서 키워요!" },
+  { emoji:"🐶", hint:"d _ g",     clue:"멍멍! 친구 같은 동물!" },
+  { emoji:"🦆", hint:"d _ c k",   clue:"꽥꽥! 물가에서 놀아요!" },
+  { emoji:"🐑", hint:"s _ e _ p", clue:"털이 복슬복슬해요!" },
+  { emoji:"🐷", hint:"p _ g",     clue:"꿀꿀! 분홍 코가 귀여워요!" },
+  { emoji:"🐐", hint:"g _ a t",   clue:"산을 잘 올라가요!" },
+  { emoji:"🐔", hint:"h _ n",     clue:"꼬꼬댁! 달걀을 낳아요!" },
+  { emoji:"🐄", hint:"c _ w",     clue:"음메! 우유를 줘요!" },
 ];
 
 function makeStaff() {
@@ -146,8 +142,8 @@ function renderCards(containerId, cards, startIdx) {
   });
 }
 
-renderCards('cards-p1', allCards.slice(0, 5), 0);
-renderCards('cards-p2', allCards.slice(5),    5);
+renderCards('cards-p1', allCards.slice(0, 6), 0);
+renderCards('cards-p2', allCards.slice(6),    6);
 </script>
 </body>
 </html>
