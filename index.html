@@ -2345,7 +2345,7 @@ function fcRenderChoices(choices) {
     btn.className = 'fc-choice-btn';
     const col = FC_COLORS[i];
     btn.style.cssText = `background:${col.bg};border-color:${col.border};box-shadow:0 4px 0 0 ${col.shadow}`;
-    btn.innerHTML = `<span class="fc-num">${labels[i]}</span>${c.label}`;
+    btn.innerHTML = c.label;
     btn.onclick = () => fcSelectAnswer(btn, c.correct);
     container.appendChild(btn);
   });
