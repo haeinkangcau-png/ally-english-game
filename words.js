@@ -89,9 +89,9 @@ const WORDS_DATA = {
     ]
   },
 
-  /* ── 6월 1주차 ── */
-  "jun_w1": {
-    label: "6월 1주차",
+  /* ── 6월 1주차 A ── */
+  "jun_w1a": {
+    label: "6월 1주차 A",
     words: [
       { word: "cat",   meaning: "고양이", emoji: "🐱", pron: "kæt"   },
       { word: "dog",   meaning: "강아지", emoji: "🐶", pron: "dɔːɡ"  },
@@ -104,10 +104,25 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 6월 1주차 B ── */
+  "jun_w1b": {
+    label: "6월 1주차 B",
+    words: [
+      { word: "wild animal", meaning: "야생 동물", emoji: "🦁",  pron: "waɪld ˈænɪməl" },
+      { word: "livestock",   meaning: "가축",     emoji: "🐄",  pron: "ˈlaɪvstɒk"     },
+      { word: "piglet",      meaning: "아기 돼지", emoji: "🐷",  pron: "ˈpɪɡlɪt"       },
+      { word: "cub",         meaning: "아기 곰, 아기 사자", emoji: "🧸",  pron: "kʌb"  },
+      { word: "lamb",        meaning: "아기 양",  emoji: "🐑",  pron: "læm"            },
+      { word: "pup",         meaning: "아기 늑대", emoji: "🐾",  pron: "pʌp"            },
+      { word: "wolf",        meaning: "늑대",     emoji: "🐺",  pron: "wʊlf"           },
+      { word: "bear",        meaning: "곰",       emoji: "🐻",  pron: "bɛr"            },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기

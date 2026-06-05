@@ -1207,6 +1207,104 @@
       font-family: 'Fredoka','Jua',sans-serif; font-weight: 700; font-size: 1rem;
       cursor: pointer;
     }
+
+    /* ── Flash Card Game ── */
+    .flash-shortcut {
+      background: linear-gradient(180deg, #bbe8d8 0%, var(--mint) 60%, #6abf9a 100%);
+      color: white;
+      box-shadow: 0 5px 0 0 #6abf9a, 0 12px 22px -8px rgba(106,191,154,0.4);
+      grid-column: 1 / -1;
+    }
+    .flash-shortcut:active { box-shadow: 0 1px 0 0 #6abf9a; }
+    .fc-card {
+      position: relative; width: 100%; max-width: 480px;
+      background: var(--paper); border-radius: 32px;
+      box-shadow: var(--sh-card);
+      padding: 40px 24px 32px;
+      display: flex; flex-direction: column; align-items: center;
+      margin-bottom: 20px; text-align: center;
+    }
+    .fc-card::before {
+      content: ''; position: absolute; top: 14px; left: 14px; right: 14px; bottom: 14px;
+      border-radius: 22px; border: 2px dashed #ffd3d3;
+      pointer-events: none; opacity: 0.5;
+    }
+    .fc-tag {
+      position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+      background: var(--pink); color: white;
+      font-family: 'Jua', sans-serif; font-size: 0.85rem;
+      padding: 4px 18px 3px; border-radius: 999px;
+      box-shadow: 0 3px 0 0 var(--pink-d);
+      white-space: nowrap; display: flex; align-items: center; gap: 6px;
+    }
+    .fc-word {
+      font-family: 'Fredoka', sans-serif; font-weight: 700;
+      font-size: clamp(2.2rem, 8vw, 3rem);
+      color: var(--ink); letter-spacing: 1px; margin-bottom: 6px;
+    }
+    .fc-pron {
+      font-family: 'Pretendard Variable', Pretendard, sans-serif; font-weight: 400;
+      font-size: 1rem; color: var(--ink-3); margin-bottom: 18px;
+    }
+    .fc-sound-btn {
+      background: white; border: none; border-radius: 999px;
+      padding: 10px 26px 9px;
+      font-family: 'Jua', sans-serif; font-size: 1.05rem; color: var(--pink-d);
+      cursor: pointer; touch-action: manipulation;
+      box-shadow: 0 3px 0 0 var(--pink-s), inset 0 0 0 2px var(--pink-s);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .fc-sound-btn:active { transform: translateY(2px); }
+    .fc-sound-btn svg { width: 18px; height: 18px; }
+    .fc-answer-panel {
+      display: none; width: 100%; margin-top: 18px;
+      background: linear-gradient(180deg, #e8fff5 0%, #cffaeb 100%);
+      border: 2px solid var(--mint); border-radius: 20px;
+      padding: 16px 18px 14px; text-align: center;
+      animation: fc-panel-in 0.35s cubic-bezier(.4,1.5,.45,.95);
+    }
+    .fc-answer-panel.visible { display: block; }
+    @keyframes fc-panel-in {
+      0%   { transform: scaleY(0.4); opacity: 0; transform-origin: top; }
+      100% { transform: scaleY(1);   opacity: 1; transform-origin: top; }
+    }
+    .fc-ap-label { font-family: 'Jua', sans-serif; font-size: 0.85rem; color: #2a7a5a; margin-bottom: 8px; }
+    .fc-ap-emoji { font-size: 2.4rem; line-height: 1; display: block; margin-bottom: 4px; }
+    .fc-ap-word  { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 2rem; color: #2a7a5a; }
+    .fc-ap-pron  { font-family: 'Pretendard Variable', Pretendard, sans-serif; font-weight: 400; font-size: 0.95rem; color: #5aaa88; margin-bottom: 10px; }
+    .fc-ap-snd {
+      background: white; border: none; border-radius: 999px;
+      padding: 7px 20px 6px; font-family: 'Jua', sans-serif; font-size: 0.95rem; color: #2a7a5a;
+      cursor: pointer; touch-action: manipulation;
+      box-shadow: 0 3px 0 0 #96d8bf, inset 0 0 0 1.5px #96d8bf;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .fc-ap-snd svg { width: 16px; height: 16px; }
+    .fc-choices {
+      width: 100%; max-width: 480px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .fc-choice-btn {
+      background: var(--paper); border: 2.5px solid #f5d8d0; border-radius: 22px;
+      padding: 18px 12px 17px;
+      font-family: 'Jua', sans-serif; font-size: 1.05rem; color: var(--ink);
+      cursor: pointer; touch-action: manipulation;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      box-shadow: 0 4px 0 0 #f0d8cf;
+      transition: transform .1s, box-shadow .1s; user-select: none;
+    }
+    .fc-choice-btn .fc-num { font-size: 0.75rem; color: var(--ink-3); font-family: 'Pretendard Variable', Pretendard, sans-serif; }
+    .fc-choice-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #f0d8cf; }
+    .fc-choice-btn.correct { background: linear-gradient(180deg,#e8fff5 0%,#cffaeb 100%); border-color: var(--mint); box-shadow: 0 4px 0 0 #6abf9a; color: #2a7a5a; }
+    .fc-choice-btn.wrong   { background: linear-gradient(180deg,#ffe0e5 0%,#ffc8d0 100%); border-color: var(--pink); box-shadow: 0 4px 0 0 var(--pink-d); color: var(--pink-d); }
+    @keyframes fc-shake {
+      0%,100% { transform:translateX(0) translateY(2px); }
+      20%     { transform:translateX(-8px) translateY(2px); }
+      40%     { transform:translateX(8px) translateY(2px); }
+      60%     { transform:translateX(-5px) translateY(2px); }
+      80%     { transform:translateX(5px) translateY(2px); }
+    }
+    .fc-choice-btn.fc-shake { animation: fc-shake 0.4s ease; }
   </style>
 </head>
 <body>
@@ -1286,6 +1384,13 @@
         <button class="short-btn quiz-shortcut" style="background:linear-gradient(180deg,#ddd2ff 0%,var(--lav) 60%,#9b89d8 100%);box-shadow:0 5px 0 0 #9b89d8,0 12px 22px -8px rgba(155,137,216,0.4)" onclick="startConvQuiz()">
           <span class="btn-icon">🗣️</span>
           대화 퀴즈
+        </button>
+      </div>
+
+      <div class="two-btn-row">
+        <button class="short-btn flash-shortcut" onclick="startFlashGame()">
+          <span class="btn-icon">🃏</span>
+          이번 주 플래시카드
         </button>
       </div>
 
@@ -1428,6 +1533,44 @@
     <button class="conv-korean-btn" id="convKoreanToggle" onclick="toggleConvKorean()" style="margin-top:8px">
       🇰🇷 한국어 표현 보기
     </button>
+  </div>
+
+  <!-- ═══ FLASH CARD SCREEN ═══ -->
+  <div class="screen" id="screen-flash">
+    <div class="top-bar">
+      <button class="home-btn" onclick="goStart()" aria-label="처음으로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8"/><path d="M5 10v10h14V10"/></svg>
+      </button>
+      <div class="progress-track"><div class="progress-fill" id="fcProgressFill"></div></div>
+      <div class="progress-label" id="fcProgressLabel">1 / 16</div>
+    </div>
+    <div class="fc-card" id="fcCard">
+      <div class="fc-tag" id="fcTag">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 7.1L22 10l-5.5 4.6 2 7.4L12 17.7l-6.5 4.3 2-7.4L2 10l7.1-.9z"/></svg>
+        <span id="fcTagText">어떤 뜻일까? 🤔</span>
+      </div>
+      <div class="fc-word" id="fcWord"></div>
+      <div class="fc-pron" id="fcPron"></div>
+      <button class="fc-sound-btn" id="fcSoundBtn" onclick="fcSpeakCurrent()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 5L6 9H3v6h3l5 4z"/>
+          <path d="M16 9a4 4 0 010 6"/>
+          <path d="M19 6a8 8 0 010 12"/>
+        </svg>
+        소리 듣기
+      </button>
+      <div class="fc-answer-panel" id="fcAnswerPanel">
+        <div class="fc-ap-label">🎉 정답이에요!</div>
+        <span class="fc-ap-emoji" id="fcApEmoji"></span>
+        <div class="fc-ap-word" id="fcApWord"></div>
+        <div class="fc-ap-pron" id="fcApPron"></div>
+        <button class="fc-ap-snd" id="fcApSndBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15 9a4 4 0 010 6"/></svg>
+          다시 듣기
+        </button>
+      </div>
+    </div>
+    <div class="fc-choices" id="fcChoices"></div>
   </div>
 
   </div><!-- /.stage -->
@@ -1630,7 +1773,7 @@ function buildGameWords() {
 }
 function startGame() { currentMode = 'main'; gameWords = buildGameWords(); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
 function startThisWeekReview() { currentMode = 'review'; selectedReview = WEEK_ORDER[WEEK_ORDER.length - 1]; gameWords = shuffle([...WORDS_DATA[selectedReview].words]); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord(); }
-function restartGame() { if (currentMode === 'conv') startConvQuiz(); else if (currentMode === 'review') startReviewGame(); else startGame(); }
+function restartGame() { if (currentMode === 'conv') startConvQuiz(); else if (currentMode === 'review') startReviewGame(); else if (currentMode === 'flash') startFlashGame(); else startGame(); }
 function goStart() { initStart(); }
 function loadWord() {
   const w = gameWords[currentIdx];
@@ -2112,6 +2255,158 @@ function showConvResult() {
   saveRecord(stars, correct, total, 'conv');
   buildWeeklyStrip();
   document.getElementById('emailStatus').textContent = '';
+  showScreen('screen-result');
+}
+
+/* ══════════════════════════════════════════
+   Flash Card Game
+   ══════════════════════════════════════════ */
+const FC_COLORS = [
+  { bg:'#fff0f5', border:'#ffd3d3', shadow:'#f0c8d8' },
+  { bg:'#f0f5ff', border:'#c8daff', shadow:'#b0c8f5' },
+  { bg:'#f0fff8', border:'#c0f0de', shadow:'#96d8bf' },
+  { bg:'#fff8f0', border:'#ffd8b0', shadow:'#f0c090' },
+];
+let fcQueue = [], fcIdx = 0, fcWrongCount = 0, fcAnswered = false;
+
+function fcShuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startFlashGame() {
+  currentMode = 'flash';
+  const key = WEEK_ORDER[WEEK_ORDER.length - 1];
+  const words = WORDS_DATA[key].words;
+  const enToKo = fcShuffle([...words]).map(w => ({ ...w, mode: 'en2ko' }));
+  const koToEn = fcShuffle([...words]).map(w => ({ ...w, mode: 'ko2en' }));
+  fcQueue = fcShuffle([...enToKo, ...koToEn]);
+  fcIdx = 0; fcWrongCount = 0; fcAnswered = false;
+  showScreen('screen-flash');
+  fcLoadCard();
+}
+
+function fcLoadCard() {
+  fcAnswered = false;
+  document.getElementById('fcAnswerPanel').classList.remove('visible');
+  const item = fcQueue[fcIdx];
+  const total = fcQueue.length;
+  const isEn = item.mode === 'en2ko';
+  const weekWords = WORDS_DATA[WEEK_ORDER[WEEK_ORDER.length - 1]].words;
+
+  document.getElementById('fcProgressFill').style.width = (fcIdx / total * 100) + '%';
+  document.getElementById('fcProgressLabel').textContent = `${fcIdx + 1} / ${total}`;
+  document.getElementById('fcTagText').textContent = isEn ? '어떤 뜻일까? 🤔' : '영어로는? ✏️';
+
+  if (isEn) {
+    document.getElementById('fcWord').textContent = item.word;
+    document.getElementById('fcPron').textContent = `[${item.pron}]`;
+    document.getElementById('fcPron').style.display = '';
+    document.getElementById('fcSoundBtn').style.display = '';
+    const others = fcShuffle(weekWords.filter(x => x.meaning !== item.meaning)).slice(0, 3);
+    fcRenderChoices(fcShuffle([
+      { label: item.meaning, correct: true },
+      ...others.map(x => ({ label: x.meaning, correct: false })),
+    ]));
+    setTimeout(() => fcSpeak(item.speak || item.word), 300);
+  } else {
+    document.getElementById('fcWord').textContent = item.meaning;
+    document.getElementById('fcPron').style.display = 'none';
+    document.getElementById('fcSoundBtn').style.display = 'none';
+    const others = fcShuffle(weekWords.filter(x => x.word !== item.word)).slice(0, 3);
+    fcRenderChoices(fcShuffle([
+      { label: item.word, correct: true },
+      ...others.map(x => ({ label: x.word, correct: false })),
+    ]));
+  }
+}
+
+function fcRenderChoices(choices) {
+  const container = document.getElementById('fcChoices');
+  container.innerHTML = '';
+  const labels = ['①', '②', '③', '④'];
+  choices.forEach((c, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'fc-choice-btn';
+    const col = FC_COLORS[i];
+    btn.style.cssText = `background:${col.bg};border-color:${col.border};box-shadow:0 4px 0 0 ${col.shadow}`;
+    btn.innerHTML = `<span class="fc-num">${labels[i]}</span>${c.label}`;
+    btn.onclick = () => fcSelectAnswer(btn, c.correct);
+    container.appendChild(btn);
+  });
+}
+
+function fcAdvance() {
+  fcIdx++;
+  if (fcIdx < fcQueue.length) fcLoadCard();
+  else fcShowResult();
+}
+
+function fcSelectAnswer(btn, isCorrect) {
+  if (fcAnswered) return;
+  if (isCorrect) {
+    fcAnswered = true;
+    document.querySelectorAll('.fc-choice-btn').forEach(b => { b.style.pointerEvents = 'none'; });
+    btn.classList.add('correct');
+    playSound('correct');
+    const item = fcQueue[fcIdx];
+    if (item.mode === 'ko2en') {
+      document.getElementById('fcApEmoji').textContent = item.emoji || '✨';
+      document.getElementById('fcApWord').textContent = item.word;
+      document.getElementById('fcApPron').textContent = `[${item.pron}]`;
+      document.getElementById('fcApSndBtn').onclick = () => fcSpeak(item.speak || item.word);
+      document.getElementById('fcAnswerPanel').classList.add('visible');
+      fcSpeak(item.speak || item.word);
+    } else {
+      showToast('🎉', '정답이에요!');
+    }
+    setTimeout(() => { removeToast(); fcAdvance(); }, 1400);
+  } else {
+    fcWrongCount++;
+    btn.style.pointerEvents = 'none';
+    btn.classList.add('wrong', 'fc-shake');
+    showToast('😢', '다시 한번!');
+    playSound('wrong');
+    setTimeout(removeToast, 900);
+  }
+}
+
+function fcSpeak(word) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1.1;
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = ['Zira','Samantha','Karen','Eva','Victoria','Aria','Jenny','Moira','Tessa'];
+  const v = voices.find(v => v.lang.startsWith('en') && preferred.some(n => v.name.includes(n)));
+  if (v) u.voice = v;
+  window.speechSynthesis.speak(u);
+}
+function fcSpeakCurrent() {
+  const item = fcQueue[fcIdx];
+  if (item) fcSpeak(item.speak || item.word);
+}
+
+function fcShowResult() {
+  const total = fcQueue.length;
+  const correct = total - fcWrongCount;
+  const stars = fcWrongCount === 0 ? 3 : fcWrongCount <= 2 ? 2 : 1;
+  const msgs = [
+    ['조금 더 연습해봐요!', '괜찮아요, 다시 하면 잘할 수 있어요 💪'],
+    ['잘하고 있어요!', '거의 다 맞췄어요 👏'],
+    ['완벽해요! 🎉', '모든 단어를 맞췄어요!'],
+  ];
+  const [mm, sm] = msgs[stars - 1];
+  document.getElementById('starsRow').innerHTML = [0,1,2].map(i => starSvg(i < stars)).join('');
+  document.getElementById('resultMsg').textContent = `${total}개 중 ${correct}개 정답! ${mm}`;
+  document.getElementById('resultSub').textContent = sm;
+  document.getElementById('wrongSection').innerHTML = '';
+  saveRecord(stars, correct, total, 'flash');
+  buildWeeklyStrip();
   showScreen('screen-result');
 }
 
