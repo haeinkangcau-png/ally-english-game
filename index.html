@@ -2412,7 +2412,7 @@ function fcShowResult() {
     ['완벽해요! 🎉', '모든 단어를 맞췄어요!'],
   ];
   const [mm, sm] = msgs[stars - 1];
-  document.getElementById('starsRow').innerHTML = [0,1,2].map(i => starSvg(i < stars)).join('');
+  document.getElementById('starsDisplay').innerHTML = [0,1,2].map(i => starSvg(i < stars)).join('');
   document.getElementById('resultMsg').textContent = `${total}개 중 ${correct}개 정답! ${mm}`;
   document.getElementById('resultSub').textContent = sm;
   document.getElementById('wrongSection').innerHTML = '';
