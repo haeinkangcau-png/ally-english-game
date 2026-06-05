@@ -1699,7 +1699,7 @@ function buildWeeklyStrip() {
     const d = new Date(today); d.setDate(today.getDate() - i);
     const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     const r = records[k];
-    if (r && (r.main || r.review || r.conv)) streak++; else break;
+    if (r && (r.main || r.review || r.conv || r.convReview || r.convQuiz)) streak++; else break;
   }
   let cells = '';
   for (let i = 0; i < 7; i++) {
@@ -1708,30 +1708,28 @@ function buildWeeklyStrip() {
     const isToday = key === todayKey;
     const rec = records[key] || {};
     const isFuture = d > today && !isToday;
-    const mainDone = !!rec.main;
-    const reviewDone = !!rec.review;
-    const convDone = !!rec.conv;
-    const mainClass = 'day-dot' + (mainDone ? ' done' : (isToday ? ' today-empty' : (isFuture ? ' is-future' : '')));
-    const reviewClass = 'day-dot' + (reviewDone ? ' review-done' : (isToday ? ' today-empty' : (isFuture ? ' is-future' : '')));
-    const convClass = 'day-dot' + (convDone ? ' conv-done' : (isToday ? ' today-empty' : (isFuture ? ' is-future' : '')));
-    const mainEmoji = mainDone ? '⭐' : (isToday && !isFuture ? '♡' : '');
-    const reviewEmoji = reviewDone ? '📖' : (isToday && !isFuture ? '♡' : '');
-    const convEmoji = convDone ? '💬' : (isToday && !isFuture ? '♡' : '');
-    const mainStars = mainDone ? '★'.repeat(rec.main.stars) + `<span class="off">${'★'.repeat(3-rec.main.stars)}</span>` : '';
-    const reviewStars = reviewDone ? '★'.repeat(rec.review.stars) + `<span class="off">${'★'.repeat(3-rec.review.stars)}</span>` : '';
-    const convStars = convDone ? '★'.repeat(rec.conv.stars) + `<span class="off">${'★'.repeat(3-rec.conv.stars)}</span>` : '';
+    // 카테고리: 단어복습 / 단어퀴즈 / 대화복습 / 대화퀴즈 (legacy 'conv'는 대화퀴즈로 표시)
+    const cats = [
+      { rec: rec.review,                   cls: 'review-done', emoji: '📖', color: 'var(--blue)'   },
+      { rec: rec.main,                     cls: 'done',        emoji: '⭐', color: 'var(--pink-d)' },
+      { rec: rec.convReview,               cls: 'conv-done',   emoji: '💬', color: 'var(--lav)'    },
+      { rec: rec.convQuiz || rec.conv,     cls: 'conv-done',   emoji: '🗣️', color: 'var(--lav)'    },
+    ];
+    let dotsHtml = '', starsHtml = '';
+    cats.forEach(c => {
+      const done = !!c.rec;
+      const cls = 'day-dot' + (done ? ' ' + c.cls : (isToday ? ' today-empty' : (isFuture ? ' is-future' : '')));
+      const emoji = done ? c.emoji : (isToday && !isFuture ? '♡' : '');
+      dotsHtml += `<div class="${cls}">${emoji}</div>`;
+      if (done) {
+        const s = c.rec.stars;
+        starsHtml += `<div class="day-stars" style="color:${c.color}">${'★'.repeat(s)}<span class="off">${'★'.repeat(3-s)}</span></div>`;
+      }
+    });
     cells += `<div class="day-cell${isToday ? ' is-today' : ''}">
       <span class="day-label${isToday ? ' today' : ''}">${DAY_LABELS[i]}</span>
-      <div class="day-dots-row">
-        <div class="${reviewClass}"><span class="dot-label">복</span>${reviewEmoji}</div>
-        <div class="${mainClass}"><span class="dot-label">퀴</span>${mainEmoji}</div>
-        <div class="${convClass}"><span class="dot-label">말</span>${convEmoji}</div>
-      </div>
-      <div class="day-bottom">
-        ${reviewStars ? `<div class="day-stars" style="color:var(--blue)">${reviewStars}</div>` : ''}
-        ${mainStars ? `<div class="day-stars">${mainStars}</div>` : ''}
-        ${convStars ? `<div class="day-stars" style="color:var(--lav)">${convStars}</div>` : ''}
-      </div>
+      <div class="day-dots-row">${dotsHtml}</div>
+      <div class="day-bottom">${starsHtml}</div>
     </div>`;
   }
   const streakBadge = streak > 1 ? `<span class="weekly-strip-streak">🔥 ${streak}일 연속!</span>` : '';
@@ -1774,7 +1772,7 @@ function startThisWeekReview() {
   if (WORDS_DATA[key].quizMode === 'flash') { startFlashGame('review'); return; }
   currentMode = 'review'; selectedReview = key; gameWords = shuffle([...WORDS_DATA[key].words]); currentIdx = 0; wrongWords = []; showScreen('screen-game'); loadWord();
 }
-function restartGame() { if (currentMode === 'conv') startConvQuiz(); else if (currentMode === 'review') startReviewGame(); else if (currentMode === 'flash') startFlashGame(fcRecordMode); else startGame(); }
+function restartGame() { if (currentMode === 'conv') { convRecordMode === 'convReview' ? startConvReview() : startConvQuiz(); } else if (currentMode === 'review') startReviewGame(); else if (currentMode === 'flash') startFlashGame(fcRecordMode); else startGame(); }
 function goStart() { initStart(); }
 function loadWord() {
   const w = gameWords[currentIdx];
@@ -1889,9 +1887,18 @@ function wordComplete() {
 function starSvg(filled) {
   return `<svg viewBox="0 0 24 24" fill="currentColor" class="${filled ? 'star-on' : 'star-off'}"><path d="M12 2l2.9 7.1L22 10l-5.5 4.6L18.5 22 12 17.7 5.5 22 7.5 14.6 2 10l7.1-.9z"/></svg>`;
 }
+/* 정답률(정답수/총문제수) 기반 별점 — 문제 수에 비례.
+   >=90% ★★★ / >=70% ★★ / >=40% ★ / 그 미만은 메인게임만 0점, 대화·플래시는 최소 1점 */
+function starRating(correct, total, allowZero = false) {
+  const r = total > 0 ? correct / total : 1;
+  if (r >= 0.9) return 3;
+  if (r >= 0.7) return 2;
+  if (r >= 0.4) return 1;
+  return allowZero ? 0 : 1;
+}
 function showResult() {
   const uw = [...new Map(wrongWords.map(w => [w.word, w])).values()], cc = gameWords.length - uw.length;
-  let stars = 3; if (uw.length >= 2) stars = 2; if (uw.length >= 4) stars = 1; if (uw.length >= 7) stars = 0;
+  const stars = starRating(cc, gameWords.length, true);
   document.getElementById('starsDisplay').innerHTML = [0,1,2].map(i => starSvg(i < stars)).join('');
   const msgs = [
     ['조금만 더 연습해요!', '괜찮아요, 다음엔 잘할 수 있어요'],
@@ -1992,7 +1999,7 @@ function playSound(type) {
   } catch(e) {}
 }
 /* ─── Conversation Game (대답 고르기) ───────── */
-let convQuestions = [], convCurrentIdx = 0, convWrong = 0, convWrongQuestions = [], convChoicesData = [], convAnswered = false, convShowKorean = false;
+let convQuestions = [], convCurrentIdx = 0, convWrong = 0, convWrongQuestions = [], convChoicesData = [], convAnswered = false, convShowKorean = false, convRecordMode = 'convQuiz';
 let convUsedCorrectAnswers = new Set();
 
 function pickConvCorrectAnswer(q) {
@@ -2004,7 +2011,7 @@ function pickConvCorrectAnswer(q) {
 }
 
 function startConvReview() {
-  currentMode = 'conv';
+  currentMode = 'conv'; convRecordMode = 'convReview';
   const latestKey = CONVERSATION_WEEK_ORDER[CONVERSATION_WEEK_ORDER.length - 1];
   const base = CONVERSATION_DATA[latestKey].questions;
   // 이번 주 질문 각각 3번 반복 = 6문제
@@ -2017,7 +2024,7 @@ function startConvReview() {
   loadConvQuestion();
 }
 function startConvQuiz() {
-  currentMode = 'conv';
+  currentMode = 'conv'; convRecordMode = 'convQuiz';
   const latestKey = CONVERSATION_WEEK_ORDER[CONVERSATION_WEEK_ORDER.length - 1];
   const curQ = shuffle([...CONVERSATION_DATA[latestKey].questions]);
   // 이번 주 3개: 질문 2개 중 1개는 1번, 1개는 2번
@@ -2227,10 +2234,7 @@ function applyConvKorean() {
 function toggleConvKorean() { convShowKorean = !convShowKorean; applyConvKorean(); }
 function showConvResult() {
   const total = convQuestions.length, correct = total - convWrong;
-  let stars;
-  if (convWrong === 0) stars = 3;
-  else if (convWrong < total) stars = 2;
-  else stars = 1;
+  const stars = starRating(correct, total);
   document.getElementById('starsDisplay').innerHTML = [0,1,2].map(i => starSvg(i < stars)).join('');
   const msgs = [
     ['다시 한번 해봐요!', '괜찮아요, 연습하면 잘할 수 있어요!'],
@@ -2253,7 +2257,7 @@ function showConvResult() {
       section.appendChild(item);
     });
   }
-  saveRecord(stars, correct, total, 'conv');
+  saveRecord(stars, correct, total, convRecordMode);
   buildWeeklyStrip();
   document.getElementById('emailStatus').textContent = '';
   showScreen('screen-result');
@@ -2289,14 +2293,65 @@ function fcShuffle(arr) {
   return a;
 }
 
+/* 같은 주차 그룹(예: jun_w1a, jun_w1b)을 "이번 주"로 묶기 위한 헬퍼 */
+function fcWeekGroupOf(key) { const m = key.match(/^(.*\d)[a-z]$/); return m ? m[1] : key; }
+function fcDedupWords(arr) { const seen = new Set(); return arr.filter(w => { if (seen.has(w.word)) return false; seen.add(w.word); return true; }); }
+function fcThisWeekWords() {
+  const grp = fcWeekGroupOf(WEEK_ORDER[WEEK_ORDER.length - 1]);
+  const words = [];
+  WEEK_ORDER.filter(k => fcWeekGroupOf(k) === grp).forEach(k => words.push(...WORDS_DATA[k].words));
+  return fcDedupWords(words);
+}
+function fcPrevWords() {
+  const grp = fcWeekGroupOf(WEEK_ORDER[WEEK_ORDER.length - 1]);
+  const words = [];
+  WEEK_ORDER.filter(k => fcWeekGroupOf(k) !== grp).forEach(k => words.push(...WORDS_DATA[k].words));
+  return fcDedupWords(words);
+}
+function fcPickWords(pool, n) {
+  if (!pool.length) return [];
+  const sh = fcShuffle([...pool]); const out = [];
+  while (out.length < n) out.push(...sh);
+  return out.slice(0, n);
+}
+/* 오늘의 퀴즈: 총 12문제 — 이번주 한→영 3 / 영→한 3 + 이전 한→영 3 / 영→한 3 */
+function fcBuildQuizQueue() {
+  const tw = fcThisWeekWords();
+  const pv = fcPrevWords();
+  const prevPool = pv.length ? pv : tw; // 이전 주가 없으면 이번 주로 보충
+  const q = [];
+  fcPickWords(tw, 3).forEach(w => q.push({ ...w, mode: 'ko2en', pool: tw }));
+  fcPickWords(tw, 3).forEach(w => q.push({ ...w, mode: 'en2ko', pool: tw }));
+  fcPickWords(prevPool, 3).forEach(w => q.push({ ...w, mode: 'ko2en', pool: prevPool }));
+  fcPickWords(prevPool, 3).forEach(w => q.push({ ...w, mode: 'en2ko', pool: prevPool }));
+  return fcShuffle(q);
+}
+/* 오늘의 복습: 이번 주(a·b) 전체, 양방향, 최대 20문제. 모든 단어가 1회 이상 나오도록 균등 분배 */
+function fcBuildReviewQueue() {
+  const tw = fcThisWeekWords();
+  const N = tw.length, CAP = 20;
+  let koEn, enKo;
+  if (N * 2 <= CAP) {
+    // 단어가 10개 이하: 모든 단어를 양방향(2N문제)으로
+    koEn = fcShuffle([...tw]); enKo = fcShuffle([...tw]);
+  } else {
+    // 단어가 10개 초과: 방향당 10문제. 한→영이 못 다룬 단어를 영→한에 우선 배치해 전 단어 1회 이상 보장
+    const perDir = Math.floor(CAP / 2);
+    const sh = fcShuffle([...tw]);
+    koEn = sh.slice(0, perDir);
+    let rest = sh.slice(perDir, perDir * 2);
+    if (rest.length < perDir) rest = rest.concat(fcShuffle([...koEn]).slice(0, perDir - rest.length));
+    enKo = fcShuffle(rest);
+  }
+  const q = [];
+  koEn.forEach(w => q.push({ ...w, mode: 'ko2en', pool: tw }));
+  enKo.forEach(w => q.push({ ...w, mode: 'en2ko', pool: tw }));
+  return fcShuffle(q);
+}
 function startFlashGame(recordMode = 'main') {
   currentMode = 'flash';
   fcRecordMode = recordMode;
-  const key = WEEK_ORDER[WEEK_ORDER.length - 1];
-  const words = WORDS_DATA[key].words;
-  const enToKo = fcShuffle([...words]).map(w => ({ ...w, mode: 'en2ko' }));
-  const koToEn = fcShuffle([...words]).map(w => ({ ...w, mode: 'ko2en' }));
-  fcQueue = fcShuffle([...enToKo, ...koToEn]);
+  fcQueue = recordMode === 'review' ? fcBuildReviewQueue() : fcBuildQuizQueue();
   fcIdx = 0; fcWrongCount = 0; fcAnswered = false;
   showScreen('screen-flash');
   fcLoadCard();
@@ -2308,7 +2363,7 @@ function fcLoadCard() {
   const item = fcQueue[fcIdx];
   const total = fcQueue.length;
   const isEn = item.mode === 'en2ko';
-  const weekWords = WORDS_DATA[WEEK_ORDER[WEEK_ORDER.length - 1]].words;
+  const weekWords = item.pool || WORDS_DATA[WEEK_ORDER[WEEK_ORDER.length - 1]].words;
 
   document.getElementById('fcProgressFill').style.width = (fcIdx / total * 100) + '%';
   document.getElementById('fcProgressLabel').textContent = `${fcIdx + 1} / ${total}`;
@@ -2406,7 +2461,7 @@ function fcSpeakCurrent() {
 function fcShowResult() {
   const total = fcQueue.length;
   const correct = total - fcWrongCount;
-  const stars = fcWrongCount === 0 ? 3 : fcWrongCount <= 2 ? 2 : 1;
+  const stars = starRating(correct, total);
   const msgs = [
     ['조금 더 연습해봐요!', '괜찮아요, 다시 하면 잘할 수 있어요 💪'],
     ['잘하고 있어요!', '거의 다 맞췄어요 👏'],
