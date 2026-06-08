@@ -842,6 +842,47 @@
     .review-open-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 0 var(--pink-s), inset 0 0 0 2px var(--pink-s); }
     .review-open-btn svg { width: 20px; height: 20px; }
 
+    /* ── Quiz log (작고 눈에 안 띄는 기록 보기) ── */
+    .log-peek-btn {
+      display: block; margin: 14px auto 2px;
+      background: none; border: none;
+      font-family: 'Jua', sans-serif; font-size: 0.66rem;
+      letter-spacing: 1px; color: var(--ink-3); opacity: 0.35;
+      padding: 6px 12px; cursor: pointer; touch-action: manipulation;
+    }
+    .log-peek-btn:active { opacity: 0.75; }
+    .log-wrap { width: 100%; padding: 6px 2px 28px; overflow-y: auto; }
+    .log-section-title {
+      font-family: 'Jua', sans-serif; font-size: 0.92rem;
+      color: var(--pink-d); margin: 16px 4px 8px;
+    }
+    .log-missed { display: flex; flex-direction: column; gap: 5px; }
+    .log-miss-item {
+      display: flex; align-items: center; gap: 8px;
+      background: #fff5f8; border: 1.5px solid #ffe0ea;
+      border-radius: 12px; padding: 7px 12px;
+    }
+    .log-miss-n {
+      font-family: 'Jua', sans-serif; font-size: 0.72rem; color: #fff;
+      background: var(--pink); border-radius: 8px; padding: 2px 7px; flex-shrink: 0;
+    }
+    .log-miss-label { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--ink-2); }
+    .log-miss-sub { font-size: 0.8rem; color: var(--ink-3); margin-left: auto; text-align: right; }
+    .log-sessions { display: flex; flex-direction: column; gap: 6px; }
+    .log-sess { background: #fafafe; border: 1.5px solid #efefef; border-radius: 12px; padding: 8px 12px; }
+    .log-sess-head { display: flex; align-items: center; gap: 8px; font-family: 'Jua', sans-serif; font-size: 0.76rem; }
+    .log-sess-date { color: var(--ink-3); }
+    .log-sess-mode { color: var(--lav); }
+    .log-sess-score { margin-left: auto; color: var(--pink-d); }
+    .log-sess-wrong { font-size: 0.78rem; color: var(--ink-3); margin-top: 3px; word-break: break-word; }
+    .log-empty { color: var(--ink-3); font-size: 0.85rem; text-align: center; padding: 16px; }
+    .log-clear-btn {
+      display: block; margin: 20px auto 0;
+      background: none; border: 1.5px solid #eee; color: var(--ink-3);
+      font-family: 'Jua', sans-serif; font-size: 0.72rem;
+      border-radius: 10px; padding: 8px 16px; cursor: pointer; opacity: 0.7;
+    }
+
     /* ── Weekly record strip ── */
     .weekly-strip {
       width: 100%;
@@ -1395,6 +1436,7 @@
       </button>
       <button class="vt-btn" onclick="openVoiceTest()" style="display:none">🎙️ 목소리 테스트</button>
     </div>
+    <button class="log-peek-btn" onclick="openQuizLog()" aria-label="퀴즈 기록 보기">· 기록 ·</button>
   </div>
 
   <!-- ═══ REVIEW SELECT SCREEN ═══ -->
@@ -1566,6 +1608,23 @@
     <div class="fc-choices" id="fcChoices"></div>
   </div>
 
+  <!-- ═══ QUIZ LOG SCREEN ═══ -->
+  <div class="screen" id="screen-log">
+    <div class="top-bar">
+      <button class="home-btn" onclick="goStart()" aria-label="처음으로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="screen-title">📋 퀴즈 기록</div>
+    </div>
+    <div class="log-wrap">
+      <div class="log-section-title">자주 틀린 단어·표현</div>
+      <div class="log-missed" id="logMissed"></div>
+      <div class="log-section-title">최근 기록 (<span id="logCount">0</span>회)</div>
+      <div class="log-sessions" id="logSessions"></div>
+      <button class="log-clear-btn" onclick="clearQuizLog()">기록 전체 삭제</button>
+    </div>
+  </div>
+
   </div><!-- /.stage -->
 
   <!-- ═══ VOICE TEST MODAL ═══ -->
@@ -1683,6 +1742,53 @@ function saveRecord(stars, correct, total, mode) {
     records[key][mode] = { stars, correct, total, ts: Date.now() };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
   }
+}
+
+/* ── 퀴즈 결과 로그 (브라우저 localStorage, 틀린 단어 집계용) ── */
+const QUIZ_LOG_KEY = 'ally_quiz_log';
+const QUIZ_LOG_MAX = 300;
+const QUIZ_MODE_LABELS = { main: '단어 퀴즈', review: '단어 복습', flash: '단어 퀴즈', convReview: '대화 복습', convQuiz: '대화 퀴즈' };
+function readQuizLog() { try { return JSON.parse(localStorage.getItem(QUIZ_LOG_KEY) || '[]'); } catch (e) { return []; } }
+function logQuizResult(mode, correct, total, stars, wrong) {
+  let log = readQuizLog();
+  log.push({ ts: Date.now(), mode, correct, total, stars, wrong: (wrong || []).map(w => ({ label: w.label, sub: w.sub || '' })) });
+  if (log.length > QUIZ_LOG_MAX) log = log.slice(log.length - QUIZ_LOG_MAX);
+  localStorage.setItem(QUIZ_LOG_KEY, JSON.stringify(log));
+}
+function openQuizLog() { buildQuizLog(); showScreen('screen-log'); }
+function buildQuizLog() {
+  const log = readQuizLog();
+  // 자주 틀린 단어/표현 집계
+  const counts = {};
+  log.forEach(e => (e.wrong || []).forEach(w => {
+    if (!counts[w.label]) counts[w.label] = { label: w.label, sub: w.sub, n: 0 };
+    counts[w.label].n++;
+  }));
+  const ranked = Object.values(counts).sort((a, b) => b.n - a.n);
+  const missEl = document.getElementById('logMissed');
+  missEl.innerHTML = ranked.length === 0
+    ? '<div class="log-empty">아직 틀린 기록이 없어요 🎉</div>'
+    : ranked.map(r => `<div class="log-miss-item"><span class="log-miss-n">${r.n}회</span><span class="log-miss-label">${r.label}</span><span class="log-miss-sub">${r.sub || ''}</span></div>`).join('');
+  // 최근 기록 (최신순)
+  const sessEl = document.getElementById('logSessions');
+  sessEl.innerHTML = log.length === 0
+    ? '<div class="log-empty">아직 푼 퀴즈가 없어요</div>'
+    : [...log].reverse().map(e => {
+        const d = new Date(e.ts);
+        const dateStr = `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+        const modeLabel = QUIZ_MODE_LABELS[e.mode] || e.mode;
+        const wrongStr = (e.wrong && e.wrong.length) ? e.wrong.map(w => w.label).join(', ') : '없음 🎉';
+        return `<div class="log-sess">
+          <div class="log-sess-head"><span class="log-sess-date">${dateStr}</span><span class="log-sess-mode">${modeLabel}</span><span class="log-sess-score">${e.correct}/${e.total} ${'★'.repeat(e.stars)}</span></div>
+          <div class="log-sess-wrong">✗ ${wrongStr}</div>
+        </div>`;
+      }).join('');
+  document.getElementById('logCount').textContent = log.length;
+}
+function clearQuizLog() {
+  if (!confirm('퀴즈 기록을 모두 지울까요?\n(주간 별점·스탬프는 그대로 유지돼요)')) return;
+  localStorage.removeItem(QUIZ_LOG_KEY);
+  buildQuizLog();
 }
 function buildWeeklyStrip() {
   const records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
@@ -1925,6 +2031,7 @@ function showResult() {
     });
   }
   saveRecord(stars, cc, gameWords.length, currentMode);
+  logQuizResult(currentMode, cc, gameWords.length, stars, uw.map(w => ({ label: w.word, sub: w.meaning })));
   buildWeeklyStrip();
   showScreen('screen-result');
   sendResultEmail(uw, cc, stars);
@@ -2258,6 +2365,7 @@ function showConvResult() {
     });
   }
   saveRecord(stars, correct, total, convRecordMode);
+  logQuizResult(convRecordMode, correct, total, stars, convWrongQuestions.map(wq => ({ label: wq.question, sub: wq.correctAnswer })));
   buildWeeklyStrip();
   document.getElementById('emailStatus').textContent = '';
   showScreen('screen-result');
@@ -2282,7 +2390,7 @@ const FC_COLORS = [
   { bg:'#f0fff8', border:'#c0f0de', shadow:'#96d8bf' },
   { bg:'#fff8f0', border:'#ffd8b0', shadow:'#f0c090' },
 ];
-let fcQueue = [], fcIdx = 0, fcWrongCount = 0, fcAnswered = false, fcRecordMode = 'main';
+let fcQueue = [], fcIdx = 0, fcWrongCount = 0, fcAnswered = false, fcRecordMode = 'main', fcWrongItems = [], fcCardMissed = false;
 
 function fcShuffle(arr) {
   const a = [...arr];
@@ -2352,13 +2460,14 @@ function startFlashGame(recordMode = 'main') {
   currentMode = 'flash';
   fcRecordMode = recordMode;
   fcQueue = recordMode === 'review' ? fcBuildReviewQueue() : fcBuildQuizQueue();
-  fcIdx = 0; fcWrongCount = 0; fcAnswered = false;
+  fcIdx = 0; fcWrongCount = 0; fcAnswered = false; fcWrongItems = []; fcCardMissed = false;
   showScreen('screen-flash');
   fcLoadCard();
 }
 
 function fcLoadCard() {
   fcAnswered = false;
+  fcCardMissed = false;
   document.getElementById('fcAnswerPanel').classList.remove('visible');
   const item = fcQueue[fcIdx];
   const total = fcQueue.length;
@@ -2434,6 +2543,11 @@ function fcSelectAnswer(btn, isCorrect) {
     setTimeout(() => { removeToast(); fcAdvance(); }, 1400);
   } else {
     fcWrongCount++;
+    if (!fcCardMissed) {
+      fcCardMissed = true;
+      const it = fcQueue[fcIdx];
+      fcWrongItems.push({ label: it.word, sub: it.meaning });
+    }
     btn.style.pointerEvents = 'none';
     btn.classList.add('wrong', 'fc-shake');
     showToast('😢', '다시 한번!');
@@ -2473,6 +2587,7 @@ function fcShowResult() {
   document.getElementById('resultSub').textContent = sm;
   document.getElementById('wrongSection').innerHTML = '';
   saveRecord(stars, correct, total, fcRecordMode);
+  logQuizResult(fcRecordMode, correct, total, stars, fcWrongItems.map(w => ({ label: w.label, sub: w.sub })));
   buildWeeklyStrip();
   showScreen('screen-result');
 }
