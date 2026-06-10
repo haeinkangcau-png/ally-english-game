@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ally's Flash Card Sample ♡</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Jua&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:   #ff8e9d;
+      --pink-d: #ed7589;
+      --pink-s: #ffd3d3;
+      --pink-x: #ffe6e0;
+      --mint:   #9adfc4;
+      --lav:    #c8b9f5;
+      --butter: #ffe186;
+      --peach:  #ffbf9a;
+      --blue:   #a8caff;
+      --paper:  #fff8f3;
+      --ink:    #5a4658;
+      --ink-2:  #8a7787;
+      --ink-3:  #b9a8b3;
+      --sh-card: 0 12px 28px -8px rgba(255,142,157,0.28), 0 2px 0 0 #fbd7cd;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    button { font: inherit; color: inherit; }
+    html, body { min-height: 100dvh; }
+    body {
+      font-family: 'Pretendard Variable', Pretendard, sans-serif;
+      font-weight: 700; color: var(--ink);
+      background:
+        radial-gradient(at 12% 8%, #ffdfd5 0%, transparent 38%),
+        radial-gradient(at 88% 14%, #e2d9ff 0%, transparent 42%),
+        radial-gradient(at 50% 92%, #d6ecff 0%, transparent 45%),
+        linear-gradient(170deg, #fff3ed 0%, #f3e8ff 55%, #e0f2fe 100%);
+      background-attachment: fixed;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    /* ── Layout ── */
+    .stage {
+      min-height: 100dvh;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 20px 16px 48px;
+    }
+
+    /* ── Top bar ── */
+    .top-bar {
+      width: 100%; max-width: 480px;
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+    }
+    .home-btn {
+      width: 38px; height: 38px; border: none; border-radius: 50%;
+      background: var(--paper); box-shadow: 0 3px 0 0 #f0d8cf;
+      cursor: pointer; display: grid; place-items: center; flex: 0 0 auto;
+    }
+    .home-btn svg { width: 18px; height: 18px; color: var(--pink-d); }
+    .home-btn:active { transform: translateY(1px); }
+    .progress-track {
+      flex: 1; height: 16px; background: white; border-radius: 999px;
+      overflow: hidden; box-shadow: inset 0 2px 0 0 #fbd7cd, inset 0 0 0 2px #fbd7cd;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--pink) 0%, var(--lav) 60%, var(--blue) 100%);
+      border-radius: 999px; transition: width 0.6s cubic-bezier(.22,1,.36,1); width: 0%;
+      position: relative;
+    }
+    .progress-fill::after {
+      content: ''; position: absolute; top: 2px; left: 6px; right: 6px; height: 4px;
+      background: rgba(255,255,255,0.55); border-radius: 999px;
+    }
+    .progress-label {
+      font-family: 'Jua', sans-serif; font-size: 1rem; color: var(--ink);
+      background: white; padding: 6px 12px 5px; border-radius: 999px;
+      box-shadow: 0 3px 0 0 #fbd7cd; white-space: nowrap; flex: 0 0 auto;
+    }
+
+    /* ── Flash card ── */
+    .flash-card {
+      position: relative; width: 100%; max-width: 480px;
+      background: var(--paper); border-radius: 32px;
+      box-shadow: var(--sh-card);
+      padding: 40px 24px 32px;
+      display: flex; flex-direction: column; align-items: center;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .flash-card::before {
+      content: ''; position: absolute; top: 14px; left: 14px; right: 14px; bottom: 14px;
+      border-radius: 22px; border: 2px dashed #ffd3d3;
+      pointer-events: none; opacity: 0.5;
+    }
+    .card-tag {
+      position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+      background: var(--pink); color: white;
+      font-family: 'Jua', sans-serif; font-size: 0.85rem;
+      padding: 4px 18px 3px; border-radius: 999px;
+      box-shadow: 0 3px 0 0 var(--pink-d);
+      white-space: nowrap;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .card-tag svg { width: 13px; height: 13px; }
+
+    @keyframes twinkle {
+      0%,100% { transform: scale(.7) rotate(0); opacity:.3; }
+      50%     { transform: scale(1.15) rotate(20deg); opacity:1; }
+    }
+
+    .card-word {
+      font-family: 'Fredoka', sans-serif; font-weight: 700;
+      font-size: clamp(2.4rem, 9vw, 3.2rem);
+      color: var(--ink); letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .card-pron {
+      font-family: 'Pretendard Variable', Pretendard, sans-serif; font-weight: 400;
+      font-size: 1rem; color: var(--ink-3); margin-bottom: 18px;
+    }
+
+    .sound-btn {
+      background: white; border: none; border-radius: 999px;
+      padding: 10px 26px 9px;
+      font-family: 'Jua', sans-serif; font-size: 1.05rem; color: var(--pink-d);
+      cursor: pointer; touch-action: manipulation;
+      box-shadow: 0 3px 0 0 var(--pink-s), inset 0 0 0 2px var(--pink-s);
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: transform .1s, box-shadow .1s;
+    }
+    .sound-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 0 var(--pink-s), inset 0 0 0 2px var(--pink-s); }
+    .sound-btn svg { width: 18px; height: 18px; }
+
+    /* ── 정답 패널 ── */
+    .answer-panel {
+      display: none;
+      width: 100%;
+      margin-top: 18px;
+      background: linear-gradient(180deg, #e8fff5 0%, #cffaeb 100%);
+      border: 2px solid var(--mint);
+      border-radius: 20px;
+      padding: 16px 18px 14px;
+      text-align: center;
+      animation: panel-in 0.35s cubic-bezier(.4,1.5,.45,.95);
+    }
+    .answer-panel.visible { display: block; }
+    @keyframes panel-in {
+      0%   { transform: scaleY(0.4); opacity: 0; transform-origin: top; }
+      100% { transform: scaleY(1);   opacity: 1; transform-origin: top; }
+    }
+    .answer-panel .ap-label {
+      font-family: 'Jua', sans-serif; font-size: 0.85rem;
+      color: #2a7a5a; margin-bottom: 8px;
+    }
+    .answer-panel .ap-emoji { font-size: 2.4rem; line-height: 1; display: block; margin-bottom: 4px; }
+    .answer-panel .ap-word {
+      font-family: 'Fredoka', sans-serif; font-weight: 700;
+      font-size: 2rem; color: #2a7a5a; letter-spacing: 1px;
+    }
+    .answer-panel .ap-pron {
+      font-family: 'Pretendard Variable', Pretendard, sans-serif; font-weight: 400;
+      font-size: 0.95rem; color: #5aaa88; margin-bottom: 10px;
+    }
+    .answer-panel .ap-sound {
+      background: white; border: none; border-radius: 999px;
+      padding: 7px 20px 6px;
+      font-family: 'Jua', sans-serif; font-size: 0.95rem; color: #2a7a5a;
+      cursor: pointer; touch-action: manipulation;
+      box-shadow: 0 3px 0 0 #96d8bf, inset 0 0 0 1.5px #96d8bf;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .answer-panel .ap-sound svg { width: 16px; height: 16px; }
+
+    /* ── Choices ── */
+    .choices {
+      width: 100%; max-width: 480px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .choice-btn {
+      background: var(--paper);
+      border: 2.5px solid #f5d8d0;
+      border-radius: 22px;
+      padding: 18px 12px 17px;
+      font-family: 'Jua', sans-serif; font-size: 1.15rem; color: var(--ink);
+      cursor: pointer; touch-action: manipulation;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      box-shadow: 0 4px 0 0 #f0d8cf;
+      transition: transform .1s, box-shadow .1s, background .15s, border-color .15s;
+      user-select: none; position: relative;
+    }
+    .choice-btn .choice-num {
+      font-size: 0.75rem; color: var(--ink-3);
+      font-family: 'Pretendard Variable', Pretendard, sans-serif;
+    }
+    .choice-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #f0d8cf; }
+    .choice-btn.correct {
+      background: linear-gradient(180deg, #e8fff5 0%, #cffaeb 100%);
+      border-color: var(--mint); box-shadow: 0 4px 0 0 #6abf9a;
+      color: #2a7a5a;
+    }
+    .choice-btn.wrong {
+      background: linear-gradient(180deg, #ffe0e5 0%, #ffc8d0 100%);
+      border-color: var(--pink); box-shadow: 0 4px 0 0 var(--pink-d);
+      color: var(--pink-d);
+    }
+    .choice-btn.dim { opacity: 0.4; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Fredoka', 'Jua', sans-serif; font-weight: 700;
+      font-size: 1.5rem; color: var(--ink);
+      background: white;
+      padding: 26px 36px 22px; border-radius: 32px;
+      pointer-events: none;
+      animation: toast-in 0.4s cubic-bezier(.4,1.6,.45,.95);
+      z-index: 200;
+      box-shadow: 0 12px 40px -8px rgba(255,142,157,0.5), 0 0 0 4px white, 0 0 0 6px var(--pink-s);
+      text-align: center; max-width: 80vw;
+    }
+    .toast .toast-big { font-size: 2.4rem; display: block; margin-bottom: 4px; color: var(--pink-d); }
+    @keyframes toast-in {
+      0%  { transform: translate(-50%,-50%) scale(0.4) rotate(-6deg); opacity:0; }
+      65% { transform: translate(-50%,-50%) scale(1.08) rotate(2deg); opacity:1; }
+      100%{ transform: translate(-50%,-50%) scale(1) rotate(0); opacity:1; }
+    }
+
+    /* shake animation for wrong */
+    @keyframes shake {
+      0%,100% { transform:translateX(0) translateY(2px); }
+      20%     { transform:translateX(-8px) translateY(2px); }
+      40%     { transform:translateX(8px) translateY(2px); }
+      60%     { transform:translateX(-5px) translateY(2px); }
+      80%     { transform:translateX(5px) translateY(2px); }
+    }
+    .choice-btn.shake { animation: shake 0.4s ease; }
+
+    /* ── Result ── */
+    .result-card {
+      width: 100%; max-width: 480px;
+      background: var(--paper); border-radius: 32px;
+      box-shadow: var(--sh-card);
+      padding: 36px 24px 28px; text-align: center;
+    }
+    .result-mascot {
+      width: 160px; height: auto; display: block;
+      margin: 0 auto; position: relative; top: -70px; margin-bottom: -50px;
+      filter: drop-shadow(0 8px 14px rgba(200,130,160,0.25));
+    }
+    .stars-row { display: inline-flex; gap: 10px; margin-bottom: 18px; }
+    .stars-row svg { width: 50px; height: 50px; }
+    .star-on  { color: var(--butter); filter: drop-shadow(0 3px 0 #e8c454); }
+    .star-off { color: #f0e3ec; }
+    .result-msg { font-family:'Jua',sans-serif; font-size:1.4rem; color:var(--ink); margin-bottom:6px; }
+    .result-sub { font-family:'Pretendard Variable',Pretendard,sans-serif; font-weight:400; font-size:1rem; color:var(--ink-2); margin-bottom:24px; }
+    .action-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .action-btn {
+      padding:13px 26px 14px; border-radius:999px; border:none;
+      font-family:'Jua',sans-serif; font-size:1.05rem;
+      cursor:pointer; touch-action:manipulation;
+      transition:transform .1s, box-shadow .1s;
+      display:inline-flex; align-items:center; gap:6px;
+    }
+    .action-btn.primary { background:var(--pink); color:white; box-shadow:0 4px 0 0 var(--pink-d); }
+    .action-btn.primary:active { transform:translateY(2px); box-shadow:0 2px 0 0 var(--pink-d); }
+    .action-btn.secondary { background:white; color:var(--ink-2); box-shadow:0 4px 0 0 #fbd7cd, inset 0 0 0 2px #fbd7cd; }
+    .action-btn.secondary:active { transform:translateY(2px); }
+
+    @media (min-width: 720px) {
+      .choices { gap: 16px; }
+      .choice-btn { font-size: 1.25rem; padding: 22px 16px 20px; }
+      .card-word { font-size: 3.8rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ── GAME SCREEN ── -->
+  <div id="screen-game" style="width:100%;display:flex;flex-direction:column;align-items:center;">
+    <div class="top-bar">
+      <button class="home-btn" onclick="showResult()" aria-label="결과 보기">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8"/><path d="M5 10v10h14V10"/></svg>
+      </button>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">1 / 16</div>
+    </div>
+
+    <div class="flash-card" id="flashCard">
+      <div class="card-tag" id="cardTag">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 7.1L22 10l-5.5 4.6 2 7.4L12 17.7l-6.5 4.3 2-7.4L2 10l7.1-.9z"/></svg>
+        <span id="cardTagText">어떤 뜻일까? 🤔</span>
+      </div>
+      <div class="card-word"  id="cardWord">cat</div>
+      <div class="card-pron"  id="cardPron">[kæt]</div>
+      <button class="sound-btn" id="soundBtn" onclick="speakCurrent()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 5L6 9H3v6h3l5 4z"/>
+          <path d="M16 9a4 4 0 010 6"/>
+          <path d="M19 6a8 8 0 010 12"/>
+        </svg>
+        소리 듣기
+      </button>
+      <!-- 정답 패널 (한→영 정답 시 확장) -->
+      <div class="answer-panel" id="answerPanel">
+        <div class="ap-label">🎉 정답이에요!</div>
+        <span class="ap-emoji" id="apEmoji"></span>
+        <div class="ap-word" id="apWord"></div>
+        <div class="ap-pron" id="apPron"></div>
+        <button class="ap-sound" id="apSoundBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15 9a4 4 0 010 6"/></svg>
+          다시 듣기
+        </button>
+      </div>
+    </div>
+
+    <div class="choices" id="choices"></div>
+  </div>
+
+  <!-- ── RESULT SCREEN ── -->
+  <div id="screen-result" style="width:100%;display:none;flex-direction:column;align-items:center;">
+    <div class="result-card">
+      <img class="result-mascot" src="assets/bunny.png" alt="bunny" onerror="this.style.display='none'">
+      <div class="stars-row" id="starsRow"></div>
+      <div class="result-msg" id="resultMsg"></div>
+      <div class="result-sub" id="resultSub"></div>
+      <div class="action-row">
+        <button class="action-btn primary" onclick="restartGame()">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0115-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+          다시 하기
+        </button>
+        <button class="action-btn secondary" onclick="location.href='index.html'">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8"/><path d="M5 10v10h14V10"/></svg>
+          게임으로
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ── 샘플 데이터 (jun_w1b 기반) ── */
+const WORDS = [
+  { word:'wild animal', pron:'waɪld ˈænɪməl', emoji:'🦁', meaning:'야생 동물' },
+  { word:'livestock',   pron:'ˈlaɪvstɒk',     emoji:'🐄', meaning:'가축'      },
+  { word:'piglet',      pron:'ˈpɪɡlɪt',       emoji:'🐷', meaning:'아기 돼지' },
+  { word:'cub',         pron:'kʌb',            emoji:'🧸', meaning:'아기 곰, 아기 사자' },
+  { word:'lamb',        pron:'læm',            emoji:'🐑', meaning:'아기 양'   },
+  { word:'pup',         pron:'pʌp',            emoji:'🐾', meaning:'아기 늑대' },
+  { word:'wolf',        pron:'wʊlf',           emoji:'🐺', meaning:'늑대'      },
+  { word:'bear',        pron:'bɛr',            emoji:'🐻', meaning:'곰'        },
+];
+
+const CHOICE_COLORS = [
+  { bg:'#fff0f5', border:'#ffd3d3', shadow:'#f0c8d8' },
+  { bg:'#f0f5ff', border:'#c8daff', shadow:'#b0c8f5' },
+  { bg:'#f0fff8', border:'#c0f0de', shadow:'#96d8bf' },
+  { bg:'#fff8f0', border:'#ffd8b0', shadow:'#f0c090' },
+];
+
+let queue = [], currentIdx = 0, wrongCount = 0, answered = false;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startGame() {
+  // 영→한 8개 + 한→영 8개 = 16문제
+  const enToKo = shuffle([...WORDS]).map(w => ({ ...w, mode: 'en2ko' }));
+  const koToEn = shuffle([...WORDS]).map(w => ({ ...w, mode: 'ko2en' }));
+  queue = shuffle([...enToKo, ...koToEn]);
+  currentIdx = 0; wrongCount = 0; answered = false;
+  document.getElementById('screen-game').style.display = 'flex';
+  document.getElementById('screen-result').style.display = 'none';
+  loadCard();
+}
+
+function loadCard() {
+  answered = false;
+  document.getElementById('answerPanel').classList.remove('visible');
+  const item = queue[currentIdx];
+  const total = queue.length;
+  const isEnToKo = item.mode === 'en2ko';
+
+  document.getElementById('progressFill').style.width = (currentIdx / total * 100) + '%';
+  document.getElementById('progressLabel').textContent = `${currentIdx + 1} / ${total}`;
+  document.getElementById('cardTagText').textContent = isEnToKo ? '어떤 뜻일까? 🤔' : '영어로는? ✏️';
+
+  if (isEnToKo) {
+    // 영→한: 영어 단어 + 발음 + 소리버튼 표시, 한국어 선택지
+    document.getElementById('cardWord').textContent = item.word;
+    document.getElementById('cardPron').textContent = `[${item.pron}]`;
+    document.getElementById('cardPron').style.display = '';
+    document.getElementById('soundBtn').style.display = '';
+    const others = shuffle(WORDS.filter(x => x.meaning !== item.meaning)).slice(0, 3);
+    const choices = shuffle([
+      { label: item.meaning, correct: true },
+      ...others.map(x => ({ label: x.meaning, correct: false })),
+    ]);
+    renderChoices(choices);
+    setTimeout(() => speakWord(item.word), 300);
+  } else {
+    // 한→영: 한국어 뜻 표시, 소리버튼/정답패널 숨김, 영어 단어 선택지
+    document.getElementById('answerPanel').classList.remove('visible');
+    document.getElementById('cardWord').textContent = item.meaning;
+    document.getElementById('cardPron').style.display = 'none';
+    document.getElementById('soundBtn').style.display = 'none';
+    const others = shuffle(WORDS.filter(x => x.word !== item.word)).slice(0, 3);
+    const choices = shuffle([
+      { label: item.word, correct: true },
+      ...others.map(x => ({ label: x.word, correct: false })),
+    ]);
+    renderChoices(choices);
+  }
+}
+
+function renderChoices(choices) {
+  const container = document.getElementById('choices');
+  container.innerHTML = '';
+  const labels = ['①', '②', '③', '④'];
+  choices.forEach((c, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    const col = CHOICE_COLORS[i];
+    btn.style.cssText = `background:${col.bg};border-color:${col.border};box-shadow:0 4px 0 0 ${col.shadow}`;
+    btn.innerHTML = `<span class="choice-num">${labels[i]}</span>${c.label}`;
+    btn.onclick = () => selectAnswer(btn, c.correct, choices);
+    container.appendChild(btn);
+  });
+}
+
+function advanceQuestion() {
+  removeToast();
+  currentIdx++;
+  if (currentIdx < queue.length) loadCard();
+  else showResult();
+}
+
+function selectAnswer(btn, isCorrect, choices) {
+  if (answered) return;
+
+  if (isCorrect) {
+    // 정답: 모든 버튼 비활성화 후 정답 처리
+    answered = true;
+    document.querySelectorAll('.choice-btn').forEach(b => { b.style.pointerEvents = 'none'; });
+    btn.classList.add('correct');
+    playBeep('correct');
+    const item = queue[currentIdx];
+    if (item.mode === 'ko2en') {
+      const panel = document.getElementById('answerPanel');
+      document.getElementById('apEmoji').textContent = item.emoji;
+      document.getElementById('apWord').textContent = item.word;
+      document.getElementById('apPron').textContent = `[${item.pron}]`;
+      document.getElementById('apSoundBtn').onclick = () => speakWord(item.word);
+      panel.classList.add('visible');
+      speakWord(item.word);
+    } else {
+      showToast('🎉', '정답이에요!');
+    }
+    setTimeout(advanceQuestion, 1400);
+
+  } else {
+    // 오답: 틀린 버튼만 비활성화, 정답 버튼은 살려서 직접 누르게 대기
+    wrongCount++;
+    btn.style.pointerEvents = 'none';
+    btn.classList.add('wrong', 'shake');
+    showToast('😢', '다시 한번!');
+    playBeep('wrong');
+    setTimeout(removeToast, 900);
+  }
+}
+
+function speakWord(word) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1.1;
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = ['Zira','Samantha','Karen','Eva','Victoria','Aria','Jenny','Moira','Tessa'];
+  const v = voices.find(v => v.lang.startsWith('en') && preferred.some(n => v.name.includes(n)));
+  if (v) u.voice = v;
+  window.speechSynthesis.speak(u);
+}
+function speakCurrent() {
+  const item = queue[currentIdx];
+  if (item) speakWord(item.word);
+}
+
+function showToast(emoji, msg) {
+  removeToast();
+  const t = document.createElement('div');
+  t.className = 'toast'; t.id = 'toast';
+  t.innerHTML = `<span class="toast-big">${emoji}</span>${msg}`;
+  document.body.appendChild(t);
+}
+function removeToast() {
+  document.getElementById('toast')?.remove();
+}
+
+/* simple beep tones */
+let audioCtx = null;
+function getCtx() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); return audioCtx; }
+function playBeep(type) {
+  try {
+    const ctx = getCtx();
+    const freqs = type === 'correct' ? [523, 659, 784] : [300, 220];
+    freqs.forEach((f, i) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value = f; o.type = 'sine';
+      g.gain.setValueAtTime(0.18, ctx.currentTime + i * 0.1);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.28);
+      o.start(ctx.currentTime + i * 0.1);
+      o.stop(ctx.currentTime + i * 0.1 + 0.28);
+    });
+  } catch(e) {}
+}
+
+function starSvg(filled) {
+  return `<svg viewBox="0 0 24 24" fill="currentColor" class="${filled ? 'star-on' : 'star-off'}"><path d="M12 2l2.9 7.1L22 10l-5.5 4.6L18.5 22 12 17.7 5.5 22 7.5 14.6 2 10l7.1-.9z"/></svg>`;
+}
+
+function showResult() {
+  document.getElementById('screen-game').style.display = 'none';
+  document.getElementById('screen-result').style.display = 'flex';
+  const total = queue.length, correct = total - wrongCount;
+  let stars = wrongCount === 0 ? 3 : wrongCount <= 2 ? 2 : 1;
+  document.getElementById('starsRow').innerHTML = [0,1,2].map(i => starSvg(i < stars)).join('');
+  const msgs = [
+    ['조금 더 연습해봐요!', '괜찮아요, 다시 하면 잘할 수 있어요 💪'],
+    ['잘하고 있어요!',     '거의 다 맞췄어요 👏'],
+    ['완벽해요! 🎉',       '모든 단어를 맞췄어요!'],
+  ];
+  const [mm, sm] = msgs[stars - 1];
+  document.getElementById('resultMsg').textContent = `${total}개 중 ${correct}개 정답! ${mm}`;
+  document.getElementById('resultSub').textContent = sm;
+}
+
+function restartGame() { startGame(); }
+
+// 음성 준비 후 시작
+if (window.speechSynthesis && speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = () => {};
+}
+startGame();
+</script>
+</body>
+</html>
