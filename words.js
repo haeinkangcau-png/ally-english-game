@@ -121,10 +121,33 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 6월 2주차 (날씨) ── */
+  "jun_w2": {
+    label: "6월 2주차",
+    quizMode: "flash",
+    words: [
+      { word: "weather",       meaning: "날씨",            emoji: "🌦️", pron: "ˈweðər"        },
+      { word: "sunny",         meaning: "맑은, 화창한",     emoji: "☀️", pron: "ˈsʌni"         },
+      { word: "windy",         meaning: "바람 부는",        emoji: "🌬️", pron: "ˈwɪndi"        },
+      { word: "rainy",         meaning: "비 오는",          emoji: "🌧️", pron: "ˈreɪni"        },
+      { word: "thunderstorm",  meaning: "천둥번개",         emoji: "⛈️", pron: "ˈθʌndərstɔːrm"  },
+      { word: "snowy",         meaning: "눈 오는",          emoji: "🌨️", pron: "ˈsnoʊi"        },
+      { word: "light cloud",   meaning: "옅은 구름",        emoji: "🌤️", pron: "laɪt klaʊd"    },
+      { word: "thick cloud",   meaning: "짙은 구름",        emoji: "☁️", pron: "θɪk klaʊd"     },
+      { word: "shower",        meaning: "소나기",           emoji: "☔", pron: "ˈʃaʊər"        },
+      { word: "sunshine",      meaning: "햇빛, 햇살",       emoji: "🌞", pron: "ˈsʌnʃaɪn"      },
+      { word: "cloud",         meaning: "구름",            emoji: "⛅", pron: "klaʊd"         },
+      { word: "overcast",      meaning: "잔뜩 흐린",        emoji: "🌥️", pron: "ˈoʊvərkæst"    },
+      { word: "foggy",         meaning: "안개 낀",          emoji: "🌫️", pron: "ˈfɔːɡi"        },
+      { word: "frosty",        meaning: "서리 내린",        emoji: "❄️", pron: "ˈfrɔːsti"      },
+      { word: "handwriting",   meaning: "손글씨",           emoji: "✍️", pron: "ˈhændˌraɪtɪŋ"  },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기
@@ -247,9 +270,62 @@ const CONVERSATION_DATA = {
         ]
       }
     ]
+  },
+
+  /* ── 6월 2주차 (날씨 대화) ── */
+  "jun_conv_w2": {
+    label: "6월 2주차",
+    questions: [
+      {
+        question: "What is the weather like today?",
+        questionKorean: "오늘 날씨 어때요?",
+        correct: [
+          { text: "Today the weather is sunny.",  korean: "오늘 날씨는 맑아요." },
+          { text: "Today the weather is rainy.",  korean: "오늘 날씨는 비가 와요." },
+          { text: "Today the weather is cloudy.", korean: "오늘 날씨는 흐려요." },
+          { text: "Today the weather is windy.",  korean: "오늘 날씨는 바람이 불어요." },
+          { text: "Today the weather is snowy.",  korean: "오늘 날씨는 눈이 와요." },
+          { text: "Today the weather is foggy.",  korean: "오늘 날씨는 안개가 꼈어요." }
+        ],
+        wrong: [
+          { text: "I'm eight years old.", korean: "저는 여덟 살이에요." },
+          { text: "My name is Allie.",    korean: "제 이름은 Ally예요." },
+          { text: "I like pizza.",        korean: "저는 피자를 좋아해요." },
+          { text: "It's a cat.",          korean: "그건 고양이예요." },
+          { text: "I go to school.",      korean: "저는 학교에 가요." },
+          { text: "She is my sister.",    korean: "그녀는 제 여동생이에요." },
+          { text: "It's on the table.",   korean: "그건 탁자 위에 있어요." },
+          { text: "I can swim fast.",     korean: "저는 빨리 수영할 수 있어요." },
+          { text: "I have a dog.",        korean: "저는 강아지가 있어요." },
+          { text: "It's blue.",           korean: "그건 파란색이에요." }
+        ]
+      },
+      {
+        question: "What do you do?",
+        questionKorean: "무슨 일을 해요? (직업이 뭐예요?)",
+        correct: [
+          { text: "I'm a student.",                    korean: "저는 학생이에요." },
+          { text: "I go to school.",                   korean: "저는 학교에 다녀요." },
+          { text: "I'm an elementary school student.", korean: "저는 초등학생이에요." },
+          { text: "I study at school.",                korean: "저는 학교에서 공부해요." }
+        ],
+        wrong: [
+          { text: "I'm fine, thank you.",  korean: "저는 잘 지내요, 고마워요." },
+          { text: "It's sunny today.",     korean: "오늘은 맑아요." },
+          { text: "My name is Allie.",     korean: "제 이름은 Ally예요." },
+          { text: "I'm eight years old.",  korean: "저는 여덟 살이에요." },
+          { text: "I like ice cream.",     korean: "저는 아이스크림을 좋아해요." },
+          { text: "It's a dog.",           korean: "그건 강아지예요." },
+          { text: "She is happy.",         korean: "그녀는 행복해요." },
+          { text: "It's on the chair.",    korean: "그건 의자 위에 있어요." },
+          { text: "I have two pencils.",   korean: "저는 연필이 두 개 있어요." },
+          { text: "It's red.",             korean: "그건 빨간색이에요." }
+        ]
+      }
+    ]
   }
 
 };
 
 /* 대화 주차 순서 */
-const CONVERSATION_WEEK_ORDER = ["may_conv_w1"];
+const CONVERSATION_WEEK_ORDER = ["may_conv_w1", "jun_conv_w2"];
