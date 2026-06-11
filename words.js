@@ -280,12 +280,14 @@ const CONVERSATION_DATA = {
         question: "What is the weather like today?",
         questionKorean: "오늘 날씨 어때요?",
         correct: [
-          { text: "Today the weather is sunny.",  korean: "오늘 날씨는 맑아요." },
-          { text: "Today the weather is rainy.",  korean: "오늘 날씨는 비가 와요." },
-          { text: "Today the weather is cloudy.", korean: "오늘 날씨는 흐려요." },
-          { text: "Today the weather is windy.",  korean: "오늘 날씨는 바람이 불어요." },
-          { text: "Today the weather is snowy.",  korean: "오늘 날씨는 눈이 와요." },
-          { text: "Today the weather is foggy.",  korean: "오늘 날씨는 안개가 꼈어요." }
+          { text: "Today the weather is sunny.",   korean: "오늘 날씨는 맑아요." },
+          { text: "It's rainy today.",             korean: "오늘은 비가 와요." },
+          { text: "It's cloudy outside.",          korean: "밖은 흐려요." },
+          { text: "It looks like rain.",           korean: "비가 올 것 같아요." },
+          { text: "The weather is nice today.",    korean: "오늘 날씨가 좋아요." },
+          { text: "It's cold and windy.",          korean: "춥고 바람이 불어요." },
+          { text: "Today the weather is snowy.",   korean: "오늘 날씨는 눈이 와요." },
+          { text: "It's foggy this morning.",      korean: "오늘 아침은 안개가 꼈어요." }
         ],
         wrong: [
           { text: "I'm eight years old.", korean: "저는 여덟 살이에요." },

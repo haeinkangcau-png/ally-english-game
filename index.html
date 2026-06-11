@@ -1565,9 +1565,6 @@
     </div>
 
     <div class="conv-choices" id="convChoices"></div>
-    <button class="conv-korean-btn" id="convKoreanToggle" onclick="toggleConvKorean()" style="margin-top:8px">
-      🇰🇷 한국어 표현 보기
-    </button>
   </div>
 
   <!-- ═══ FLASH CARD SCREEN ═══ -->
@@ -2590,7 +2587,8 @@ function fcSpeakCurrent() {
 
 function fcShowResult() {
   const total = fcQueue.length;
-  const correct = total - fcWrongCount;
+  // 점수도 "틀린 카드 수" 기준 (기록의 틀린 단어 목록과 일치시키기 위함)
+  const correct = total - fcWrongItems.length;
   const stars = starRating(correct, total);
   const msgs = [
     ['조금 더 연습해봐요!', '괜찮아요, 다시 하면 잘할 수 있어요 💪'],
