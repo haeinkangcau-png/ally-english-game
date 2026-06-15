@@ -144,10 +144,32 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 6월 3주차 (파닉스: a / b·m / c / d) ── */
+  "jun_w3": {
+    label: "6월 3주차",
+    quizMode: "flash",
+    words: [
+      { word: "alligator",   meaning: "악어",        emoji: "🐊",   pron: "ˈælɪɡeɪtər" },
+      { word: "axe",         meaning: "도끼",        emoji: "🪓",   pron: "æks"        },
+      { word: "astronaut",   meaning: "우주비행사",   emoji: "👩‍🚀", pron: "ˈæstrənɔːt" },
+      { word: "ambulance",   meaning: "구급차",      emoji: "🚑",   pron: "ˈæmbjələns" },
+      { word: "butterfly",   meaning: "나비",        emoji: "🦋",   pron: "ˈbʌtərflaɪ" },
+      { word: "caterpillar", meaning: "애벌레",      emoji: "🐛",   pron: "ˈkætərpɪlər" },
+      { word: "moth",        meaning: "나방",        emoji: "🦋🌙", pron: "mɔːθ"       },
+      { word: "mouth",       meaning: "입",          emoji: "👄",   pron: "maʊθ"       },
+      { word: "cactus",      meaning: "선인장",      emoji: "🌵",   pron: "ˈkæktəs"    },
+      { word: "carrot",      meaning: "당근",        emoji: "🥕",   pron: "ˈkærət"     },
+      { word: "cake",        meaning: "케이크",      emoji: "🍰",   pron: "keɪk"       },
+      { word: "desk",        meaning: "책상",        emoji: "📖✏️", pron: "dɛsk"       },
+      { word: "dolphin",     meaning: "돌고래",      emoji: "🐬",   pron: "ˈdɒlfɪn"    },
+      { word: "dollar",      meaning: "달러",        emoji: "💵",   pron: "ˈdɒlər"     },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기
