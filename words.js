@@ -144,9 +144,9 @@ const WORDS_DATA = {
     ]
   },
 
-  /* ── 6월 3주차 (파닉스: a / b·m / c / d) ── */
-  "jun_w3": {
-    label: "6월 3주차",
+  /* ── 6월 3주차 A (파닉스: a / b·m / c / d) ── */
+  "jun_w3a": {
+    label: "6월 3주차 A",
     quizMode: "flash",
     words: [
       { word: "alligator",   meaning: "악어",        emoji: "🐊",   pron: "ˈælɪɡeɪtər" },
@@ -166,10 +166,26 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 6월 3주차 B (숫자 30~100) ── */
+  "jun_w3b": {
+    label: "6월 3주차 B",
+    quizMode: "flash",
+    words: [
+      { word: "thirty",      meaning: "서른 (30)",  emoji: "🌈", pron: "ˈθɜːrti"     },
+      { word: "forty",       meaning: "마흔 (40)",  emoji: "🎈", pron: "ˈfɔːrti"     },
+      { word: "fifty",       meaning: "쉰 (50)",    emoji: "🏆", pron: "ˈfɪfti"      },
+      { word: "sixty",       meaning: "예순 (60)",  emoji: "🍭", pron: "ˈsɪksti"     },
+      { word: "seventy",     meaning: "일흔 (70)",  emoji: "🚀", pron: "ˈsevənti"    },
+      { word: "eighty",      meaning: "여든 (80)",  emoji: "🐢", pron: "ˈeɪti"       },
+      { word: "ninety",      meaning: "아흔 (90)",  emoji: "🎁", pron: "ˈnaɪnti"     },
+      { word: "one hundred", meaning: "백 (100)",   emoji: "💯", pron: "wʌn ˈhʌndrəd" },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기

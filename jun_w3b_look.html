@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Ally's English Homework - Look (6월 3주차)</title>
+<title>Ally's English Homework - Look (6월 3주차 B)</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -67,7 +67,7 @@
     width:6mm; height:6mm; border-radius:50%;
     display:flex; align-items:center; justify-content:center; flex-shrink:0;
   }
-  .card-clue { font-size:10pt; color:#6366f1; font-weight:600; }
+  .card-clue { font-size:12pt; color:#6366f1; font-weight:700; }
   .emoji-box { text-align:center; font-size:48pt; line-height:1; margin-bottom:3mm; }
   .letter-hint {
     text-align:center; font-size:18pt; color:#4f46e5;
@@ -82,7 +82,7 @@
 <div class="page">
   <div class="header">
     <h1>🖼️ <span class="ally-name">Ally's</span> English Homework</h1>
-    <p>Look &amp; Write — 6월 3주차 | 그림을 보고 어떤 단어인지 맞춰 보자!</p>
+    <p>Look &amp; Write — 6월 3주차 B (숫자 30~100) | 숫자를 보고 영어로 써 보자!</p>
   </div>
   <div class="name-row">
     <span>Name <span class="ul"></span></span>
@@ -94,7 +94,7 @@
 <div class="page">
   <div class="header">
     <h1>🖼️ <span class="ally-name">Ally's</span> English Homework</h1>
-    <p>Look &amp; Write — 6월 3주차 | 계속 써 보자! 잘하고 있어!</p>
+    <p>Look &amp; Write — 6월 3주차 B (숫자 30~100) | 마지막이야! 거의 다 왔어!</p>
   </div>
   <div class="name-row">
     <span>Name <span class="ul"></span></span>
@@ -103,34 +103,16 @@
   <div class="grid" id="cards-p2"></div>
 </div>
 
-<div class="page">
-  <div class="header">
-    <h1>🖼️ <span class="ally-name">Ally's</span> English Homework</h1>
-    <p>Look &amp; Write — 6월 3주차 | 마지막이야! 거의 다 왔어!</p>
-  </div>
-  <div class="name-row">
-    <span>Name <span class="ul"></span></span>
-    <span>Date <span class="ul"></span></span>
-  </div>
-  <div class="grid" id="cards-p3"></div>
-</div>
-
 <script>
 const allCards = [
-  { emoji:"🐊",   hint:"a l l _ g _ t o r", clue:"강가에 사는 무서운 이빨!" },
-  { emoji:"🪓",   hint:"a _ e",             clue:"나무를 쩍! 자르는 도구" },
-  { emoji:"👩‍🚀", hint:"a s t r _ n _ u t", clue:"우주로 날아가는 사람!" },
-  { emoji:"🚑",   hint:"a m b _ l _ n c e", clue:"삐뽀삐뽀! 아픈 사람을 도와요" },
-  { emoji:"🦋",   hint:"b u t t _ r f l _", clue:"꽃에 앉는 알록달록 곤충" },
-  { emoji:"🐛",   hint:"c a t _ r p _ l l a r", clue:"나비가 되기 전 모습" },
-  { emoji:"🦋🌙", hint:"m _ t h",           clue:"밤에 불빛으로 모여요" },
-  { emoji:"👄",   hint:"m _ u t h",         clue:"말하고 먹는 곳" },
-  { emoji:"🌵",   hint:"c _ c t u s",       clue:"사막에 사는 가시 식물" },
-  { emoji:"🥕",   hint:"c _ r r o t",       clue:"토끼가 좋아하는 주황 채소" },
-  { emoji:"🍰",   hint:"c _ k e",           clue:"생일에 먹는 달콤한 것" },
-  { emoji:"📖✏️", hint:"d _ s k",           clue:"공부할 때 쓰는 가구" },
-  { emoji:"🐬",   hint:"d _ l p h i n",     clue:"바다에서 점프하는 친구" },
-  { emoji:"💵",   hint:"d _ l l a r",       clue:"미국에서 쓰는 돈" },
+  { emoji:"🌈", hint:"t h _ r t y",         clue:"30 — 서른!" },
+  { emoji:"🎈", hint:"f _ r t y",           clue:"40 — 마흔!" },
+  { emoji:"🏆", hint:"f _ f t y",           clue:"50 — 쉰!" },
+  { emoji:"🍭", hint:"s _ x t y",           clue:"60 — 예순!" },
+  { emoji:"🚀", hint:"s _ v e n t y",       clue:"70 — 일흔!" },
+  { emoji:"🐢", hint:"e _ g h t y",         clue:"80 — 여든!" },
+  { emoji:"🎁", hint:"n _ n e t y",         clue:"90 — 아흔!" },
+  { emoji:"💯", hint:"o n e  h _ n d r e d", clue:"100 — 백!" },
 ];
 
 function makeStaff() {
@@ -160,9 +142,8 @@ function renderCards(containerId, cards, startIdx) {
   });
 }
 
-renderCards('cards-p1', allCards.slice(0, 6),  0);
-renderCards('cards-p2', allCards.slice(6, 12), 6);
-renderCards('cards-p3', allCards.slice(12),    12);
+renderCards('cards-p1', allCards.slice(0, 6), 0);
+renderCards('cards-p2', allCards.slice(6),    6);
 </script>
 </body>
 </html>
