@@ -72,14 +72,28 @@
   <div class="words" id="words-p1"></div>
 </div>
 
+<div class="page">
+  <div class="header">
+    <h1>⭐ <span class="ally-name">Ally's</span> Special Practice</h1>
+    <p>Trace &amp; Write — 마지막이야! 거의 다 왔어!</p>
+  </div>
+  <div class="name-row">
+    <span>Name <span class="ul"></span></span>
+    <span>Date <span class="ul"></span></span>
+  </div>
+  <div class="words" id="words-p2"></div>
+</div>
+
 <script>
 const allWords = [
-  { word:"rainy",    meaning:"비 오는",   emoji:"🌧️", pron:"ˈreɪni"     },
-  { word:"rabbit",   meaning:"토끼",      emoji:"🐰", pron:"ˈræbɪt"     },
-  { word:"overcast", meaning:"잔뜩 흐린", emoji:"🌥️", pron:"ˈoʊvərkæst" },
-  { word:"snowy",    meaning:"눈 오는",   emoji:"🌨️", pron:"ˈsnoʊi"     },
-  { word:"weather",  meaning:"날씨",      emoji:"🌦️", pron:"ˈweðər"     },
-  { word:"four",     meaning:"넷",        emoji:"4️⃣", pron:"fɔːr"       },
+  { word:"moth",    meaning:"나방",      emoji:"🦋🌙", pron:"mɔːθ"     },
+  { word:"axe",     meaning:"도끼",      emoji:"🪓",   pron:"æks"      },
+  { word:"cake",    meaning:"케이크",    emoji:"🍰",   pron:"keɪk"     },
+  { word:"dolphin", meaning:"돌고래",    emoji:"🐬",   pron:"ˈdɒlfɪn"  },
+  { word:"four",    meaning:"넷",        emoji:"4️⃣",   pron:"fɔːr"     },
+  { word:"pig",     meaning:"돼지",      emoji:"🐷",   pron:"pɪɡ"      },
+  { word:"fifty",   meaning:"쉰 (50)",   emoji:"🏆",   pron:"ˈfɪfti"   },
+  { word:"thirty",  meaning:"서른 (30)", emoji:"🌈",   pron:"ˈθɜːrti"  },
 ];
 
 function makeStaff(traceWord) {
@@ -115,7 +129,8 @@ function renderWords(containerId, words, startIdx) {
   });
 }
 
-renderWords('words-p1', allWords, 0);
+renderWords('words-p1', allWords.slice(0, 6), 0);
+renderWords('words-p2', allWords.slice(6),    6);
 </script>
 </body>
 </html>
