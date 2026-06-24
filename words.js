@@ -182,10 +182,26 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 6월 4주차 (장소) ── */
+  "jun_w4": {
+    label: "6월 4주차",
+    quizMode: "flash",
+    words: [
+      { word: "place",          meaning: "장소",   emoji: "📍",   pron: "pleɪs"           },
+      { word: "store",          meaning: "가게",   emoji: "🏪",   pron: "stɔːr"           },
+      { word: "bank",           meaning: "은행",   emoji: "🏦",   pron: "bæŋk"            },
+      { word: "movie theater",  meaning: "영화관", emoji: "🎬",   pron: "ˈmuːvi ˌθiːətər" },
+      { word: "police station", meaning: "경찰서", emoji: "🚓",   pron: "pəˈliːs ˌsteɪʃən" },
+      { word: "police officer", meaning: "경찰관", emoji: "👮‍♀️", pron: "pəˈliːs ˌɒfɪsər"  },
+      { word: "market",         meaning: "마트",   emoji: "🛒",   pron: "ˈmɑːrkɪt"        },
+      { word: "restaurant",     meaning: "식당",   emoji: "🍽️",   pron: "ˈrestrɒnt"       },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기
