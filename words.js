@@ -198,10 +198,28 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 7월 1주차 (교통·운동) ── */
+  "jul_w1": {
+    label: "7월 1주차",
+    quizMode: "flash",
+    words: [
+      { word: "helicopter", meaning: "헬리콥터",    emoji: "🚁",   pron: "ˈhelɪkɒptər" },
+      { word: "train",      meaning: "기차",        emoji: "🚂",   pron: "treɪn"       },
+      { word: "boat",       meaning: "배",          emoji: "⛵",   pron: "boʊt"        },
+      { word: "plane",      meaning: "비행기",      emoji: "✈️",   pron: "pleɪn"       },
+      { word: "rocket",     meaning: "로켓",        emoji: "🚀",   pron: "ˈrɒkɪt"      },
+      { word: "car",        meaning: "자동차",      emoji: "🚗",   pron: "kɑːr"        },
+      { word: "sports",     meaning: "운동, 스포츠", emoji: "🏅",   pron: "spɔːrts"     },
+      { word: "play",       meaning: "놀다",        emoji: "🎈",   pron: "pleɪ"        },
+      { word: "jump rope",  meaning: "줄넘기",      emoji: "🤸‍♀️", pron: "dʒʌmp roʊp"  },
+      { word: "badminton",  meaning: "배드민턴",    emoji: "🏸",   pron: "ˈbædmɪntən"  },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4", "jul_w1"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기
