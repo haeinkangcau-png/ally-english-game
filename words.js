@@ -457,6 +457,31 @@ const CONVERSATION_DATA = {
           { text: "It's Monday.",         korean: "오늘은 월요일이에요." },
           { text: "It's blue.",           korean: "그건 파란색이에요." }
         ]
+      },
+      {
+        question: "Where are you going?",
+        questionKorean: "어디 가요?",
+        correct: [
+          { text: "I'm going to the store.",         korean: "가게에 가요." },
+          { text: "I'm going to the bank.",          korean: "은행에 가요." },
+          { text: "I'm going to the restaurant.",    korean: "식당에 가요." },
+          { text: "I'm going to the movie theater.", korean: "영화관에 가요." },
+          { text: "I'm going to the market.",        korean: "마트에 가요." },
+          { text: "I'm going to school.",            korean: "학교에 가요." },
+          { text: "I'm going home.",                 korean: "집에 가요." }
+        ],
+        wrong: [
+          { text: "I'm eight years old.", korean: "저는 여덟 살이에요." },
+          { text: "It's sunny today.",    korean: "오늘은 맑아요." },
+          { text: "My name is Allie.",    korean: "제 이름은 Ally예요." },
+          { text: "I like pizza.",        korean: "저는 피자를 좋아해요." },
+          { text: "It's a fox.",          korean: "그건 여우예요." },
+          { text: "She is my sister.",    korean: "그녀는 제 여동생이에요." },
+          { text: "I have a cake.",       korean: "저는 케이크가 있어요." },
+          { text: "I can swim.",          korean: "저는 수영할 수 있어요." },
+          { text: "Today is Monday.",     korean: "오늘은 월요일이에요." },
+          { text: "It's blue.",           korean: "그건 파란색이에요." }
+        ]
       }
     ]
   }
