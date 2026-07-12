@@ -62,47 +62,44 @@ WEEK_ORDER 배열에도 "jun_w1" 추가해줘
 | 따라쓰기 글자 | stroke `#ccc` fill none |
 | 빈칸 힌트 | `#4f46e5` |
 
-### 폰트
+### 폰트 (2026-07 아이 쓰기 편하게 ~70%로 축소)
 | 용도 | 폰트 | 크기 |
 |------|------|------|
 | 제목 | Fredoka One | 26pt |
 | Ally's 강조 | Fredoka One | 30pt |
 | 부제 | Nunito | 11pt |
-| 단어 | Fredoka One | 15pt |
-| 발음기호 | Nunito | 10pt |
-| 한국어 뜻 | Nunito | 11pt |
-| 이모지 (Sheet 1) | — | 20pt |
-| 이모지 (Sheet 2) | — | 48pt |
-| 빈칸 힌트 | Fredoka One | 18pt |
+| 단어 | Fredoka One | 11pt |
+| 발음기호 | Nunito | 8pt |
+| 한국어 뜻 | Nunito | 8pt |
+| 이모지 (Sheet 1) | — | 14pt |
+| 이모지 (Sheet 2) | — | 34pt |
+| 빈칸 힌트 | Fredoka One | 13pt (letter-spacing 5px) |
+| 따라쓰기 글자(SVG) | — | font-size 27, y=28 |
 | Name/Date 라벨 | Nunito | 14pt |
 
-### 4선 노트 핵심 규칙
+### 4선 노트 핵심 규칙 (70% 축소 반영)
 - SVG `<line>` 4개만 사용 (CSS border 금지)
 - `preserveAspectRatio="none"` 필수
-- Sheet 1: viewBox 800×60 / 선 y=1,20,40,59
-- Sheet 2: viewBox 600×50 / 선 y=1,17,33,49
+- Sheet 1: viewBox 800×42 / 선 y=1,14,28,41
+- Sheet 2: viewBox 600×35 / 선 y=1,12,23,34
 
 ### 페이지 구성
 - A4 (210mm × 297mm), padding 8mm 12mm
-- 단어 6개 이하: 1페이지
-- 단어 7개 이상: 2페이지 분할 (1~6 / 7~끝)
+- **페이지당 8개** (동적 분할). 단어 수만큼 `ITEMS_PER_PAGE=8`로 자동 페이지 생성 (`<div id="sheet">` + JS 루프)
 - Sheet 2 홀수 마지막 카드: 중앙 배치
 
 ### 칸 배치 규칙 (⚠️ 빈 칸·페이지 넘침 방지 — 반드시 지킬 것)
 한 페이지에 항목이 가득 차지 않을 때(마지막 페이지) 빈 칸/빈 줄이 생기거나
 1페이지가 넘쳐 2페이지로 흘러내리는 문제가 있었음. 아래 규칙으로 해결:
 
-- **Sheet 1 (Trace)**: 빈 슬롯을 만들지 말 것
-  - 렌더링은 항상 **실제 단어 개수만큼만** (`words.forEach`). `TRACE_SLOTS_PER_PAGE`만큼
-    빈 칸을 채우는 루프(빈 번호 동그라미·빈 4선) 금지.
-  - `.words`는 `justify-content:space-between` 대신 **`justify-content:flex-start; gap:10mm;`**
-    (위에서부터 쌓고, 마지막 페이지 단어들도 상단에 모이게).
-  - gap은 **10mm 권장**. 6단어 페이지 기준 가용 높이(약 244mm)에 여유 있게 들어감.
-    16mm 이상은 6단어가 가득 찬 페이지에서 넘칠 수 있으니 금지.
-- **Sheet 2 (Look)**: 카드 높이를 **고정**할 것
-  - `.grid`에 **`grid-auto-rows:72mm; align-content:start;`** 지정.
-  - 이게 없으면 `flex:1` 때문에 카드가 적은 페이지에서 한 줄이 세로로 늘어나 카드가 비정상적으로 길어짐.
-- 공통: 항목이 적은 페이지든 많은 페이지든 **한 칸 높이는 항상 동일**, 위에서부터 채움.
+- **동적 페이지네이션 (현행 방식)**: 본문은 `<div id="sheet"></div>` 하나만 두고, JS에서
+  `ITEMS_PER_PAGE = 8`로 단어/카드를 8개씩 잘라 페이지(`.page`: header + name-row + words/grid)를
+  동적으로 생성. → 단어 수가 몇 개든 빈 페이지·빈 칸 없이 자동 분할됨.
+- **Sheet 1 (Trace)**: 실제 항목만 렌더 (`words.forEach`). `.words`는 `justify-content:flex-start; gap:7mm;`
+  (위에서부터 쌓기). 70% 축소 후 8개가 한 페이지에 여유 있게 들어감.
+- **Sheet 2 (Look)**: 카드 높이 고정 — `.grid`에 `grid-auto-rows:50mm; align-content:start;`.
+  (없으면 카드 적은 페이지에서 한 줄이 세로로 늘어남.)
+- 공통: 항목이 적든 많든 **한 칸 높이는 항상 동일**, 위에서부터 채움.
 
 ### 이모지 특이사항
 - 🇯🇵 일본 국기는 Windows에서 JP 텍스트로 표시됨
