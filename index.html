@@ -856,6 +856,14 @@
       font-family: 'Jua', sans-serif; font-size: 0.92rem;
       color: var(--pink-d); margin: 16px 4px 8px;
     }
+    .log-period { display: flex; gap: 6px; margin: 0 2px 10px; }
+    .log-period-btn {
+      flex: 1; padding: 7px 8px; border-radius: 11px;
+      border: 1.5px solid #ffd9e4; background: #fff;
+      font-family: 'Jua', sans-serif; font-size: 0.74rem; color: var(--pink-d);
+      cursor: pointer; touch-action: manipulation;
+    }
+    .log-period-btn.active { background: var(--pink); color: #fff; border-color: var(--pink); }
     .log-missed { display: flex; flex-direction: column; gap: 5px; }
     .log-miss-item {
       display: flex; align-items: center; gap: 8px;
@@ -1616,6 +1624,11 @@
     </div>
     <div class="log-wrap">
       <div class="log-section-title">자주 틀린 단어·표현</div>
+      <div class="log-period" id="logPeriod">
+        <button class="log-period-btn active" data-p="all" onclick="setLogPeriod('all')">전체</button>
+        <button class="log-period-btn" data-p="month" onclick="setLogPeriod('month')">최근 1달</button>
+        <button class="log-period-btn" data-p="2weeks" onclick="setLogPeriod('2weeks')">최근 2주</button>
+      </div>
       <div class="log-missed" id="logMissed"></div>
       <div class="log-section-title">최근 기록 (<span id="logCount">0</span>회)</div>
       <div class="log-sessions" id="logSessions"></div>
@@ -1753,19 +1766,30 @@ function logQuizResult(mode, correct, total, stars, wrong) {
   if (log.length > QUIZ_LOG_MAX) log = log.slice(log.length - QUIZ_LOG_MAX);
   localStorage.setItem(QUIZ_LOG_KEY, JSON.stringify(log));
 }
+let logPeriod = 'all'; // 'all' | 'month' | '2weeks'
+function setLogPeriod(p) {
+  logPeriod = p;
+  document.querySelectorAll('.log-period-btn').forEach(b => b.classList.toggle('active', b.dataset.p === p));
+  buildQuizLog();
+}
 function openQuizLog() { buildQuizLog(); showScreen('screen-log'); }
 function buildQuizLog() {
   const log = readQuizLog();
+  // 기간 필터 (자주 틀린 단어/표현 집계에만 적용)
+  const DAY = 86400000;
+  const cutoff = logPeriod === 'month' ? Date.now() - 30 * DAY : logPeriod === '2weeks' ? Date.now() - 14 * DAY : 0;
+  const periodLog = log.filter(e => e.ts >= cutoff);
   // 자주 틀린 단어/표현 집계
   const counts = {};
-  log.forEach(e => (e.wrong || []).forEach(w => {
+  periodLog.forEach(e => (e.wrong || []).forEach(w => {
     if (!counts[w.label]) counts[w.label] = { label: w.label, sub: w.sub, n: 0 };
     counts[w.label].n++;
   }));
   const ranked = Object.values(counts).sort((a, b) => b.n - a.n);
+  const emptyMsg = logPeriod === 'all' ? '아직 틀린 기록이 없어요 🎉' : '이 기간에는 틀린 기록이 없어요 🎉';
   const missEl = document.getElementById('logMissed');
   missEl.innerHTML = ranked.length === 0
-    ? '<div class="log-empty">아직 틀린 기록이 없어요 🎉</div>'
+    ? `<div class="log-empty">${emptyMsg}</div>`
     : ranked.map(r => `<div class="log-miss-item"><span class="log-miss-n">${r.n}회</span><span class="log-miss-label">${r.label}</span><span class="log-miss-sub">${r.sub || ''}</span></div>`).join('');
   // 최근 기록 (최신순)
   const sessEl = document.getElementById('logSessions');
