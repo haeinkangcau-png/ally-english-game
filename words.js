@@ -216,10 +216,38 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 7월 2주차 (단모음 CVC 파닉스) ── */
+  "jul_w2": {
+    label: "7월 2주차",
+    quizMode: "flash",
+    words: [
+      { word: "rod",   meaning: "막대기, 낚싯대", emoji: "🎣",     pron: "rɒd"   },
+      { word: "nap",   meaning: "낮잠",          emoji: "😴",     pron: "næp"   },
+      { word: "dip",   meaning: "(살짝) 담그다",  emoji: "🥣",     pron: "dɪp"   },
+      { word: "tap",   meaning: "수도꼭지",       emoji: "🚰",     pron: "tæp"   },
+      { word: "web",   meaning: "거미줄",         emoji: "🕸️",     pron: "web"   },
+      { word: "axe",   meaning: "도끼",          emoji: "🪓",     pron: "æks"   },
+      { word: "up",    meaning: "위로",          emoji: "⬆️",     pron: "ʌp"    },
+      { word: "kit",   meaning: "도구 세트",      emoji: "🧰",     pron: "kɪt"   },
+      { word: "queen", meaning: "여왕",          emoji: "👑",     pron: "kwiːn" },
+      { word: "fox",   meaning: "여우",          emoji: "🦊",     pron: "fɒks"  },
+      { word: "pin",   meaning: "핀",            emoji: "📌",     pron: "pɪn"   },
+      { word: "bun",   meaning: "둥근 빵",        emoji: "🍞",     pron: "bʌn"   },
+      { word: "can",   meaning: "깡통, 캔",       emoji: "🥫",     pron: "kæn"   },
+      { word: "bit",   meaning: "조금, 약간",     emoji: "🤏",     pron: "bɪt"   },
+      { word: "hut",   meaning: "오두막",         emoji: "🏠",     pron: "hʌt"   },
+      { word: "fog",   meaning: "안개",          emoji: "🌫️",     pron: "fɒɡ"   },
+      { word: "win",   meaning: "이기다",         emoji: "🏆",     pron: "wɪn"   },
+      { word: "man",   meaning: "남자",          emoji: "👨",     pron: "mæn"   },
+      { word: "jam",   meaning: "잼",            emoji: "🍓🍇🍑", pron: "dʒæm"  },
+      { word: "sit",   meaning: "앉다",          emoji: "💺",     pron: "sɪt"   },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4", "jul_w1"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4", "jul_w1", "jul_w2"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기
