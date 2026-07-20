@@ -244,10 +244,43 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 7월 3주차 (파닉스: 단모음 · o / oct) ── */
+  "jul_w3": {
+    label: "7월 3주차",
+    quizMode: "flash",
+    words: [
+      { word: "rib",             meaning: "갈비뼈",                   emoji: "🦴",   pron: "rɪb"             },
+      { word: "vest",            meaning: "조끼",                     emoji: "🦺",   pron: "vest"            },
+      { word: "zip",             meaning: "지퍼(를 잠그다)",           emoji: "🧥",   pron: "zɪp"             },
+      { word: "pencil",          meaning: "연필",                     emoji: "✏️",   pron: "ˈpensəl"         },
+      { word: "butterfly",       meaning: "나비",                     emoji: "🦋",   pron: "ˈbʌtərflaɪ"      },
+      { word: "strawberry",      meaning: "딸기",                     emoji: "🍓",   pron: "ˈstrɔːberi"      },
+      { word: "hem",             meaning: "옷단, (옷의) 단",           emoji: "🧵",   pron: "hem"             },
+      { word: "wed",             meaning: "결혼하다, 결혼한 부부",       emoji: "💍",   pron: "wed"             },
+      { word: "pit",             meaning: "씨앗에 있는 구멍, 움푹한 구멍", emoji: "🕳️",   pron: "pɪt"            },
+      { word: "wig",             meaning: "가발",                     emoji: "💇‍♀️", pron: "wɪɡ"             },
+      { word: "capital letter",  meaning: "대문자",                   emoji: "🔠",   pron: "ˈkæpɪtəl ˈletər" },
+      { word: "lowercase letter", meaning: "소문자",                  emoji: "🔡",   pron: "ˈloʊərkeɪs ˈletər" },
+      { word: "octagon",         meaning: "팔각형",                   emoji: "🛑",   pron: "ˈɒktəɡən"        },
+      { word: "ostrich",         meaning: "타조",                     emoji: "🐦",   pron: "ˈɒstrɪtʃ"        },
+      { word: "ox",              meaning: "황소",                     emoji: "🐂",   pron: "ɒks"             },
+      { word: "teddy bear",      meaning: "곰 인형",                  emoji: "🧸",   pron: "ˈtedi ber"       },
+      { word: "snowflake",       meaning: "눈송이",                   emoji: "❄️",   pron: "ˈsnoʊfleɪk"      },
+      { word: "otter",           meaning: "수달",                     emoji: "🦦",   pron: "ˈɒtər"           },
+      { word: "october",         meaning: "10월",                     emoji: "🍂",   pron: "ɒkˈtoʊbər"       },
+      { word: "octopus",         meaning: "문어",                     emoji: "🐙",   pron: "ˈɒktəpəs"        },
+      { word: "wag",             meaning: "(꼬리를) 흔들다",           emoji: "🐕",   pron: "wæɡ"             },
+      { word: "den",             meaning: "(동물의) 굴, 소굴",         emoji: "🦊",   pron: "den"             },
+      { word: "wet",             meaning: "젖은",                     emoji: "💧",   pron: "wet"             },
+      { word: "vet",             meaning: "수의사",                   emoji: "🩺",   pron: "vet"             },
+      { word: "van",             meaning: "밴, 승합차",               emoji: "🚐",   pron: "væn"             },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4", "jul_w1", "jul_w2"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4", "jul_w1", "jul_w2", "jul_w3"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기
@@ -484,9 +517,46 @@ const CONVERSATION_DATA = {
         ]
       }
     ]
+  },
+
+  /* ── 7월 3주차 (좋아하는 장난감) ── */
+  "jul_conv_w3": {
+    label: "7월 3주차",
+    questions: [
+      {
+        question: "What is your favorite toy?",
+        questionKorean: "가장 좋아하는 장난감이 뭐예요?",
+        correct: [
+          { text: "My favorite toy is a teddy bear.", korean: "제가 가장 좋아하는 장난감은 곰 인형이에요." },
+          { text: "I like my teddy bear the most.",   korean: "저는 곰 인형을 제일 좋아해요." },
+          { text: "My favorite toy is a doll.",       korean: "제가 가장 좋아하는 장난감은 인형이에요." },
+          { text: "I love my toy car.",               korean: "저는 장난감 자동차를 정말 좋아해요." },
+          { text: "My favorite toy is a robot.",      korean: "제가 가장 좋아하는 장난감은 로봇이에요." },
+          { text: "I like blocks the most.",          korean: "저는 블록을 제일 좋아해요." },
+          { text: "My favorite toy is a ball.",       korean: "제가 가장 좋아하는 장난감은 공이에요." },
+          { text: "I love my puzzle.",                korean: "저는 퍼즐을 정말 좋아해요." },
+          { text: "My favorite toy is a kite.",       korean: "제가 가장 좋아하는 장난감은 연이에요." },
+          { text: "I like my toy train the most.",    korean: "저는 장난감 기차를 제일 좋아해요." }
+        ],
+        wrong: [
+          { text: "I'm eight years old.", korean: "저는 여덟 살이에요." },
+          { text: "It's sunny today.",    korean: "오늘은 맑아요." },
+          { text: "My name is Allie.",    korean: "제 이름은 Ally예요." },
+          { text: "I go to school.",      korean: "저는 학교에 가요." },
+          { text: "It's a cat.",          korean: "그건 고양이예요." },
+          { text: "She is my sister.",    korean: "그녀는 제 여동생이에요." },
+          { text: "I like pizza.",        korean: "저는 피자를 좋아해요." },
+          { text: "It's on the table.",   korean: "그건 탁자 위에 있어요." },
+          { text: "I can swim fast.",     korean: "저는 빨리 수영할 수 있어요." },
+          { text: "It's October.",        korean: "지금은 10월이에요." },
+          { text: "It's blue.",           korean: "그건 파란색이에요." },
+          { text: "I'm a student.",       korean: "저는 학생이에요." }
+        ]
+      }
+    ]
   }
 
 };
 
 /* 대화 주차 순서 */
-const CONVERSATION_WEEK_ORDER = ["may_conv_w1", "jun_conv_w2"];
+const CONVERSATION_WEEK_ORDER = ["may_conv_w1", "jun_conv_w2", "jul_conv_w3"];
