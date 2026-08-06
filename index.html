@@ -2165,10 +2165,10 @@ function startConvReview() {
   currentMode = 'conv'; convRecordMode = 'convReview';
   const latestKey = CONVERSATION_WEEK_ORDER[CONVERSATION_WEEK_ORDER.length - 1];
   const base = CONVERSATION_DATA[latestKey].questions;
-  // 이번 주 질문 각각 3번 반복 = 6문제
-  let pool = [];
-  base.forEach(q => { pool.push(q, q, q); });
-  convQuestions = shuffle(pool).slice(0, 6);
+  // 질문이 적어도 반복해서 6문제를 채움 (모든 질문이 최소 1번 등장)
+  let pool = shuffle([...base]);
+  while (pool.length < 6) { pool.push(...shuffle([...base])); }
+  convQuestions = pool.slice(0, 6);
   convUsedCorrectAnswers = new Set();
   convCurrentIdx = 0; convWrong = 0; convWrongQuestions = []; convAnswered = false; convShowKorean = false;
   showScreen('screen-conv');
@@ -2178,10 +2178,9 @@ function startConvQuiz() {
   currentMode = 'conv'; convRecordMode = 'convQuiz';
   const latestKey = CONVERSATION_WEEK_ORDER[CONVERSATION_WEEK_ORDER.length - 1];
   const curQ = shuffle([...CONVERSATION_DATA[latestKey].questions]);
-  // 이번 주 3개: 질문 2개 중 1개는 1번, 1개는 2번
-  const curPart = [];
-  if (curQ.length >= 2) { curPart.push(curQ[0], curQ[1], curQ[1]); }
-  else if (curQ.length === 1) { curPart.push(curQ[0], curQ[0], curQ[0]); }
+  // 이번 주 3개: 가능하면 서로 다른 질문 3개, 부족하면 반복해서 채움
+  const curPart = curQ.slice(0, 3);
+  while (curPart.length < 3 && curQ.length) { curPart.push(curQ[curPart.length % curQ.length]); }
   // 과거 3개: 모든 이전 질문을 반복해서 3개 채움
   const prevQ = [];
   CONVERSATION_WEEK_ORDER.slice(0, -1).forEach(k => prevQ.push(...CONVERSATION_DATA[k].questions));

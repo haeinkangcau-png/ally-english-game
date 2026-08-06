@@ -277,10 +277,39 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 8월 1주차 (파닉스: 자음 블렌드 · ch · qu) ── */
+  "aug_w1": {
+    label: "8월 1주차",
+    quizMode: "flash",
+    words: [
+      { word: "stop",          meaning: "멈추다",            emoji: "🛑", pron: "stɒp"            },
+      { word: "shot",          meaning: "슛, 쏘기",          emoji: "🏀", pron: "ʃɒt"             },
+      { word: "drop",          meaning: "떨어뜨리다; 방울",   emoji: "💧", pron: "drɒp"            },
+      { word: "slot",          meaning: "(동전 넣는) 구멍",   emoji: "🎰", pron: "slɒt"            },
+      { word: "piggy bank",    meaning: "돼지 저금통",        emoji: "🐷", pron: "ˈpɪɡi bæŋk"      },
+      { word: "crop",          meaning: "농작물",            emoji: "🌾", pron: "krɒp"            },
+      { word: "trunk",         meaning: "코끼리 코",          emoji: "🐘", pron: "trʌŋk"           },
+      { word: "drill",         meaning: "드릴",              emoji: "🛠️", pron: "drɪl"            },
+      { word: "lamp",          meaning: "램프, 등",          emoji: "💡", pron: "læmp"            },
+      { word: "thumb",         meaning: "엄지손가락",         emoji: "👍", pron: "θʌm"             },
+      { word: "chimney",       meaning: "굴뚝",              emoji: "🏭", pron: "ˈtʃɪmni"         },
+      { word: "chest",         meaning: "상자, 궤짝; 가슴",   emoji: "📦", pron: "tʃest"           },
+      { word: "chin",          meaning: "턱",                emoji: "🙂", pron: "tʃɪn"            },
+      { word: "chick",         meaning: "병아리",            emoji: "🐤", pron: "tʃɪk"            },
+      { word: "quail",         meaning: "메추라기",           emoji: "🐦", pron: "kweɪl"           },
+      { word: "quietly",       meaning: "조용히",            emoji: "🤫", pron: "ˈkwaɪətli"       },
+      { word: "queen",         meaning: "여왕",              emoji: "👑", pron: "kwiːn"           },
+      { word: "question mark", meaning: "물음표",            emoji: "❓", pron: "ˈkwestʃən mɑːrk" },
+      { word: "quarter",       meaning: "25센트 동전",        emoji: "🪙", pron: "ˈkwɔːrtər"       },
+      { word: "reindeer",      meaning: "순록",              emoji: "🦌", pron: "ˈreɪndɪr"        },
+      { word: "heart",         meaning: "심장, 하트",         emoji: "❤️", pron: "hɑːrt"           },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4", "jul_w1", "jul_w2", "jul_w3"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4", "jul_w1", "jul_w2", "jul_w3", "aug_w1"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기
@@ -554,9 +583,104 @@ const CONVERSATION_DATA = {
         ]
       }
     ]
+  },
+
+  /* ── 7월 4주차 (좋아하는 것 · 본 적 있니) ── */
+  "jul_conv_w4": {
+    label: "7월 4주차",
+    questions: [
+      {
+        question: "Do you like cats or dogs?",
+        questionKorean: "고양이가 좋아요, 강아지가 좋아요?",
+        correct: [
+          { text: "I like cats.",       korean: "저는 고양이가 좋아요." },
+          { text: "I like dogs.",       korean: "저는 강아지가 좋아요." },
+          { text: "I like dogs more.",  korean: "저는 강아지가 더 좋아요." },
+          { text: "I like cats more.",  korean: "저는 고양이가 더 좋아요." },
+          { text: "I like both!",       korean: "저는 둘 다 좋아요!" },
+          { text: "I love dogs!",       korean: "저는 강아지를 정말 좋아해요!" }
+        ],
+        wrong: [
+          { text: "I'm eight years old.", korean: "저는 여덟 살이에요." },
+          { text: "It's sunny today.",    korean: "오늘은 맑아요." },
+          { text: "My name is Allie.",    korean: "제 이름은 Ally예요." },
+          { text: "It's on the table.",   korean: "그건 탁자 위에 있어요." },
+          { text: "I go to school.",      korean: "저는 학교에 가요." },
+          { text: "It's October.",        korean: "지금은 10월이에요." },
+          { text: "It's blue.",           korean: "그건 파란색이에요." },
+          { text: "She is my sister.",    korean: "그녀는 제 여동생이에요." }
+        ]
+      },
+      {
+        question: "Do you like snow?",
+        questionKorean: "눈을 좋아해요?",
+        correct: [
+          { text: "Yes, I love snow!",        korean: "네, 눈을 정말 좋아해요!" },
+          { text: "Yes, I like snow a lot!",  korean: "네, 눈을 많이 좋아해요!" },
+          { text: "Yes, snow is fun!",        korean: "네, 눈은 재미있어요!" },
+          { text: "Yes, I do!",               korean: "네, 좋아해요!" },
+          { text: "No, I don't like snow.",   korean: "아니요, 눈을 안 좋아해요." },
+          { text: "Not really.",              korean: "별로요." }
+        ],
+        wrong: [
+          { text: "I'm a student.",       korean: "저는 학생이에요." },
+          { text: "It's a cat.",          korean: "그건 고양이예요." },
+          { text: "My name is Allie.",    korean: "제 이름은 Ally예요." },
+          { text: "I'm eight years old.", korean: "저는 여덟 살이에요." },
+          { text: "She is my sister.",    korean: "그녀는 제 여동생이에요." },
+          { text: "I go home now.",       korean: "저는 지금 집에 가요." },
+          { text: "It's blue.",           korean: "그건 파란색이에요." },
+          { text: "I have a pencil.",     korean: "저는 연필이 있어요." }
+        ]
+      },
+      {
+        question: "Have you ever seen a robin?",
+        questionKorean: "울새(로빈)를 본 적 있어요?",
+        correct: [
+          { text: "Yes, I have.",           korean: "네, 본 적 있어요." },
+          { text: "Yes, I saw one!",        korean: "네, 한 마리 봤어요!" },
+          { text: "Yes, it's a little bird!", korean: "네, 작은 새예요!" },
+          { text: "Yes, once!",             korean: "네, 한 번요!" },
+          { text: "No, I haven't.",         korean: "아니요, 본 적 없어요." },
+          { text: "No, never.",             korean: "아니요, 한 번도 없어요." }
+        ],
+        wrong: [
+          { text: "I'm eight years old.", korean: "저는 여덟 살이에요." },
+          { text: "It's rainy today.",    korean: "오늘은 비가 와요." },
+          { text: "My name is Allie.",    korean: "제 이름은 Ally예요." },
+          { text: "I like pizza.",        korean: "저는 피자를 좋아해요." },
+          { text: "It's on the desk.",    korean: "그건 책상 위에 있어요." },
+          { text: "I can swim fast.",     korean: "저는 빨리 수영할 수 있어요." },
+          { text: "It's October.",        korean: "지금은 10월이에요." },
+          { text: "I'm a student.",       korean: "저는 학생이에요." }
+        ]
+      },
+      {
+        question: "Have you ever seen a rainbow?",
+        questionKorean: "무지개를 본 적 있어요?",
+        correct: [
+          { text: "Yes, I have!",           korean: "네, 본 적 있어요!" },
+          { text: "Yes, I saw one!",        korean: "네, 한 번 봤어요!" },
+          { text: "Yes, it was beautiful!", korean: "네, 정말 예뻤어요!" },
+          { text: "Yes, after the rain!",   korean: "네, 비 온 뒤에요!" },
+          { text: "No, I haven't.",         korean: "아니요, 본 적 없어요." },
+          { text: "No, not yet.",           korean: "아니요, 아직요." }
+        ],
+        wrong: [
+          { text: "I'm eight years old.", korean: "저는 여덟 살이에요." },
+          { text: "It's a dog.",          korean: "그건 강아지예요." },
+          { text: "My name is Allie.",    korean: "제 이름은 Ally예요." },
+          { text: "I go to school.",      korean: "저는 학교에 가요." },
+          { text: "She is happy.",        korean: "그녀는 행복해요." },
+          { text: "It's under the chair.", korean: "그건 의자 아래에 있어요." },
+          { text: "I have a cake.",       korean: "저는 케이크가 있어요." },
+          { text: "It's blue.",           korean: "그건 파란색이에요." }
+        ]
+      }
+    ]
   }
 
 };
 
 /* 대화 주차 순서 */
-const CONVERSATION_WEEK_ORDER = ["may_conv_w1", "jun_conv_w2", "jul_conv_w3"];
+const CONVERSATION_WEEK_ORDER = ["may_conv_w1", "jun_conv_w2", "jul_conv_w3", "jul_conv_w4"];
