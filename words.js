@@ -306,10 +306,42 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 8월 2주차 (파닉스: 자음 블렌드 · th/sh) ── */
+  "aug_w2": {
+    label: "8월 2주차",
+    quizMode: "flash",
+    words: [
+      { word: "tiger",      meaning: "호랑이",       emoji: "🐯", pron: "ˈtaɪɡər"    },
+      { word: "turtle",     meaning: "거북이",       emoji: "🐢", pron: "ˈtɜːrtl"     },
+      { word: "truck",      meaning: "트럭",         emoji: "🚚", pron: "trʌk"        },
+      { word: "snake",      meaning: "뱀",           emoji: "🐍", pron: "sneɪk"       },
+      { word: "circus",     meaning: "서커스",       emoji: "🎪", pron: "ˈsɜːrkəs"    },
+      { word: "present",    meaning: "선물",         emoji: "🎁", pron: "ˈprezənt"    },
+      { word: "umbrella",   meaning: "우산",         emoji: "☂️", pron: "ʌmˈbrelə"    },
+      { word: "strawberry", meaning: "딸기",         emoji: "🍓", pron: "ˈstrɔːberi"  },
+      { word: "zebra",      meaning: "얼룩말",       emoji: "🦓", pron: "ˈziːbrə"     },
+      { word: "socks",      meaning: "양말",         emoji: "🧦", pron: "sɒks"        },
+      { word: "snail",      meaning: "달팽이",       emoji: "🐌", pron: "sneɪl"       },
+      { word: "slide",      meaning: "미끄럼틀",     emoji: "🛝", pron: "slaɪd"       },
+      { word: "beach",      meaning: "해변",         emoji: "🏖️", pron: "biːtʃ"       },
+      { word: "brush",      meaning: "빗, 붓, 솔",   emoji: "🖌️", pron: "brʌʃ"        },
+      { word: "bush",       meaning: "덤불, 수풀",   emoji: "🌳", pron: "bʊʃ"         },
+      { word: "tooth",      meaning: "이, 치아",     emoji: "🦷", pron: "tuːθ"        },
+      { word: "teeth",      meaning: "이(복수)",     emoji: "😁", pron: "tiːθ"        },
+      { word: "flash",      meaning: "번쩍임, 섬광", emoji: "⚡", pron: "flæʃ"        },
+      { word: "mouth",      meaning: "입",           emoji: "👄", pron: "maʊθ"        },
+      { word: "bath",       meaning: "목욕",         emoji: "🛁", pron: "bɑːθ"        },
+      { word: "trash",      meaning: "쓰레기",       emoji: "🗑️", pron: "træʃ"        },
+      { word: "bench",      meaning: "벤치",         emoji: "🪑", pron: "bentʃ"       },
+      { word: "moth",       meaning: "나방",         emoji: "🦋", pron: "mɔːθ"        },
+      { word: "eyelash",    meaning: "속눈썹",       emoji: "👁️", pron: "ˈaɪlæʃ"      },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4", "jul_w1", "jul_w2", "jul_w3", "aug_w1"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4", "jul_w1", "jul_w2", "jul_w3", "aug_w1", "aug_w2"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기
