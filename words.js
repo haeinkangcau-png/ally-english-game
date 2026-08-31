@@ -338,10 +338,45 @@ const WORDS_DATA = {
     ]
   },
 
+  /* ── 8월 3주차 (v/w · 사물·장소) ── */
+  "aug_w3": {
+    label: "8월 3주차",
+    quizMode: "flash",
+    words: [
+      { word: "vacuum",      meaning: "진공청소기",       emoji: "🧹", pron: "ˈvækjuːm"     },
+      { word: "giraffe",     meaning: "기린",             emoji: "🦒", pron: "dʒəˈræf"      },
+      { word: "elf",         meaning: "요정",             emoji: "🧝", pron: "elf"          },
+      { word: "vase",        meaning: "꽃병",             emoji: "🏺", pron: "veɪs"         },
+      { word: "shirt",       meaning: "셔츠",             emoji: "👕", pron: "ʃɜːrt"        },
+      { word: "volleyball",  meaning: "배구",             emoji: "🏐", pron: "ˈvɒlibɔːl"    },
+      { word: "vulture",     meaning: "독수리(대머리수리)", emoji: "🦅", pron: "ˈvʌltʃər"    },
+      { word: "vegetable",   meaning: "채소",             emoji: "🥕", pron: "ˈvedʒtəbl"    },
+      { word: "truck",       meaning: "트럭",             emoji: "🚚", pron: "trʌk"         },
+      { word: "tiger",       meaning: "호랑이",           emoji: "🐯", pron: "ˈtaɪɡər"      },
+      { word: "polar bear",  meaning: "북극곰",           emoji: "🐻‍❄️", pron: "ˈpoʊlər ber" },
+      { word: "tractor",     meaning: "트랙터",           emoji: "🚜", pron: "ˈtræktər"     },
+      { word: "glasses",     meaning: "안경",             emoji: "👓", pron: "ˈɡlæsɪz"      },
+      { word: "train",       meaning: "기차",             emoji: "🚂", pron: "treɪn"        },
+      { word: "hat",         meaning: "모자",             emoji: "🎩", pron: "hæt"          },
+      { word: "watermelon",  meaning: "수박",             emoji: "🍉", pron: "ˈwɔːtərmelən" },
+      { word: "walrus",      meaning: "바다코끼리",        emoji: "🦭", pron: "ˈwɔːlrəs"     },
+      { word: "worm",        meaning: "지렁이",           emoji: "🪱", pron: "wɜːrm"         },
+      { word: "whale",       meaning: "고래",             emoji: "🐋", pron: "weɪl"         },
+      { word: "scooter",     meaning: "스쿠터, 킥보드",    emoji: "🛴", pron: "ˈskuːtər"     },
+      { word: "watch",       meaning: "손목시계",          emoji: "⌚", pron: "wɒtʃ"         },
+      { word: "bathroom",    meaning: "욕실, 화장실",      emoji: "🛁", pron: "ˈbɑːθruːm"    },
+      { word: "bedroom",     meaning: "침실",             emoji: "🛏️", pron: "ˈbedruːm"     },
+      { word: "underwear",   meaning: "속옷",             emoji: "🩲", pron: "ˈʌndərwer"    },
+      { word: "umbrella",    meaning: "우산",             emoji: "☂️", pron: "ʌmˈbrelə"     },
+      { word: "key",         meaning: "열쇠",             emoji: "🔑", pron: "kiː"          },
+      { word: "upset",       meaning: "속상한, 화난",      emoji: "😢", pron: "ʌpˈset"       },
+    ]
+  },
+
 };
 
 /* 주차 순서: 오래된 것 → 최신 순으로 유지 */
-const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4", "jul_w1", "jul_w2", "jul_w3", "aug_w1", "aug_w2"];
+const WEEK_ORDER = ["may_w2", "may_w3", "may_w4", "may_w5", "jun_w1a", "jun_w1b", "jun_w2", "jun_w3a", "jun_w3b", "jun_w4", "jul_w1", "jul_w2", "jul_w3", "aug_w1", "aug_w2", "aug_w3"];
 
 /* ══════════════════════════════════════════════
    대화 게임 데이터 — 표현 듣고 대답 고르기
@@ -710,9 +745,40 @@ const CONVERSATION_DATA = {
         ]
       }
     ]
+  },
+
+  /* ── 8월 1주차 (악기 다룰 수 있니) ── */
+  "aug_conv_w1": {
+    label: "8월 1주차",
+    questions: [
+      {
+        question: "Can you play a musical instrument?",
+        questionKorean: "악기를 다룰 수 있어요?",
+        correct: [
+          { text: "Yes, I can play the piano.",  korean: "네, 피아노를 칠 수 있어요." },
+          { text: "Yes, I can play the violin.", korean: "네, 바이올린을 켤 수 있어요." },
+          { text: "Yes, I play the flute.",      korean: "네, 플루트를 불어요." },
+          { text: "I can play the guitar.",      korean: "저는 기타를 칠 수 있어요." },
+          { text: "I can play the drums.",       korean: "저는 드럼을 칠 수 있어요." },
+          { text: "Yes, a little.",              korean: "네, 조금요." },
+          { text: "No, I can't.",                korean: "아니요, 못 해요." },
+          { text: "Not yet.",                    korean: "아직요." }
+        ],
+        wrong: [
+          { text: "I'm eight years old.", korean: "저는 여덟 살이에요." },
+          { text: "It's sunny today.",    korean: "오늘은 맑아요." },
+          { text: "My name is Allie.",    korean: "제 이름은 Ally예요." },
+          { text: "I like pizza.",        korean: "저는 피자를 좋아해요." },
+          { text: "It's a cat.",          korean: "그건 고양이예요." },
+          { text: "I go to school.",      korean: "저는 학교에 가요." },
+          { text: "It's blue.",           korean: "그건 파란색이에요." },
+          { text: "She is my sister.",    korean: "그녀는 제 여동생이에요." }
+        ]
+      }
+    ]
   }
 
 };
 
 /* 대화 주차 순서 */
-const CONVERSATION_WEEK_ORDER = ["may_conv_w1", "jun_conv_w2", "jul_conv_w3", "jul_conv_w4"];
+const CONVERSATION_WEEK_ORDER = ["may_conv_w1", "jun_conv_w2", "jul_conv_w3", "jul_conv_w4", "aug_conv_w1"];
